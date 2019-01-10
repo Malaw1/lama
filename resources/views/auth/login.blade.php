@@ -6,7 +6,7 @@
         <div class="white-box">
             <form class="form-horizontal form-material" id="loginform" method="post" action="{{ route('login') }}">
                 {{csrf_field()}}
-                <h3 class="box-title m-b-20">Authentification</h3>
+                <h3 class="box-title m-b-20">Sign In</h3>
                 <div class="form-group ">
                     <div class="col-xs-12">
                         <input id="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
@@ -15,7 +15,9 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                         @else
-                            <span class="help-text"> </span>
+                            <span class="help-text">
+                                       admin@admin.com
+                                    </span>
                         @endif
                     </div>
                 </div>
@@ -27,7 +29,7 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                             </span>
                         @else
-                            <span class="help-text"></span>
+                            <span class="help-text">password123</span>
                         @endif
                     </div>
                 </div>
@@ -41,21 +43,21 @@
                 </div>
                 <div class="form-group text-center m-t-20">
                     <div class="col-xs-12">
-                        <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit"> Se Connecter
+                        <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit"> Log In
                         </button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                        {{-- <div class="social">
+                        <div class="social">
                             <a href="{{url('auth/facebook')}}" class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
                             <a href="{{url('auth/google')}}" class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="form-group m-b-0">
                     <div class="col-sm-12 text-center">
-                        {{-- <p>Don't have an account? <a href="{{url('register')}}" class="text-primary m-l-5"><b>Sign Up</b></a></p> --}}
+                        <p>Don't have an account? <a href="{{url('register')}}" class="text-primary m-l-5"><b>Sign Up</b></a></p>
                     </div>
                 </div>
             </form>

@@ -299,38 +299,3 @@ Auth::routes();
 Auth::routes();
 
 
-
-Route::resource('reactif/reactif', 'Admin\\ReactifController');
-Route::resource('substance/substance', 'Admin\\SubstanceController');
-Route::resource('consommable/consommable', 'Admin\\ConsommableController');
-Route::resource('equipement', 'Admin\\EquipementController');
-Route::resource('demande/demande', 'Admin\\DemandeController');
-Route::resource('parametre/parametre', 'Admin\\ParametreController');
-Route::resource('methode/methode', 'Admin\\MethodeController');
-Route::resource('demande-test/test-demande', 'Admin\\TestDemandeController');
-Route::resource('objetEssai/objet-essai', 'Admin\\ObjetEssaiController');
-Route::resource('analyse/analyse', 'Admin\\AnalyseController');
-Route::resource('fabricant/fabricant', 'Admin\\FabricantController');
-Route::resource('faisabilite/faisabilite', 'Admin\\FaisabiliteController');
-Route::resource('fa-materiel/fa-materiel', 'Admin\\FaMaterielController');
-Route::resource('fa-methode/fa-methode', 'Admin\\FaMethodeController');
-Route::resource('fa-param/fa-param', 'Admin\\FaParamController');
-Route::resource('fa-reactif/fa-reactif', 'Admin\\FaReactifController');
-Route::resource('fa-substance/fa-substance', 'Admin\\FaSubstanceController');
-Route::resource('fa-equipement/fa-equipement', 'Admin\\FaEquipementController');
-Route::resource('client/client', 'Admin\\ClientController');
-
-Route::get('/dynamic', 'DynamicController@index');
-
-Route::POST('/dynamic/fetch', 'DynamicController@fetch')->name('dynamic.fetch');
-Route::resource('materiel/materiel', 'Admin\\MaterielController');
-
-Route::get('analyse', 'AnalyseController@analyse');
-
-Route::get('/dynamic', 'HomeController@index');
-Route::get('states/get/{id}', 'HomeController@getStates');
-Route::resource('fa-para-methode/fa-para-methode', 'Admin\\FaParaMethodeController');
-Route::resource('hplc/hplc', 'Admin\\HplcController');
-
-Route::resource('pesage/pesage', 'Admin\\PesageController');
-Route::resource('spectro-uv/spectro-uv', 'Admin\\SpectroUvController');
