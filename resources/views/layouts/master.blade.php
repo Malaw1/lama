@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="Labman" content="">
+    <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('plugins/images/favicon.png')}}">
-    <title>LabMan Systems</title>
+    <title>Cubic Admin Template</title>
     <!-- ===== Bootstrap CSS ===== -->
     <link href="{{asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- ===== Plugin CSS ===== -->
@@ -89,7 +89,7 @@
     <div class="page-wrapper">
         @yield('content')
         <footer class="footer t-a-c">
-            © 2019 AfricaSoft Tech.
+            © 2017 Cubic Admin
         </footer>
     </div>
     <!-- ===== Page-Content-End ===== -->

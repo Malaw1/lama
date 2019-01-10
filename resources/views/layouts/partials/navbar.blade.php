@@ -10,7 +10,7 @@
                     <img src="{{asset('plugins/images/logo.png')}}" alt="home"/>
                 </b>
                 <span>
-                    <img src="{{asset('plugins/images/logo-tsext.png')}}" alt="LabMan Systems" class="dark-logo"/>
+                    <img src="{{asset('plugins/images/logo-text.png')}}" alt="homepage" class="dark-logo"/>
                 </span>
             </a>
         </div>

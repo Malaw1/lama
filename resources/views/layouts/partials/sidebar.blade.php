@@ -109,7 +109,7 @@
                 <li>
                     <a class="waves-effect" href="{{ url('account-settings') }}">
                         <i class="fa fa-gear fa-fw"></i>
-                        <span class="hide-menu"> Account Settings</span>
+                        <span class="hide-menu"> Account Settigs</span>
                     </a>
                 </li>
                 @if(auth()->user()->isAdmin() == true)

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('plugins/images/favicon.png')}}">
-    <title>LabMan System</title>
+    <title>Cubic Admin Template</title>
     <!-- ===== Bootstrap CSS ===== -->
     <link href="{{asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- ===== Plugin CSS ===== -->

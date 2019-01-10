@@ -462,130 +462,16 @@
                 </div>
             </div>
             <!-- ===== Right-Sidebar ===== -->
-            {{--@include('layouts.partials.right-sidebar')--}}
-            <!-- ===== Right-Sidebar-End ===== -->
+        {{--@include('layouts.partials.right-sidebar')--}}
+        <!-- ===== Right-Sidebar-End ===== -->
         </div>
-    @else 
+    @else
         <div class="container-fluid">
-                <div class="row">
-                        <div class="col-md-8">
-                            <div class="white-box">
-                                <div class="task-widget2">
-                                    <div class="task-image">
-                                        <img src="{{asset('plugins/images/task.jpg')}}" alt="task" class="img-responsive">
-                                        <div class="task-image-overlay"></div>
-                                        <div class="task-detail">
-                                            <h2 class="font-light text-white m-b-0">{{ today()->format('d-m-y') }}</h2>
-                                            <h4 class="font-normal text-white m-t-5">Taches quotidiennes</h4>
-                                        </div>
-                                        <div class="task-add-btn">
-                                            <a href="javascript:void(0);" class="btn btn-success">+</a>
-                                        </div>
-                                    </div>
-                                    <div class="task-total">
-                                        <p class="font-16 m-b-0"><strong>5</strong> Taches pour <a href="javascript:void(0);" class="text-link">{{ auth()->user()->name }}</a>
-                                        </p>
-                                    </div>
-                                    <div class="task-list">
-                                         <ul class="list-group">
-                                            <li class="list-group-item bl-info">
-                                                <div class="checkbox checkbox-success">
-                                                    <input id="c7" type="checkbox">
-                                                    <label for="c7">
-                                                        <span class="font-16">Analyse de l echantillon X.</span>
-                                                    </label>
-                                                    <h6 class="p-l-30 font-bold">05:00 PM</h6>
-                                                </div>
-                                            </li>
-
-                                            {{-- 
-                                            <li class="list-group-item bl-warning">
-                                                <div class="checkbox checkbox-success">
-                                                    <input id="c8" type="checkbox" checked>
-                                                    <label for="c8">
-                                                        <span class="font-16">Send payment of <strong>&#36;500 invoised</strong> on 23 May to <a
-                                                                    href="javascript:void(0);"
-                                                                    class="text-link">Daniel Kristeen</a> via paypal.</span>
-                                                    </label>
-                                                    <h6 class="p-l-30 font-bold">03:00 PM</h6>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item bl-danger">
-                                                <div class="checkbox checkbox-success">
-                                                    <input id="c9" type="checkbox">
-                                                    <label for="c9">
-                                                        <span class="font-16">It is a long established fact that a reader will be distracted by the readable.</span>
-                                                    </label>
-                                                    <h6 class="p-l-30 font-bold">04:45 PM</h6>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item bl-success">
-                                                <div class="checkbox checkbox-success">
-                                                    <input id="c10" type="checkbox">
-                                                    <label for="c10">
-                                                        <span class="font-16">It is a long established fact that a reader will be distracted by the readable.</span>
-                                                    </label>
-                                                    <h6 class="p-l-30 font-bold">05:30 PM</h6>
-                                                </div>
-                                            </li>
-                                        </ul> --}}
-                                    </div>
-                                    <div class="task-loadmore">
-                                        <a href="javascript:void(0);" class="btn btn-default btn-outline btn-rounded">Load
-                                            More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="white-box chat-widget">
-                                <a href="javascript:void(0);" class="pull-right"><i class="icon-settings"></i></a>
-                                <h4 class="box-title">Chat</h4>
-                                <ul class="chat-list slimscroll" style="overflow: hidden;" tabindex="5005">
-                                    <li>
-                                        <div class="chat-image"><img alt="male" src="{{ asset('storage/uploads/users/'.auth()->user()->profile->pic) }}"></div>
-                                        <div class="chat-body">
-                                            <div class="chat-text">
-                                                <p><span class="font-semibold">{{ auth()->user()->name }}</span> Hey Daniel, This is just a
-                                                    sample chat. </p>
-                                            </div>
-                                            <span>2 Min ago</span>
-                                        </div>
-                                    </li>
-                                    <li class="odd">
-                                        <div class="chat-body">
-                                            <div class="chat-text">
-                                                <p> buddy </p>
-                                            </div>
-                                            <span>2 Min ago</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="chat-image"><img alt="male" src="{{ asset('storage/uploads/users/'.auth()->user()->profile->pic) }}"></div>
-                                        <div class="chat-body">
-                                            <div class="chat-text">
-                                                <p><span class="font-semibold">{{ auth()->user()->name }}</span> Bye now. </p>
-                                            </div>
-                                            <span>1 Min ago</span>
-                                        </div>
-                                    </li>
-                                    <li class="odd">
-                                        <div class="chat-body">
-                                            <div class="chat-text">
-                                                <p> We have been busy all the day to make your website proposal and finally came
-                                                    with the super excited offer. </p>
-                                            </div>
-                                            <span>5 Sec ago</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="chat-send">
-                                    <input type="text" class="form-control" placeholder="Write your message">
-                                    <i class="fa fa-camera"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    <h1 align="center">Welcome to Dashboard</h1>
+                </div>
+            </div>
         </div>
     @endif
 

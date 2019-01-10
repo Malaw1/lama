@@ -3,7 +3,6 @@
 namespace App\Providers;
 use File;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,8 +18,6 @@ class AppServiceProvider extends ServiceProvider
             $menus = json_decode(File::get(base_path('resources/laravel-admin/menus.json')));
             view()->share('laravelAdminMenus', $menus);
         }
-
-        Schema::defaultStringLength(191);
 
     }
 
