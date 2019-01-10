@@ -1,0 +1,13 @@
+.right-sidebar .r-panel-body ul.layouts li {
+    list-style: none;
+    padding: 5px;
+}
+
+.right-sidebar .r-panel-body ul.layouts li.active {
+   background-color: #0283cc;
+    color: white;
+}
+.right-sidebar .r-panel-body ul.layouts li.active a{
+    color: white;
+    text-decoration: none;
+}
