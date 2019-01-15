@@ -2,6 +2,7 @@
 
 @push('css')
     <link href="{{asset('plugins/components/icheck/skins/all.css')}}" rel="stylesheet">
+
 @endpush
 
 @section('content')

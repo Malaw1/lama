@@ -150,7 +150,15 @@ return [
         /*
          * Package Service Providers...
          */
+        Spatie\Permission\PermissionServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
+        Appzcoder\LaravelAdmin\LaravelAdminServiceProvider::class,
+        // For crud generator & html
+        Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -208,7 +216,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Form' => Collective\Html\FormFacade::class,
+        'HTML' => Collective\Html\HtmlFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

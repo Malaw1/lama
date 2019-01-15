@@ -1,10 +1,17 @@
 @extends('layouts.master')
 
 @push('css')
+    <style>
+        .info-box .info-count {
+            margin-top: 0px !important;
+        }
+    </style>
 @endpush
 
 @section('content')
-    <div class="row m-0">
+    @if(auth()->user()->hasRole('admin'))
+        <div class="row m-0">
+
             <div class="col-md-3 col-sm-6 info-box">
                 <div class="media">
                     <div class="media-left">
@@ -13,9 +20,9 @@
                     </div>
                     <div class="media-body">
                         <h3 class="info-count text-blue">154</h3>
-                        <p class="info-text font-12">Objet d'essai</p>
+                        <p class="info-text font-12">Bookings</p>
                         <span class="hr-line"></span>
-                        <p class="info-ot font-15">Echantillons<span class="label label-rounded label-success">30</span></p>
+                        <p class="info-ot font-15">Target<span class="label label-rounded label-success">300</span></p>
                     </div>
                 </div>
             </div>
@@ -25,10 +32,10 @@
                         <span class="icoleaf bg-primary text-white"><i class="mdi mdi-comment-text-outline"></i></span>
                     </div>
                     <div class="media-body">
-                        <h3 class="info-count text-blue">12</h3>
-                        <p class="info-text font-12">Commandes</p>
+                        <h3 class="info-count text-blue">68</h3>
+                        <p class="info-text font-12">Complaints</p>
                         <span class="hr-line"></span>
-                        <p class="info-ot font-15">En cours<span
+                        <p class="info-ot font-15">Total Pending<span
                                     class="label label-rounded label-danger">154</span></p>
                     </div>
                 </div>
@@ -40,7 +47,7 @@
                     </div>
                     <div class="media-body">
                         <h3 class="info-count text-blue">&#36;9475</h3>
-                        <p class="info-text font-12">Revenue</p>
+                        <p class="info-text font-12">Earning</p>
                         <span class="hr-line"></span>
                         <p class="info-ot font-15">March : <span class="text-blue font-semibold">&#36;514578</span></p>
                     </div>
@@ -55,23 +62,23 @@
                         </div>
                     </div>
                     <div class="media-body">
-                        <h2 class="text-blue font-22 m-t-0">Rapport</h2>
+                        <h2 class="text-blue font-22 m-t-0">Report</h2>
                         <ul class="p-0 m-b-20">
-                            <li><i class="fa fa-circle m-r-5 text-primary"></i>60% Revenue</li>
-                            <li><i class="fa fa-circle m-r-5 text-primary"></i>55% Depense</li>
-                            <li><i class="fa fa-circle m-r-5 text-info"></i>50% Com.</li>
+                            <li><i class="fa fa-circle m-r-5 text-primary"></i>60% Earnings</li>
+                            <li><i class="fa fa-circle m-r-5 text-primary"></i>55% Pending</li>
+                            <li><i class="fa fa-circle m-r-5 text-info"></i>50% Bookings</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-    <div class="container-fluid">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
                     <div class="white-box stat-widget">
                         <div class="row">
                             <div class="col-md-3 col-sm-3">
-                                <h4 class="box-title">Statistique</h4>
+                                <h4 class="box-title">Statistics</h4>
                             </div>
                             <div class="col-md-9 col-sm-9">
                                 <select class="custom-select">
@@ -82,12 +89,12 @@
                                 </select>
                                 <ul class="list-inline">
                                     <li>
-                                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Demandes
+                                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>New Sales
                                         </h6>
                                     </li>
                                     <li>
-                                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>En traitement
-                                            </h6>
+                                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Existing
+                                            Sales</h6>
                                     </li>
                                 </ul>
                             </div>
@@ -97,32 +104,35 @@
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <div class="white-box">
-                        <h4 class="box-title"> Progression</h4>
+                        <h4 class="box-title">Task Progress</h4>
                         <div class="task-widget t-a-c">
                             <div class="task-chart" id="sparklinedashdb"></div>
                             <div class="task-content font-16 t-a-c">
                                 <div class="col-sm-6 b-r">
-                                    Taches Urgentes
-                                    <h1 class="text-primary">05 <span class="font-16 text-muted">Taches</span></h1>
+                                    Urgent Tasks
+                                    <h1 class="text-primary">05 <span class="font-16 text-muted">Tasks</span></h1>
                                 </div>
                                 <div class="col-sm-6">
-                                    Taches Normales
-                                    <h1 class="text-primary">03 <span class="font-16 text-muted">Taches</span></h1>
+                                    Normal Tasks
+                                    <h1 class="text-primary">03 <span class="font-16 text-muted">Tasks</span></h1>
                                 </div>
                             </div>
                             <div class="task-assign font-16">
                                 Assigned To
                                 <ul class="list-inline">
                                     <li class="p-l-0">
-                                        <img src="{{asset('plugins/images/users/1.png')}}" alt="user" data-toggle="tooltip"
+                                        <img src="{{asset('plugins/images/users/1.png')}}" alt="user"
+                                             data-toggle="tooltip"
                                              data-placement="top" title="" data-original-title="Steave">
                                     </li>
                                     <li>
-                                        <img src="{{asset('plugins/images/users/2.png')}}" alt="user" data-toggle="tooltip"
+                                        <img src="{{asset('plugins/images/users/2.png')}}" alt="user"
+                                             data-toggle="tooltip"
                                              data-placement="top" title="" data-original-title="Steave">
                                     </li>
                                     <li>
-                                        <img src="{{asset('plugins/images/users/3.png')}}" alt="user" data-toggle="tooltip"
+                                        <img src="{{asset('plugins/images/users/3.png')}}" alt="user"
+                                             data-toggle="tooltip"
                                              data-placement="top" title="" data-original-title="Steave">
                                     </li>
                                     <li class="p-r-0">
@@ -166,7 +176,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="row">
+            <div class="row">
                 <div class="col-md-12">
                     <div class="white-box user-table">
                         <div class="row">
@@ -225,8 +235,8 @@
                                     <td><span class="label label-success">Admin</span></td>
                                     <td>
                                         <select class="custom-select">
-                                            <option value="1">Aalyste</option>
-                                            <option value="2">Resposale</option>
+                                            <option value="1">Modulator</option>
+                                            <option value="2">Admin</option>
                                             <option value="3">Staff</option>
                                             <option value="4">User</option>
                                             <option value="5">General</option>
@@ -330,7 +340,7 @@
                         <a href="javascript:void(0);" class="btn btn-success pull-right m-t-10 font-20">+</a>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <div class="row">
                 <div class="col-md-8">
                     <div class="white-box">
@@ -339,7 +349,7 @@
                                 <img src="{{asset('plugins/images/task.jpg')}}" alt="task" class="img-responsive">
                                 <div class="task-image-overlay"></div>
                                 <div class="task-detail">
-                                    <h2 class="font-light text-white m-b-0">{{ now()}}</h2>
+                                    <h2 class="font-light text-white m-b-0">07 April</h2>
                                     <h4 class="font-normal text-white m-t-5">Your tasks for today</h4>
                                 </div>
                                 <div class="task-add-btn">
@@ -348,7 +358,7 @@
                             </div>
                             <div class="task-total">
                                 <p class="font-16 m-b-0"><strong>5</strong> Tasks for <a href="javascript:void(0);"
-                                                                                         class="text-link">Djibril NDIAYE</a>
+                                                                                         class="text-link">Jon Doe</a>
                                 </p>
                             </div>
                             <div class="task-list">
@@ -406,10 +416,11 @@
                         <h4 class="box-title">Chat</h4>
                         <ul class="chat-list slimscroll" style="overflow: hidden;" tabindex="5005">
                             <li>
-                                <div class="chat-image"><img alt="male" src="{{asset('plugins/images/users/11.jpg')}}"></div>
+                                <div class="chat-image"><img alt="male"
+                                                             src="{{asset('plugins/images/users/hanna.jpg')}}"></div>
                                 <div class="chat-body">
                                     <div class="chat-text">
-                                        <p><span class="font-semibold">Djibril NDIAYE</span> Hey Prof, This is just a
+                                        <p><span class="font-semibold">Hanna Gover</span> Hey Daniel, This is just a
                                             sample chat. </p>
                                     </div>
                                     <span>2 Min ago</span>
@@ -424,10 +435,11 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="chat-image"><img alt="male" src="{{asset('plugins/images/users/11.jpg')}}"></div>
+                                <div class="chat-image"><img alt="male"
+                                                             src="{{asset('plugins/images/users/hanna.jpg')}}"></div>
                                 <div class="chat-body">
                                     <div class="chat-text">
-                                        <p><span class="font-semibold">Djibril NDIAYE</span> Bye now. </p>
+                                        <p><span class="font-semibold">Hanna Gover</span> Bye now. </p>
                                     </div>
                                     <span>1 Min ago</span>
                                 </div>
@@ -450,9 +462,19 @@
                 </div>
             </div>
             <!-- ===== Right-Sidebar ===== -->
-        @include('layouts.partials.right-sidebar')
-            <!-- ===== Right-Sidebar-End ===== -->
+        {{--@include('layouts.partials.right-sidebar')--}}
+        <!-- ===== Right-Sidebar-End ===== -->
         </div>
+    @else
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    <h1 align="center">Welcome to Dashboard</h1>
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endsection
 
 @push('js')

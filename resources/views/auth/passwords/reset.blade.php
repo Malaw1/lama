@@ -5,13 +5,16 @@
     <section id="wrapper" class="login-register">
         <div class="login-box">
             <div class="white-box">
-                <form class="form-horizontal form-material" action="{{ route('password.request') }}">
+                <form class="form-horizontal form-material" method="post" action="{{ route('password.request') }}">
                     {{csrf_field()}}
+                    <input type="hidden" name="token" value="{{ $token }}">
+
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <h3>{{ __('Reset Password') }}</h3>
                         </div>
                     </div>
+
                     <div class="form-group ">
 
                         <div class="col-xs-12">

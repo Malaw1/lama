@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Providers;
-
-use Illuminate\Support\Facades\Schema;
+use App\BlogCategory;
+use App\Tag;
+use File;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,8 +17,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->composer('layouts.partials.sidebar', function($view)
+        {
+            $categories = BlogCategory::all();
+            $tags = Tag::all();
+            $view->with(['tags' => $tags, 'categories' => $categories]);
+        });
+        $menus = [];
+        if (File::exists(base_path('resources/laravel-admin/menus.json'))) {
+            $menus = json_decode(File::get(base_path('resources/laravel-admin/menus.json')));
+            view()->share('laravelAdminMenus', $menus);
+        }
         Schema::defaultStringLength(191);
     }
+
 
     /**
      * Register any application services.

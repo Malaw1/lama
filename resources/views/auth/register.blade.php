@@ -6,7 +6,7 @@
         <div class="white-box">
             <form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('register') }}">
                 {{csrf_field()}}
-                <h3 class="box-title m-b-20">Sign In</h3>
+                <h3 class="box-title m-b-20">Sign Up</h3>
                 <div class="form-group ">
                     <div class="col-xs-12">
                         <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required autofocus>

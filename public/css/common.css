@@ -2,15 +2,9 @@
     list-style: none;
     padding: 5px;
 }
-.right-sidebar .r-panel-body ul.layouts li a{
-    list-style: none;
-    padding: 5px;
-    text-decoration: none;
-    color: black;
-}
 
 .right-sidebar .r-panel-body ul.layouts li.active {
-    background-color: #0283cc;
+   background-color: #0283cc;
     color: white;
 }
 .right-sidebar .r-panel-body ul.layouts li.active a{
