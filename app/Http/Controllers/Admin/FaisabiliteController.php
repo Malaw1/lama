@@ -133,15 +133,6 @@ class FaisabiliteController extends Controller
             ]);
         }
 
-        $pc = $request->input('pc');
-        foreach ($pc as $pc) {
-        FaPc::create([
-            'reactif' => $pc,
-            'faisabilite_id' => $faisabilite_id
-            ]);
-        }
-
-
 
         $consommable = $request->input('consommable');
         foreach ($consommable as $cons) {
@@ -158,6 +149,18 @@ class FaisabiliteController extends Controller
             'faisabilite_id' => $faisabilite_id
             ]);
         }
+
+        // $stock = ProduitChimique::->where('designation', 'pattern')
+
+
+        $pc = $request->input('pc');
+        foreach ($pc as $pc) {
+        FaPc::create([
+            'reactif' => $pc,
+            'faisabilite_id' => $faisabilite_id
+            ]);
+        }
+
         //
         // $fapm = FaParaMethode::create([
         //     'methode' => $fam->methode,
