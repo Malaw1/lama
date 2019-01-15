@@ -28,6 +28,9 @@
     </div>
 </div>
 
+<input class="form-control" name="user_id" type="hidden" id="user_id" value="{{ auth()->user()->id}}" required>
+
+
 <!-- <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
         <input class="btn btn-primary" type="submit" value="{{ $submitButtonText or 'Create' }}">

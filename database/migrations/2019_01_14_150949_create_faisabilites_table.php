@@ -19,7 +19,9 @@ class CreateFaisabilitesTable extends Migration
             $table->string('reference')->nullable();
             $table->string('molecule')->nullable();
             $table->integer('objet_essai')->nullable();
+            $table->integer('status')->nullable();
             $table->integer('user_id')->nullable();
+            $table->foreign('objet_essai')->references('id')->('objet_essais');
             });
     }
 

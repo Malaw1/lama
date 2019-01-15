@@ -110,11 +110,49 @@ class FaisabiliteController extends Controller
 		]);
             $requestData = $request->all();
 
-            Faisabilite::create($requestData);
+          $faisabilite =  Faisabilite::create($requestData);
 
             $faisabilite_id = $faisabilite->id;
 
+            $pc = $request->input('pc');
+            foreach ($pc as $key ) {
+              //  $req = ProduitChimique::all()->where('designation', '=', $pc)->first();
+                //dd($req);
+                 $req = ProduitChimique::select()
+                 ->where('designation', '=', $key)
+                 ->first();
+                 //dd($key);
+                 if ($req != $key) {
+                   echo 'This is missing in the stock: '.$key.'<br>';
+                   $var[] = $key;
+                 }else{
+                   echo 'This : <'.$key.'> is in the sctock <br>';
+                 }
 
+
+            }
+            dd($var);
+            foreach ($pc as $pc) {
+            FaPc::create([
+                'designation' => $pc,
+                'faisabilite_id' => $faisabilite_id
+                ]);
+            }
+
+            dd($pc);
+
+
+            // $rek = $pc;
+            //
+            // $var [] = '';
+
+            // foreach ($rek as $re) {
+            //   if (($req = ProduitChimique::all()->where('designation', $re)) == null ) {
+            //     $var = $re;
+            //   }
+            // }
+
+            dd($pc);
 
 
         $param = $request->input('parametre');
@@ -133,13 +171,8 @@ class FaisabiliteController extends Controller
             ]);
         }
 
-        $pc = $request->input('pc');
-        foreach ($pc as $pc) {
-        FaPc::create([
-            'reactif' => $pc,
-            'faisabilite_id' => $faisabilite_id
-            ]);
-        }
+
+
 
 
 
@@ -184,6 +217,23 @@ class FaisabiliteController extends Controller
         $model = str_slug('faisabilite','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $faisabilite = Faisabilite::findOrFail($id);
+
+            $rapport = Faisabilite::join('fa_params', 'faisabilites.id', '=', 'fa_params.faisabilite_id')
+            ->join('fa_methodes', 'faisabilites.id', '=', 'fa_methodes.faisabilite_id')
+            ->join('fa_equipements', 'faisabilites.id', '=', 'fa_methodes.faisabilite_id')
+            ->join('fa_pcs', 'faisabilites.id', '=', 'fa_pcs.faisabilite_id')
+            ->join('fa_consommables', 'faisabilites.id', '=', 'fa_consommables.faisabilite_id')
+            ->select('faisabilites.*', 'fa_methodes.*', 'fa_pcs.*', 'fa_params.*', 'fa_equipements.*', 'fa_consommables.*')
+            ->get();
+
+            // $react = Reactif::join('proprietesphysiques', 'reactifs.id', '=', 'proprietesphysiques.reactifs_id')
+            //             ->join('proprieteschimiques', 'proprieteschimiques.id', '=', 'proprieteschimiques.reactifs_id')
+            //             ->select('reactifs.*', 'proprietesphysiques.*', 'proprieteschimiques.*')
+            //              ->where('reactifs.id', $reactif->id)
+            //             ->get();
+
+            dd($rapport);
+
             return view('faisabilite.show', compact('faisabilite'));
         }
         return response(view('403'), 403);

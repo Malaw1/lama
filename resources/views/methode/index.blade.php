@@ -32,7 +32,7 @@
                             @foreach($methode as $item)
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->methode }}</td><td>{{ $item->parametre }}</td>
+                                    <td>{{ $item->methode }}</td><td>{{ $item->parametre}}</td>
                                     <td>
                                         @can('view-'.str_slug('Methode'))
                                             <a href="{{ url('/methode/methode/' . $item->id) }}"
