@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Faisabilite extends Model
+class FaParam extends Model
 {
     use SoftDeletes;
     /**
@@ -13,7 +13,7 @@ class Faisabilite extends Model
      *
      * @var string
      */
-    protected $table = 'faisabilites';
+    protected $table = 'fa_params';
 
     /**
     * The database primary key value.
@@ -27,11 +27,7 @@ class Faisabilite extends Model
      *
      * @var array
      */
-<<<<<<< HEAD
-    protected $fillable = ['reference', 'molecule', 'objet_essai', 'user_id'];
-=======
-    protected $fillable = ['reference', 'molecule', 'objet_essai', 'status', 'user_id'];
->>>>>>> develop
+    protected $fillable = ['parametre', 'faisabilite_id'];
 
-
+    
 }

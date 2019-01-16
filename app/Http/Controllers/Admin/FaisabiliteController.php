@@ -18,9 +18,17 @@ use App\Methode;
 use App\Equipement;
 use App\ProduitChimique;
 use App\Consommable;
+<<<<<<< HEAD
 use App\FaParaMethode;
 use App\Pharmacopee;
 use App\Catalog;
+=======
+use App\FaConsommable;
+use App\FaParaMethode;
+use App\Pharmacopee;
+use App\Catalog;
+use App\PcError;
+>>>>>>> develop
 
 class FaisabiliteController extends Controller
 {
@@ -110,12 +118,31 @@ class FaisabiliteController extends Controller
 		]);
             $requestData = $request->all();
 
+<<<<<<< HEAD
             Faisabilite::create($requestData);
+=======
+          $faisabilite =  Faisabilite::create($requestData);
+>>>>>>> develop
 
             $faisabilite_id = $faisabilite->id;
 
 
 
+<<<<<<< HEAD
+=======
+            // $rek = $pc;
+            //
+            // $var [] = '';
+
+            // foreach ($rek as $re) {
+            //   if (($req = ProduitChimique::all()->where('designation', $re)) == null ) {
+            //     $var = $re;
+            //   }
+            // }
+
+        //    dd($pc);
+
+>>>>>>> develop
 
         $param = $request->input('parametre');
         foreach ($param as $param) {
@@ -133,7 +160,10 @@ class FaisabiliteController extends Controller
             ]);
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
         $consommable = $request->input('consommable');
         foreach ($consommable as $cons) {
         FaConsommable::create([
@@ -142,14 +172,22 @@ class FaisabiliteController extends Controller
             ]);
         }
 
+<<<<<<< HEAD
         $equipement = $request->input('methode');
         foreach ($equipement as $methode) {
         FaEquipement::create([
             'methode' => $methode,
+=======
+        $equipement = $request->input('equipement');
+        foreach ($equipement as $equip) {
+        FaEquipement::create([
+            'equipement' => $equip,
+>>>>>>> develop
             'faisabilite_id' => $faisabilite_id
             ]);
         }
 
+<<<<<<< HEAD
         // $stock = ProduitChimique::->where('designation', 'pattern')
 
 
@@ -171,6 +209,55 @@ class FaisabiliteController extends Controller
         //
 
             return redirect('faisabilite/faisabilite')->with('flash_message', 'Faisabilite added!');
+=======
+        $pc = $request->input('pc');
+        foreach ($pc as $key ) {
+             $req = ProduitChimique::where('designation', '=', $key)
+             ->first();
+
+             FaPc::create([
+                 'designation' => $key,
+                 'faisabilite_id' => $faisabilite_id
+                 ]);
+
+             if ($req <=> $key) {
+               PcError::create([
+                   'designation' => $key,
+                   'faisabilite_id' => $faisabilite_id
+                   ]);
+               $errors[] = $key;
+             }
+
+        }
+
+        if ($errors == null) {
+        return redirect('faisabilite/faisabilite')->with('flash_message', 'Faisabilite Reussi!');
+
+        }else {
+
+          $faisabilite = Faisabilite::join('objet_essais', 'faisabilites.objet_essai', '=', 'objet_essais.id')->findOrFail($faisabilite_id);
+          $faisabilite->fill(['status' => 'Non Faisable']);
+
+          $params = FaParam::where('fa_params.faisabilite_id', $faisabilite_id)->get();
+          $methode = FaMethode::where('fa_methodes.faisabilite_id', $faisabilite_id)->get();
+          $equip = FaEquipement::where('fa_equipements.faisabilite_id', $faisabilite_id)->get();
+          $pc = FaPc::where('fa_pcs.faisabilite_id', $faisabilite_id)->get();
+          $cons = FaConsommable::where('fa_consommables.faisabilite_id', $faisabilite_id)->get();
+          $err = PcError::where('pc_errors.faisabilite_id', $faisabilite_id)->get();
+
+          return view('faisabilite.show', [
+            'faisabilite' => $faisabilite,
+            'params' => $params,
+            'methode' => $methode,
+            'equip' => $equip,
+            'pc' =>$pc,
+            'cons' => $cons,
+            'erros' => $errors,
+            'err' => $err
+          ]);
+        }
+
+>>>>>>> develop
         }
         return response(view('403'), 403);
     }
@@ -186,8 +273,30 @@ class FaisabiliteController extends Controller
     {
         $model = str_slug('faisabilite','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
+<<<<<<< HEAD
             $faisabilite = Faisabilite::findOrFail($id);
             return view('faisabilite.show', compact('faisabilite'));
+=======
+            $faisabilite = Faisabilite::join('objet_essais', 'faisabilites.objet_essai', '=', 'objet_essais.id')->findOrFail($id);
+
+            $params = FaParam::where('fa_params.faisabilite_id', $id)->get();
+            $methode = FaMethode::where('fa_methodes.faisabilite_id', $id)->get();
+            $equip = FaEquipement::where('fa_equipements.faisabilite_id', $id)->get();
+            $pc = FaPc::where('fa_pcs.faisabilite_id', $id)->get();
+            $cons = FaConsommable::where('fa_consommables.faisabilite_id', $id)->get();
+            $err = PcError::where('pc_errors.faisabilite_id', $id)->get();
+
+
+            return view('faisabilite.show', [
+              'faisabilite' => $faisabilite,
+              'params' => $params,
+              'methode' => $methode,
+              'equip' => $equip,
+              'pc' =>$pc,
+              'cons' => $cons,
+              'err' => $err
+            ]);
+>>>>>>> develop
         }
         return response(view('403'), 403);
     }

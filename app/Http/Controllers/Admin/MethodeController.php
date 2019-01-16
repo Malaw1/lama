@@ -6,6 +6,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Methode;
+<<<<<<< HEAD
+=======
+use App\Parametre;
+>>>>>>> develop
 use Illuminate\Http\Request;
 
 class MethodeController extends Controller
@@ -31,11 +35,23 @@ class MethodeController extends Controller
             $perPage = 25;
 
             if (!empty($keyword)) {
+<<<<<<< HEAD
                 $methode = Methode::where('methode', 'LIKE', "%$keyword%")
                 ->orWhere('parametre', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
                 $methode = Methode::paginate($perPage);
+=======
+                $methode = Methode::join('parametres', 'methodes.parametre', '=', 'parametres.id')
+                ->where('methode', 'LIKE', "%$keyword%")
+                ->orWhere('parametre', 'LIKE', "%$keyword%")
+                ->orWhere('parametres.parametre', 'LIKE', "%$keyword%")
+                ->paginate($perPage);
+              //  dd($methode);
+            } else {
+                $methode = Methode::join('parametres', 'methodes.parametre', '=', 'parametres.id')->paginate($perPage);
+              //  dd($methode);
+>>>>>>> develop
             }
 
             return view('methode.index', compact('methode'));
@@ -53,7 +69,12 @@ class MethodeController extends Controller
     {
         $model = str_slug('methode','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
+<<<<<<< HEAD
             return view('methode.create');
+=======
+          $parametre = Parametre::all();
+            return view('methode.create', ['parametre' => $parametre]);
+>>>>>>> develop
         }
         return response(view('403'), 403);
 
@@ -75,7 +96,11 @@ class MethodeController extends Controller
 			'parametre' => 'required'
 		]);
             $requestData = $request->all();
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> develop
             Methode::create($requestData);
             return redirect('methode/methode')->with('flash_message', 'Methode added!');
         }
@@ -133,7 +158,11 @@ class MethodeController extends Controller
 			'parametre' => 'required'
 		]);
             $requestData = $request->all();
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> develop
             $methode = Methode::findOrFail($id);
              $methode->update($requestData);
 
