@@ -348,3 +348,5 @@ Route::resource('fa-param/fa-param', 'Admin\\FaParamController');
 Route::resource('fa-methode/fa-methode', 'Admin\\FaMethodeController');
 Route::resource('fa-consommable/fa-consommable', 'Admin\\FaConsommableController');
 Route::resource('fa-pc/fa-pc', 'Admin\\FaPcController');
+
+Route::resource('eq-qualif/eq-qualif', 'Admin\\EqQualifController');

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Equipement extends Model
+class EqQualif extends Model
 {
     use SoftDeletes;
     /**
@@ -13,7 +13,7 @@ class Equipement extends Model
      *
      * @var string
      */
-    protected $table = 'equipements';
+    protected $table = 'eq_qualifs';
 
     /**
     * The database primary key value.
@@ -27,7 +27,7 @@ class Equipement extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'appareil', 'fabricant', 'type', 'serie', 'date_installation', 'salle', 'etat', 'document_technique', 'user_id'];
+    protected $fillable = ['equipement', 'date_qualif', 'date_next', 'auteur', 'details', 'user_id'];
 
-
+    
 }

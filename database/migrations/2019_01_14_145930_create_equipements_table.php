@@ -25,6 +25,7 @@ class CreateEquipementsTable extends Migration
             $table->string('salle')->nullable();
             $table->string('etat')->nullable();
             $table->string('document_technique')->nullable();
+            $table->string('user_id')->nullable();
             });
     }
 

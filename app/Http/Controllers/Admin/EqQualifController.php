@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Equipement;
+use App\EqQualif;
 use Illuminate\Http\Request;
 
-class EquipementController extends Controller
+class EqQualifController extends Controller
 {
 
     public function __construct()
@@ -25,27 +25,24 @@ class EquipementController extends Controller
 
     public function index(Request $request)
     {
-        $model = str_slug('equipement','-');
+        $model = str_slug('eqqualif','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $keyword = $request->get('search');
             $perPage = 25;
 
             if (!empty($keyword)) {
-                $equipement = Equipement::where('code', 'LIKE', "%$keyword%")
-                ->orWhere('appareil', 'LIKE', "%$keyword%")
-                ->orWhere('fabricant', 'LIKE', "%$keyword%")
-                ->orWhere('type', 'LIKE', "%$keyword%")
-                ->orWhere('serie', 'LIKE', "%$keyword%")
-                ->orWhere('date_installation', 'LIKE', "%$keyword%")
-                ->orWhere('salle', 'LIKE', "%$keyword%")
-                ->orWhere('etat', 'LIKE', "%$keyword%")
-                ->orWhere('document_technique', 'LIKE', "%$keyword%")
+                $eqqualif = EqQualif::where('equipement', 'LIKE', "%$keyword%")
+                ->orWhere('date_qualif', 'LIKE', "%$keyword%")
+                ->orWhere('date_next', 'LIKE', "%$keyword%")
+                ->orWhere('auteur', 'LIKE', "%$keyword%")
+                ->orWhere('details', 'LIKE', "%$keyword%")
+                ->orWhere('user_id', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $equipement = Equipement::paginate($perPage);
+                $eqqualif = EqQualif::paginate($perPage);
             }
 
-            return view('equipement.index', compact('equipement'));
+            return view('eq-qualif.index', compact('eqqualif'));
         }
         return response(view('403'), 403);
 
@@ -58,9 +55,9 @@ class EquipementController extends Controller
      */
     public function create()
     {
-        $model = str_slug('equipement','-');
+        $model = str_slug('eqqualif','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('equipement.create');
+            return view('eq-qualif.create');
         }
         return response(view('403'), 403);
 
@@ -75,24 +72,20 @@ class EquipementController extends Controller
      */
     public function store(Request $request)
     {
-        $model = str_slug('equipement','-');
+        $model = str_slug('eqqualif','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
-			'code' => 'required',
-			'appareil' => 'required',
-			'fabricant' => 'required',
-			'type' => 'required',
-			'serie' => 'required',
-			'date_installation' => 'required',
-			'salle' => 'required',
-			'etat' => 'required',
-      'user_id' => 'required',
-			'document_technique' => 'required'
+			'equipement' => 'required',
+			'date_qualif' => 'required',
+			'date_next' => 'required',
+			'auteur' => 'required',
+			'details' => 'required',
+			'user_id' => 'required'
 		]);
             $requestData = $request->all();
-
-            Equipement::create($requestData);
-            return redirect('equipement/equipement')->with('flash_message', 'Equipement added!');
+            
+            EqQualif::create($requestData);
+            return redirect('eq-qualif/eq-qualif')->with('flash_message', 'EqQualif added!');
         }
         return response(view('403'), 403);
     }
@@ -106,10 +99,10 @@ class EquipementController extends Controller
      */
     public function show($id)
     {
-        $model = str_slug('equipement','-');
+        $model = str_slug('eqqualif','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $equipement = Equipement::findOrFail($id);
-            return view('equipement.show', compact('equipement'));
+            $eqqualif = EqQualif::findOrFail($id);
+            return view('eq-qualif.show', compact('eqqualif'));
         }
         return response(view('403'), 403);
     }
@@ -123,10 +116,10 @@ class EquipementController extends Controller
      */
     public function edit($id)
     {
-        $model = str_slug('equipement','-');
+        $model = str_slug('eqqualif','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
-            $equipement = Equipement::findOrFail($id);
-            return view('equipement.edit', compact('equipement'));
+            $eqqualif = EqQualif::findOrFail($id);
+            return view('eq-qualif.edit', compact('eqqualif'));
         }
         return response(view('403'), 403);
     }
@@ -141,25 +134,22 @@ class EquipementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = str_slug('equipement','-');
+        $model = str_slug('eqqualif','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
             $this->validate($request, [
-			'code' => 'required',
-			'appareil' => 'required',
-			'fabricant' => 'required',
-			'type' => 'required',
-			'serie' => 'required',
-			'date_installation' => 'required',
-			'salle' => 'required',
-			'etat' => 'required',
-			'document_technique' => 'required'
+			'equipement' => 'required',
+			'date_qualif' => 'required',
+			'date_next' => 'required',
+			'auteur' => 'required',
+			'details' => 'required',
+			'user_id' => 'required'
 		]);
             $requestData = $request->all();
+            
+            $eqqualif = EqQualif::findOrFail($id);
+             $eqqualif->update($requestData);
 
-            $equipement = Equipement::findOrFail($id);
-             $equipement->update($requestData);
-
-             return redirect('equipement/equipement')->with('flash_message', 'Equipement updated!');
+             return redirect('eq-qualif/eq-qualif')->with('flash_message', 'EqQualif updated!');
         }
         return response(view('403'), 403);
 
@@ -174,11 +164,11 @@ class EquipementController extends Controller
      */
     public function destroy($id)
     {
-        $model = str_slug('equipement','-');
+        $model = str_slug('eqqualif','-');
         if(auth()->user()->permissions()->where('name','=','delete-'.$model)->first()!= null) {
-            Equipement::destroy($id);
+            EqQualif::destroy($id);
 
-            return redirect('equipement/equipement')->with('flash_message', 'Equipement deleted!');
+            return redirect('eq-qualif/eq-qualif')->with('flash_message', 'EqQualif deleted!');
         }
         return response(view('403'), 403);
 
