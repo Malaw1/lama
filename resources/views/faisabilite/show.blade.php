@@ -14,19 +14,61 @@
                     <div class="clearfix"></div>
                     <hr>
                     <div class="table-responsive">
-                        <table class="table table">
-                            <tbody>
-                            <tr>
-                                <th>ID</th>
-                                <td>{{ $faisabilite->id }}</td>
-                            </tr>
-                            <tr><th> Reference </th><td> {{ $faisabilite->reference }} </td></tr><tr><th> Objet Essais </th><td> {{ $faisabilite->objet_essais }} </td></tr><tr><th> Molecule </th><td> {{ $faisabilite->molecule }} </td></tr>
-                            </tbody>
-                        </table>
+                      <table class="table table">
+                        <tbody>
+                        <tr>
+                            <th>ID</th><td>{{ $faisabilite->id }}</td>
+                            <th> Reference </th><td> {{ $faisabilite->reference }} </td>
+                            <th> Molecule </th><td> {{ $faisabilite->molecule }} </td>
+                            <th> Objet Essai </th><td> {{ $faisabilite->code }} </td>
+                        </tr>
+                        <tr>
+                          <th>Parametre</th>:
+                          @foreach ($params as $key)
+                            <td>{{ $key->parametre}}</td>
+                          @endforeach
+                        </tr>
+                        <tr>
+                          <th>Methodes</th>:
+                          @foreach ($methode as $key)
+                            <td>{{ $key->methode}}</td>
+                          @endforeach
+                        </tr>
+                        <tr>
+                          <th>Equipements</th>:
+                          @foreach ($equip as $key)
+                            <td>{{ $key->appareil}}</td>
+                          @endforeach
+                        </tr>
+                        <tr>
+                          <th>Consommables</th>:
+                          @foreach ($cons as $key)
+                            <td>{{ $key->designation}}</td>
+                          @endforeach
+                        </tr>
+                        <tr>
+                          <th>Reactifs</th>:
+                          @foreach ($reactif as $key)
+                            <td>{{ $key->reactif}}</td>
+                          @endforeach
+                        </tr>
+                        <tr>
+                          <th>status</th>:
+                            <td colspan="7">{{ $faisabilite->etat}}</td>
+                        </tr>
+                        <tr>
+                          <th>Conclusion</th>:
+                          <td><p>Les Produits Chimiques suivants ne sont pas dans votre stock: </p></td>
+                          @foreach($err as $err)
+                            <td>{{ $err->designation}}</td>
+                            @endforeach
+                        </tr>
+                        </tbody>
+
+                    </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-

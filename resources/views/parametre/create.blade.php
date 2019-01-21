@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New Parametre</h3>
+                    <h3 class="box-title pull-left">Ajouter Parametre</h3>
                     @can('view-'.str_slug('Parametre'))
-                    <a  class="btn btn-success pull-right" href="{{url('/parametre/parametre')}}"><i class="icon-arrow-left-circle"></i> Add Parametre</a>
+                    <a  class="btn btn-success pull-right" href="{{url('/parametre/parametre')}}"><i class="icon-arrow-left-circle"></i> Liste des Parametres</a>
                     @endcan
 
                     <div class="clearfix"></div>

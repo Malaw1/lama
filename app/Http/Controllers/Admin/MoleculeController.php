@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Fabricant;
+use App\Molecule;
 use Illuminate\Http\Request;
 
-class FabricantController extends Controller
+class MoleculeController extends Controller
 {
 
     public function __construct()
@@ -25,23 +25,20 @@ class FabricantController extends Controller
 
     public function index(Request $request)
     {
-        $model = str_slug('fabricant','-');
+        $model = str_slug('molecule','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $keyword = $request->get('search');
             $perPage = 25;
 
             if (!empty($keyword)) {
-                $fabricant = Fabricant::where('company_name', 'LIKE', "%$keyword%")
-                ->orWhere('adresse', 'LIKE', "%$keyword%")
-                ->orWhere('telephone', 'LIKE', "%$keyword%")
-                ->orWhere('email', 'LIKE', "%$keyword%")
-                ->orWhere('description', 'LIKE', "%$keyword%")
+                $molecule = Molecule::where('molecule', 'LIKE', "%$keyword%")
+                ->orWhere('objet_essai', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $fabricant = Fabricant::paginate($perPage);
+                $molecule = Molecule::paginate($perPage);
             }
 
-            return view('fabricant.index', compact('fabricant'));
+            return view('molecule.index', compact('molecule'));
         }
         return response(view('403'), 403);
 
@@ -54,9 +51,9 @@ class FabricantController extends Controller
      */
     public function create()
     {
-        $model = str_slug('fabricant','-');
+        $model = str_slug('molecule','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('fabricant.fabricant.create');
+            return view('molecule.create');
         }
         return response(view('403'), 403);
 
@@ -71,13 +68,16 @@ class FabricantController extends Controller
      */
     public function store(Request $request)
     {
-        $model = str_slug('fabricant','-');
+        $model = str_slug('molecule','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-
+            $this->validate($request, [
+			'molecule' => 'required',
+			'objet_essai' => 'required'
+		]);
             $requestData = $request->all();
-
-            Fabricant::create($requestData);
-            return redirect('fabricant/fabricant')->with('flash_message', 'Fabricant added!');
+            
+            Molecule::create($requestData);
+            return redirect('molecule/molecule')->with('flash_message', 'Molecule added!');
         }
         return response(view('403'), 403);
     }
@@ -91,10 +91,10 @@ class FabricantController extends Controller
      */
     public function show($id)
     {
-        $model = str_slug('fabricant','-');
+        $model = str_slug('molecule','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $fabricant = Fabricant::findOrFail($id);
-            return view('fabricant.fabricant.show', compact('fabricant'));
+            $molecule = Molecule::findOrFail($id);
+            return view('molecule.show', compact('molecule'));
         }
         return response(view('403'), 403);
     }
@@ -108,10 +108,10 @@ class FabricantController extends Controller
      */
     public function edit($id)
     {
-        $model = str_slug('fabricant','-');
+        $model = str_slug('molecule','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
-            $fabricant = Fabricant::findOrFail($id);
-            return view('fabricant.fabricant.edit', compact('fabricant'));
+            $molecule = Molecule::findOrFail($id);
+            return view('molecule.edit', compact('molecule'));
         }
         return response(view('403'), 403);
     }
@@ -126,15 +126,18 @@ class FabricantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = str_slug('fabricant','-');
+        $model = str_slug('molecule','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
-
+            $this->validate($request, [
+			'molecule' => 'required',
+			'objet_essai' => 'required'
+		]);
             $requestData = $request->all();
+            
+            $molecule = Molecule::findOrFail($id);
+             $molecule->update($requestData);
 
-            $fabricant = Fabricant::findOrFail($id);
-             $fabricant->update($requestData);
-
-             return redirect('fabricant/fabricant')->with('flash_message', 'Fabricant updated!');
+             return redirect('molecule/molecule')->with('flash_message', 'Molecule updated!');
         }
         return response(view('403'), 403);
 
@@ -149,11 +152,11 @@ class FabricantController extends Controller
      */
     public function destroy($id)
     {
-        $model = str_slug('fabricant','-');
+        $model = str_slug('molecule','-');
         if(auth()->user()->permissions()->where('name','=','delete-'.$model)->first()!= null) {
-            Fabricant::destroy($id);
+            Molecule::destroy($id);
 
-            return redirect('fabricant/fabricant')->with('flash_message', 'Fabricant deleted!');
+            return redirect('molecule/molecule')->with('flash_message', 'Molecule deleted!');
         }
         return response(view('403'), 403);
 

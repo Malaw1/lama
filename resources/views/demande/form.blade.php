@@ -7,13 +7,19 @@
 </div><div class="form-group {{ $errors->has('client') ? 'has-error' : ''}}">
     <label for="client" class="col-md-4 control-label">{{ 'Client' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="client" type="number" id="client" value="{{ $demande->client or ''}}" required>
+      <select name="client" class="form-control select2" id="client" value="{{ $demande->client or ''}}" required>
+            @foreach($client as $client)
+                <option value="{{ $client->id}}">{{ $client->company_name}}</option>
+            @endforeach
+        </select>
+        <!-- <input class="form-control" name="client" type="number" id="client" value="{{ $demande->client or ''}}" required> -->
         {!! $errors->first('client', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('description') ? 'has-error' : ''}}">
     <label for="description" class="col-md-4 control-label">{{ 'Description' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="description" type="text" id="description" value="{{ $demande->description or ''}}" required>
+      <textarea class="form-control" name="description" type="text" id="description" value="{{ $demande->description or ''}}" required></textarea>
+        <!-- <input class="form-control" name="description" type="text" id="description" value="{{ $demande->description or ''}}" required> -->
         {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('date_recue') ? 'has-error' : ''}}">
@@ -23,15 +29,15 @@
         {!! $errors->first('date_recue', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
-    <label for="user_id" class="col-md-4 control-label">{{ 'User Id' }}</label>
+    <!-- <label for="user_id" class="col-md-4 control-label">{{ 'User Id' }}</label> -->
     <div class="col-md-6">
-        <input class="form-control" name="user_id" type="number" id="user_id" value="{{ $demande->user_id or ''}}" required>
+        <input class="form-control" name="user_id" type="hidden" id="user_id" value="{{ auth()->user()->id}}" required>
         {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 
-<div class="form-group">
+<!-- <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
-        <input class="btn btn-primary" type="submit" value="{{ $submitButtonText or 'Create' }}">
+        <input class="btn btn-primary" type="submit" value="{{ $submitButtonText or 'Enregistrer' }}">
     </div>
-</div>
+</div> -->

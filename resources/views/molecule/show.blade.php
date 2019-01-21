@@ -6,9 +6,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Demande {{ $demande->id }}</h3>
-                    @can('view-'.str_slug('Demande'))
-                        <a class="btn btn-success pull-right" href="{{ url('/demande/demande') }}">
+                    <h3 class="box-title pull-left">Molecule {{ $molecule->id }}</h3>
+                    @can('view-'.str_slug('Molecule'))
+                        <a class="btn btn-success pull-right" href="{{ url('/molecule/molecule') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
                     @endcan
                     <div class="clearfix"></div>
@@ -18,16 +18,9 @@
                             <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{ $demande->id }}</td>
+                                <td>{{ $molecule->id }}</td>
                             </tr>
-                            <tr><th> Molecule </th><td> {{ $demande->molecule }} </td></tr>
-                            <tr><th> Client </th><td> {{ $demande->company_name }} </td></tr>
-                            <tr><th> Description </th><td> {{ $demande->description }} </td></tr>
-                            <tr><th>Parametres</th>
-                                @foreach($param as $param)
-                              <td>{{$param->parametre}}</td>
-                              @endforeach
-                            </tr>
+                            <tr><th> Molecule </th><td> {{ $molecule->molecule }} </td></tr><tr><th> Objet Essai </th><td> {{ $molecule->objet_essai }} </td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -36,3 +29,4 @@
         </div>
     </div>
 @endsection
+

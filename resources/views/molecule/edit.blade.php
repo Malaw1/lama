@@ -1,15 +1,14 @@
 @extends('layouts.master')
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Ajouter Reactif</h3>
-                    @can('view-'.str_slug('Reactif'))
-                    <a  class="btn btn-success pull-right" href="{{url('/reactif/reactifs')}}"><i class="icon-arrow-left-circle"></i> Tableau des Reactifs</a>
+                    <h3 class="box-title pull-left">Edit Molecule #{{ $molecule->id }}</h3>
+                    @can('view-'.str_slug('Molecule'))
+                        <a class="btn btn-success pull-right" href="{{ url('/molecule/molecule') }}">
+                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
                     @endcan
-
                     <div class="clearfix"></div>
                     <hr>
                     @if ($errors->any())
@@ -20,11 +19,12 @@
                         </ul>
                     @endif
 
-                    <form method="POST" action="{{ url('/reactif/reactifs') }}" accept-charset="UTF-8"
-                          class="form-horizontal" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url('/molecule/molecule/' . $molecule->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        {{ method_field('PATCH') }}
                         {{ csrf_field() }}
 
-                        @include ('reactifs.form')
+                        @include ('molecule.form', ['submitButtonText' => 'Update'])
+
                     </form>
                 </div>
             </div>

@@ -71,9 +71,9 @@
         {!! $errors->first('prix', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
-    <label for="user_id" class="col-md-4 control-label">{{ 'User Id' }}</label>
+    <!-- <label for="user_id" class="col-md-4 control-label">{{ 'User Id' }}</label> -->
     <div class="col-md-6">
-        <input class="form-control" name="user_id" type="number" id="user_id" value="{{ $substance->user_id or ''}}" required>
+        <input class="form-control" name="user_id" type="hidden" id="user_id" value="{{ auth()->user()->id}}" required>
         {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

@@ -350,3 +350,4 @@ Route::resource('pharmacopee/pharmacopee', 'Admin\\PharmacopeeController');
 Route::resource('reactif/reactifs', 'Admin\\ReactifsController');
 Route::resource('substance/substance', 'Admin\\SubstanceController');
 Route::resource('para-demande/para-demande', 'Admin\\ParaDemandeController');
+Route::resource('molecule/molecule', 'Admin\\MoleculeController');

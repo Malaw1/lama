@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New Substance</h3>
+                    <h3 class="box-title pull-left">Ajouter Substance</h3>
                     @can('view-'.str_slug('Substance'))
-                    <a  class="btn btn-success pull-right" href="{{url('/substance/substance')}}"><i class="icon-arrow-left-circle"></i> Add Substance</a>
+                    <a  class="btn btn-success pull-right" href="{{url('/substance/substance')}}"><i class="icon-arrow-left-circle"></i> Tableau des Substances</a>
                     @endcan
 
                     <div class="clearfix"></div>

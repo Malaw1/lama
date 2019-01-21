@@ -15,7 +15,7 @@
                     <h3 class="box-title pull-left">Equipement</h3>
                     @can('add-'.str_slug('Equipement'))
                         <a class="btn btn-success pull-right" href="{{ url('/equipment/equipement/create') }}"><i
-                                    class="icon-plus"></i> Add Equipement</a>
+                                    class="icon-plus"></i> Ajouter Equipement</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -24,7 +24,10 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Code</th><th>Appareil</th><th>Fabricant</th>
+                                <th>Code</th>
+                                <th>Appareil</th>
+                                <th>Fabricant</th>
+                                <th>Etat</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -32,7 +35,10 @@
                             @foreach($equipement as $item)
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->code }}</td><td>{{ $item->appareil }}</td><td>{{ $item->fabricant }}</td>
+                                    <td>{{ $item->code }}</td>
+                                    <td>{{ $item->appareil }}</td>
+                                    <td>{{ $item->fabricant }}</td>
+                                    <td>{{ $item->etat }}</td>
                                     <td>
                                         @can('view-'.str_slug('Equipement'))
                                             <a href="{{ url('/equipment/equipement/' . $item->id) }}"

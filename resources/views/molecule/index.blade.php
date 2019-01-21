@@ -12,10 +12,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Objet d'essais</h3>
-                    @can('add-'.str_slug('ObjetEssais'))
-                        <a class="btn btn-success pull-right" href="{{ url('/objet-essais/objet-essais/create') }}"><i
-                                    class="icon-plus"></i> Ajouter Objet d'essais</a>
+                    <h3 class="box-title pull-left">Molecule</h3>
+                    @can('add-'.str_slug('Molecule'))
+                        <a class="btn btn-success pull-right" href="{{ url('/molecule/molecule/create') }}"><i
+                                    class="icon-plus"></i> Add Molecule</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -24,42 +24,42 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Code</th><th>Forme Galenique</th><th>Date Recue</th>
+                                <th>Molecule</th><th>Objet Essai</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($objetessais as $item)
+                            @foreach($molecule as $item)
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->code }}</td><td>{{ $item->forme_galenique }}</td><td>{{ $item->date_recue }}</td>
+                                    <td>{{ $item->molecule }}</td><td>{{ $item->objet_essai }}</td>
                                     <td>
-                                        @can('view-'.str_slug('ObjetEssais'))
-                                            <a href="{{ url('/objet-essais/objet-essais/' . $item->id) }}"
-                                               title="View ObjetEssai">
+                                        @can('view-'.str_slug('Molecule'))
+                                            <a href="{{ url('/molecule/molecule/' . $item->id) }}"
+                                               title="View Molecule">
                                                 <button class="btn btn-info btn-sm">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                 </button>
                                             </a>
                                         @endcan
 
-                                        @can('edit-'.str_slug('ObjetEssais'))
-                                            <a href="{{ url('/objet-essais/objet-essais/' . $item->id . '/edit') }}"
-                                               title="Edit ObjetEssai">
+                                        @can('edit-'.str_slug('Molecule'))
+                                            <a href="{{ url('/molecule/molecule/' . $item->id . '/edit') }}"
+                                               title="Edit Molecule">
                                                 <button class="btn btn-primary btn-sm">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                                 </button>
                                             </a>
                                         @endcan
 
-                                        @can('delete-'.str_slug('ObjetEssais'))
+                                        @can('delete-'.str_slug('Molecule'))
                                             <form method="POST"
-                                                  action="{{ url('/objet-essais/objet-essais' . '/' . $item->id) }}"
+                                                  action="{{ url('/molecule/molecule' . '/' . $item->id) }}"
                                                   accept-charset="UTF-8" style="display:inline">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm"
-                                                        title="Delete ObjetEssai"
+                                                        title="Delete Molecule"
                                                         onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                                                 </button>
                                             </form>
@@ -71,7 +71,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="pagination-wrapper"> {!! $objetessais->appends(['search' => Request::get('search')])->render() !!} </div>
+                        <div class="pagination-wrapper"> {!! $molecule->appends(['search' => Request::get('search')])->render() !!} </div>
                     </div>
                 </div>
             </div>

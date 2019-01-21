@@ -7,6 +7,25 @@ use App\Http\Controllers\Controller;
 
 use App\Faisabilite;
 use Illuminate\Http\Request;
+use App\FaParam;
+use App\Catalog;
+use App\Parametre;
+use App\FaMethode;
+use App\ObjetEssai;
+use App\FaEquipement;
+use App\FaMateriel;
+use App\FaReactif;
+use App\FaSubstance;
+use App\Methode;
+use App\Equipement;
+use App\Reactif;
+use App\Substance;
+use App\Consommable;
+use App\FaParaMethode;
+use App\Pharmacopee;
+use App\FaConsommable;
+use App\ReactifError;
+
 
 class FaisabiliteController extends Controller
 {
@@ -53,9 +72,26 @@ class FaisabiliteController extends Controller
      */
     public function create()
     {
+        $parametre = Parametre::all();
+        $methode = Methode::all();
+        $objet = ObjetEssai::all();
+        $equipement = Equipement::all();
+        $consommable = Consommable::all();
+        $reactif = Catalog::all();
+        $substance = Substance::all();
+        $refs = Pharmacopee::all();
         $model = str_slug('faisabilite','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('faisabilite.create');
+          return view('faisabilite.create', [
+              'parametre' => $parametre,
+              'methode' => $methode,
+              'objet' => $objet,
+              'equipement' => $equipement,
+              'consommable' => $consommable,
+              'reactif' => $reactif,
+              'substance' => $substance,
+              'refs' => $refs
+              ]);
         }
         return response(view('403'), 403);
 
@@ -75,13 +111,114 @@ class FaisabiliteController extends Controller
             $this->validate($request, [
 			'reference' => 'required',
 			'objet_essais' => 'required',
-			'molecule' => 'required',
+			// 'status' => 'required',
 			'user_id' => 'required'
 		]);
+
             $requestData = $request->all();
-            
-            Faisabilite::create($requestData);
-            return redirect('faisabilite/faisabilite')->with('flash_message', 'Faisabilite added!');
+
+          $faisa =  Faisabilite::create($requestData);
+          $faisabilite_id = $faisa->id;
+
+            $param = $request->input('parametre');
+        foreach ($param as $param) {
+        $fap = Faparam::create([
+            'parametre' => $param,
+            'faisabilite_id' => $faisabilite_id
+            ]);
+        }
+
+        $methode = $request->input('methode');
+        foreach ($methode as $methode) {
+        $fam = FaMethode::create([
+            'methode' => $methode,
+            'faisabilite_id' => $faisabilite_id
+            ]);
+        }
+
+
+
+        $substance = $request->input('methode');
+        foreach ($substance as $methode) {
+        FaSubstance::create([
+            'substance' => $methode,
+            'faisabilite_id' => $faisabilite_id
+            ]);
+        }
+
+        $materiel = $request->input('consommable');
+        foreach ($materiel as $methode) {
+        FaConsommable::create([
+            'designation' => $methode,
+            'faisabilite_id' => $faisabilite_id
+            ]);
+        }
+
+        $equipement = $request->input('appareil');
+        foreach ($equipement as $methode) {
+        FaEquipement::create([
+            'appareil' => $methode,
+            'faisabilite_id' => $faisabilite_id
+            ]);
+        }
+
+$errors = null;
+        $pc = $request->input('reactif');
+        foreach ($pc as $key ) {
+             $req = Reactif::where('designation', '=', $key)->first();
+             // $pp = $req->designation;
+             if ($req == null) {
+               ReactifError::create([
+               'designation' => $key,
+               'faisabilite_id' => $faisabilite_id
+               ]);
+               $errors[] = $key;
+             }else {
+                   if(strcasecmp($key, $req->designation ) == 0){
+                     FaReactif::create([
+                      'reactif' => $key,
+                      'faisabilite_id' => $faisabilite_id
+                      ]);
+                   }else {
+                   ReactifError::create([
+                   'designation' => $key,
+                   'faisabilite_id' => $faisabilite_id
+                   ]);
+                    }
+                  }
+
+                }
+
+                if (($errors != null)) {
+                  echo "Errors is not null";
+                  $fais = Faisabilite::where('id', $faisabilite_id)
+                  ->update(['etat' => 'Non Faisable']);
+                //  dd($errors);
+                $params = FaParam::where('fa_params.faisabilite_id', $faisabilite_id)->get();
+                $methode = FaMethode::where('fa_methodes.faisabilite_id', $faisabilite_id)->get();
+                $equip = FaEquipement::where('fa_equipements.faisabilite_id', $faisabilite_id)->get();
+                $reactif = FaReactif::where('fa_reactifs.faisabilite_id', $faisabilite_id)->get();
+                $substance = FaSubstance::where('fa_substances.faisabilite_id', $faisabilite_id)->get();
+                $cons = FaConsommable::where('fa_consommables.faisabilite_id', $faisabilite_id)->get();
+                $err = ReactifError::where('reactif_errors.faisabilite_id', $faisabilite_id)->get();
+                  $faisabilite = Faisabilite::where('id', $faisabilite_id)->first();
+
+                  return view('faisabilite.show', [
+                    'faisabilite' => $faisabilite,
+                    'params' => $params,
+                    'methode' => $methode,
+                    'equip' => $equip,
+                    'reactif' =>$reactif,
+                    'cons' => $cons,
+                    'substance' =>$substance,
+                    'errors' => $errors,
+                    'err' => $err
+                  ]);
+                }else {
+                  return redirect('faisabilite/faisabilite')->with('flash_message', 'Faisabilite added!');
+                }
+                // dd($errors);
+
         }
         return response(view('403'), 403);
     }
@@ -97,8 +234,26 @@ class FaisabiliteController extends Controller
     {
         $model = str_slug('faisabilite','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $faisabilite = Faisabilite::findOrFail($id);
-            return view('faisabilite.show', compact('faisabilite'));
+            // $faisabilite = Faisabilite::findOrFail($id);
+            $faisabilite = Faisabilite::join('objet_essais', 'faisabilites.objet_essais', '=', 'objet_essais.id')->findOrFail($id);
+            $params = FaParam::where('fa_params.faisabilite_id', $id)->get();
+            $methode = FaMethode::where('fa_methodes.faisabilite_id', $id)->get();
+            $equip = FaEquipement::where('fa_equipements.faisabilite_id', $id)->get();
+            $reactif = FaReactif::where('fa_reactifs.faisabilite_id', $id)->get();
+            $cons = FaConsommable::where('fa_consommables.faisabilite_id', $id)->get();
+            $err = ReactifError::where('reactif_errors.faisabilite_id', $id)->get();
+
+
+            return view('faisabilite.show', [
+              'faisabilite' => $faisabilite,
+              'params' => $params,
+              'methode' => $methode,
+              'equip' => $equip,
+              'reactif' =>$reactif,
+              'cons' => $cons,
+              'err' => $err
+            ]);
+            // return view('faisabilite.show', compact('faisabilite'));
         }
         return response(view('403'), 403);
     }
@@ -139,7 +294,7 @@ class FaisabiliteController extends Controller
 			'user_id' => 'required'
 		]);
             $requestData = $request->all();
-            
+
             $faisabilite = Faisabilite::findOrFail($id);
              $faisabilite->update($requestData);
 

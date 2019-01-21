@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Equipement;
 use App\EqQualif;
+
 use Illuminate\Http\Request;
 
 class EqQualifController extends Controller
@@ -31,15 +32,19 @@ class EqQualifController extends Controller
             $perPage = 25;
 
             if (!empty($keyword)) {
-                $eqqualif = EqQualif::where('equipement', 'LIKE', "%$keyword%")
+                $eqqualif = EqQualif::join('equipements', 'equipements.id','=','eq_qualifs.equipement')
+                  ->where('equipement', 'LIKE', "%$keyword%")
                 ->orWhere('date_calib', 'LIKE', "%$keyword%")
+                ->orWhere('code', 'LIKE', "%$keyword%")
                 ->orWhere('next_calib', 'LIKE', "%$keyword%")
                 ->orWhere('auteur', 'LIKE', "%$keyword%")
                 ->orWhere('details', 'LIKE', "%$keyword%")
                 ->orWhere('user_id', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $eqqualif = EqQualif::paginate($perPage);
+                $eqqualif = EqQualif::join('equipements', 'equipements.id','=','eq_qualifs.equipement')->paginate($perPage);
+                // $demande = Demande::join('clients', 'clients.id','=','demandes.client')->paginate($perPage);
+                // dd($eqqualif);
             }
 
             return view('eq-qualif.index', compact('eqqualif'));
@@ -55,9 +60,10 @@ class EqQualifController extends Controller
      */
     public function create()
     {
+        $equip = Equipement::all();
         $model = str_slug('eqqualif','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('eq-qualif.create');
+            return view('eq-qualif.create', ['equip' => $equip]);
         }
         return response(view('403'), 403);
 
@@ -83,7 +89,7 @@ class EqQualifController extends Controller
 			'user_id' => 'required'
 		]);
             $requestData = $request->all();
-            
+
             EqQualif::create($requestData);
             return redirect('eq-qualif/eq-qualif')->with('flash_message', 'EqQualif added!');
         }
@@ -145,7 +151,7 @@ class EqQualifController extends Controller
 			'user_id' => 'required'
 		]);
             $requestData = $request->all();
-            
+
             $eqqualif = EqQualif::findOrFail($id);
              $eqqualif->update($requestData);
 

@@ -15,7 +15,7 @@
                     <h3 class="box-title pull-left">Substance</h3>
                     @can('add-'.str_slug('Substance'))
                         <a class="btn btn-success pull-right" href="{{ url('/substance/substance/create') }}"><i
-                                    class="icon-plus"></i> Add Substance</a>
+                                    class="icon-plus"></i> Ajouter Substance</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>

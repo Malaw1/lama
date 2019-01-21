@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New Pharmacopee</h3>
+                    <h3 class="box-title pull-left">Ajouter Pharmacopee</h3>
                     @can('view-'.str_slug('Pharmacopee'))
-                    <a  class="btn btn-success pull-right" href="{{url('/pharmacopee/pharmacopee')}}"><i class="icon-arrow-left-circle"></i> Add Pharmacopee</a>
+                    <a  class="btn btn-success pull-right" href="{{url('/pharmacopee/pharmacopee')}}"><i class="icon-arrow-left-circle"></i> Liste Pharmacopee</a>
                     @endcan
 
                     <div class="clearfix"></div>

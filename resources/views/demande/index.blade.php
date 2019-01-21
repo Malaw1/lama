@@ -15,7 +15,7 @@
                     <h3 class="box-title pull-left">Demande</h3>
                     @can('add-'.str_slug('Demande'))
                         <a class="btn btn-success pull-right" href="{{ url('/demande/demande/create') }}"><i
-                                    class="icon-plus"></i> Add Demande</a>
+                                    class="icon-plus"></i> Ajouter Demande</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -32,7 +32,7 @@
                             @foreach($demande as $item)
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->molecule }}</td><td>{{ $item->client }}</td><td>{{ $item->description }}</td>
+                                    <td>{{ $item->molecule }}</td><td>{{ $item->company_name }}</td><td>{{ $item->description }}</td>
                                     <td>
                                         @can('view-'.str_slug('Demande'))
                                             <a href="{{ url('/demande/demande/' . $item->id) }}"

@@ -12,10 +12,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Eqqualif</h3>
+                    <h3 class="box-title pull-left">Equipements et Qualifications</h3>
                     @can('add-'.str_slug('EqQualif'))
                         <a class="btn btn-success pull-right" href="{{ url('/eq-qualif/eq-qualif/create') }}"><i
-                                    class="icon-plus"></i> Add Eqqualif</a>
+                                    class="icon-plus"></i> Calibrer un Equipement</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -32,7 +32,7 @@
                             @foreach($eqqualif as $item)
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->equipement }}</td><td>{{ $item->date_calib }}</td><td>{{ $item->next_calib }}</td>
+                                    <td>{{ $item->code }}</td><td>{{ $item->date_calib }}</td><td>{{ $item->next_calib }}</td>
                                     <td>
                                         @can('view-'.str_slug('EqQualif'))
                                             <a href="{{ url('/eq-qualif/eq-qualif/' . $item->id) }}"

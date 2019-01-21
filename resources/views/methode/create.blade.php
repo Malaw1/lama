@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New Methode</h3>
+                    <h3 class="box-title pull-left">Ajout de Methode</h3>
                     @can('view-'.str_slug('Methode'))
-                    <a  class="btn btn-success pull-right" href="{{url('/methode/methode')}}"><i class="icon-arrow-left-circle"></i> Add Methode</a>
+                    <a  class="btn btn-success pull-right" href="{{url('/methode/methode')}}"><i class="icon-arrow-left-circle"></i> Lister Methode</a>
                     @endcan
 
                     <div class="clearfix"></div>

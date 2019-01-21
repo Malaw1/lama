@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New ObjetEssai</h3>
+                    <h3 class="box-title pull-left">Enregistrement d'Objet d'Essai</h3>
                     @can('view-'.str_slug('ObjetEssai'))
-                    <a  class="btn btn-success pull-right" href="{{url('/objet-essais/objet-essais')}}"><i class="icon-arrow-left-circle"></i> Add ObjetEssai</a>
+                    <a  class="btn btn-success pull-right" href="{{url('/objet-essais/objet-essais')}}"><i class="icon-arrow-left-circle"></i> Liste des Objets d'Essai</a>
                     @endcan
 
                     <div class="clearfix"></div>
@@ -23,8 +23,9 @@
                     <form method="POST" action="{{ url('/objet-essais/objet-essais') }}" accept-charset="UTF-8"
                           class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
-
+                        @include ('/molecule.form')
                         @include ('objet-essais.form')
+
                     </form>
                 </div>
             </div>

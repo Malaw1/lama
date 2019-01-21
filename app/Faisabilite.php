@@ -27,7 +27,7 @@ class Faisabilite extends Model
      *
      * @var array
      */
-    protected $fillable = ['reference', 'objet_essais', 'molecule', 'user_id'];
+    protected $fillable = ['reference', 'objet_essais', 'status', 'user_id'];
 
-    
+
 }

@@ -6,6 +6,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\ObjetEssai;
+use App\Fabricant;
+use App\Demande;
+use App\Molecule;
 use Illuminate\Http\Request;
 
 class ObjetEssaisController extends Controller
@@ -59,9 +62,11 @@ class ObjetEssaisController extends Controller
      */
     public function create()
     {
+        $fabricant = Fabricant::all();
+        $demande = Demande::all();
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('objet-essais.create');
+            return view('objet-essais.create', ['fabricant' => $fabricant, 'demande' => $demande]);
         }
         return response(view('403'), 403);
 
@@ -76,23 +81,74 @@ class ObjetEssaisController extends Controller
      */
     public function store(Request $request)
     {
+      // $mol = $request->input('molecule');
+      //
+      // dd($mol);
+      $date = $request->input('date_recue');
+        $dat = explode('-', $date, 3);
+        $year = substr($dat[0], -2);
+        $month = $dat[1];
+        $day = $dat[2];
+        if($request->input('forme_galenique') != 'vaccin'){
+            $form = 'M';
+        }
+        else {
+            $form = 'V';
+        }
+
+
+        // $forme = $request->input('forme_galenique');
+        // $form = substr($forme[0], -2);
+
+        $objet = ObjetEssai::All()->last();
+
+        if($objet == null){
+            $f = '0001';
+          //  dd($id);
+        }
+        else{
+          if ($objet->id < 10) {
+            $id =$objet->id + 1;
+            $f = '000'.$id;
+          }elseif ($objet->id < 100) {
+            $id =$objet->id + 1;
+            $f = '00'.$id;
+          }elseif ($objet->id < 1000) {
+            $id =$objet->id + 1;
+            $f = '0'.$id;
+          }
+        }
+
+        $code = $form.''.$day.''.$month.''.$year.''.$f;
+        // dd($code);
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            $this->validate($request, [
-			'code' => 'required',
-			'forme_galenique' => 'required',
-			'date_recue' => 'required',
-			'quantite' => 'required',
-			'lot' => 'required',
-			'date_fab' => 'required',
-			'date_exp' => 'required',
-			'provenance' => 'required',
-			'fabricant' => 'required',
-			'demandeur' => 'required'
-		]);
+          $addObjet = ObjetEssai::create([
+            'code' => $code,
+            'designation' => $request->input('designation'),
+            'forme_galenique' => $request->input('forme_galenique'),
+            'date_recue' => $request->input('date_recue'),
+            'quantite_recue' => $request->input('quantite_recue'),
+            'lot' => $request->input('lot'),
+            'date_fab' => $request->input('date_fab'),
+            'date_exp' => $request->input('date_exp'),
+            'provenance' => $request->input('provenance'),
+            'fabricant' => $request->input('fabricant'),
+            'demandeur' => $request->input('demandeur')
+      		]);
+
+        $objet_essai = $addObjet->id;
+
+        $molecule = $request->input('molecule');
+        foreach ($molecule as $mole) {
+        Molecule::create([
+            'molecule' => $mole,
+            'objet_essai' => $objet_essai
+            ]);
+        }
             $requestData = $request->all();
-            
-            ObjetEssai::create($requestData);
+
+            // ObjetEssai::create($requestData);
             return redirect('objet-essais/objet-essais')->with('flash_message', 'ObjetEssai added!');
         }
         return response(view('403'), 403);
@@ -157,7 +213,7 @@ class ObjetEssaisController extends Controller
 			'demandeur' => 'required'
 		]);
             $requestData = $request->all();
-            
+
             $objetessai = ObjetEssai::findOrFail($id);
              $objetessai->update($requestData);
 

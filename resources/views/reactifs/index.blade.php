@@ -13,9 +13,8 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">Reactifs</h3>
-                    @can('add-'.str_slug('Reactif'))
-                        <a class="btn btn-success pull-right" href="{{ url('/reactif/reactifs/create') }}"><i
-                                    class="icon-plus"></i> Add Reactifs</a>
+                    @can('add-'.str_slug('Reactifs'))
+                        <a class="btn btn-success pull-right" href="{{ url('/reactif/reactifs/create') }}"><i class="icon-plus"></i> Ajouter Reactifs</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>

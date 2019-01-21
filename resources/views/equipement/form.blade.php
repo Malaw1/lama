@@ -43,25 +43,33 @@
 </div><div class="form-group {{ $errors->has('etat') ? 'has-error' : ''}}">
     <label for="etat" class="col-md-4 control-label">{{ 'Etat' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="etat" type="text" id="etat" value="{{ $equipement->etat or ''}}" required>
+      <select class="form-control" name="etat" id="etat" required>
+        <option value="{{ $equipement->etat or 'fonctionnelle'}}">Fonctionnelle</option>
+        <option value="{{ $equipement->etat or 'non_fonctionnelle'}}">Non Fonctionnelle</option>
+      </select>
+        <!-- <input class="form-control" name="etat" type="text" id="etat" value="{{ $equipement->etat or ''}}" required> -->
         {!! $errors->first('etat', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('document') ? 'has-error' : ''}}">
     <label for="document" class="col-md-4 control-label">{{ 'Document' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="document" type="text" id="document" value="{{ $equipement->document or ''}}" required>
+      <select class="form-control" name="document" type="text" id="document" required>
+        <option value="{{ $equipement->document or 'yes'}}">Disponible</option>
+        <option value="{{ $equipement->document or 'no'}}">Non Disponible</option>
+      </select>
+        <!-- <input class="form-control" name="document" type="text" id="document" value="{{ $equipement->document or ''}}" required> -->
         {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
-    <label for="user_id" class="col-md-4 control-label">{{ 'User Id' }}</label>
+    <!-- <label for="user_id" class="col-md-4 control-label">{{ 'User Id' }}</label> -->
     <div class="col-md-6">
-        <input class="form-control" name="user_id" type="number" id="user_id" value="{{ $equipement->user_id or ''}}" required>
+        <input class="form-control" name="user_id" type="hidden" id="user_id" value="{{ auth()->user()->id}}" required>
         {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
-        <input class="btn btn-primary" type="submit" value="{{ $submitButtonText or 'Create' }}">
+        <input class="btn btn-primary" type="submit" value="{{ $submitButtonText or 'Enregistrer' }}">
     </div>
 </div>

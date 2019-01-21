@@ -18,9 +18,10 @@ class CreateDemandesTable extends Migration
             $table->softDeletes();
             $table->string('molecule')->nullable();
             $table->integer('client')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->date('date_recue')->nullable();
             $table->integer('user_id')->nullable();
+            $table->string('code')->nullable();
             });
     }
 
