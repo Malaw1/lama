@@ -94,7 +94,7 @@ class ReactifsController extends Controller
 			'user_id' => 'required'
 		]);
             $requestData = $request->all();
-            
+
             Reactif::create($requestData);
             return redirect('reactif/reactifs')->with('flash_message', 'Reactif added!');
         }
@@ -160,7 +160,7 @@ class ReactifsController extends Controller
 			'user_id' => 'required'
 		]);
             $requestData = $request->all();
-            
+
             $reactif = Reactif::findOrFail($id);
              $reactif->update($requestData);
 

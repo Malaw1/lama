@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('plugins/images/favicon.png')}}">
-    <title>Cubic Admin Template</title>
+    <title>Labman Systems</title>
     <!-- ===== Bootstrap CSS ===== -->
     <link href="{{asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- ===== Plugin CSS ===== -->
@@ -90,7 +90,7 @@
     <div class="page-wrapper">
         @yield('content')
         <footer class="footer t-a-c">
-            © 2017 Cubic Admin
+            © 2019 LNCM
         </footer>
     </div>
     <!-- ===== Page-Content-End ===== -->
