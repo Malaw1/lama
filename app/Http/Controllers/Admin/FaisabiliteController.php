@@ -138,7 +138,7 @@ class FaisabiliteController extends Controller
 
 
 
-        $substance = $request->input('methode');
+        $substance = $request->input('substance');
         foreach ($substance as $methode) {
         FaSubstance::create([
             'substance' => $methode,

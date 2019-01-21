@@ -2,7 +2,7 @@
     <label for="substance" class="col-md-4 control-label">{{ 'Substance' }}</label>
     <div class="col-md-6">
       <select name="substance[]" class="select2 m-b-10 select2-multiple" multiple="multiple" data-placeholder="Choose">
-            @foreach($substance as $test)
+            @foreach($reactif as $test)
                 <option value="{{ $test->designation}}">{{ $test->designation}}</option>
             @endforeach
         </select>
