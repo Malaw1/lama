@@ -20,7 +20,7 @@
                         <img src="{{asset('plugins/images/logo.png')}}" alt="home"/>
                     </b>
                     <span>
-                    <img src="{{asset('plugins/images/logo-text.png')}}" alt="homepage" class="dark-logo"/>
+                    <img src="{{asset('plugins/images/')}}" alt="LabMan Systems" class="dark-logo"/>
                 </span>
                 </a>
             @endif
@@ -43,7 +43,7 @@
 
         <ul class="nav navbar-top-links navbar-right pull-right">
             @if(auth()->check())
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a class="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown"
                        href="javascript:void(0);">
                         <i class="icon-speech"></i>
@@ -108,7 +108,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="dropdown">
                     <a class="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown"
                        href="javascript:void(0);">

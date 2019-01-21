@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Methode;
+use App\Parametre;
 use Illuminate\Http\Request;
 
 class MethodeController extends Controller
@@ -51,9 +52,10 @@ class MethodeController extends Controller
      */
     public function create()
     {
+      $parametre = Parametre::all();
         $model = str_slug('methode','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('methode.create');
+            return view('methode.create', ['parametre' => $parametre]);
         }
         return response(view('403'), 403);
 
@@ -75,7 +77,7 @@ class MethodeController extends Controller
 			'parametre' => 'required'
 		]);
             $requestData = $request->all();
-            
+
             Methode::create($requestData);
             return redirect('methode/methode')->with('flash_message', 'Methode added!');
         }
@@ -133,7 +135,7 @@ class MethodeController extends Controller
 			'parametre' => 'required'
 		]);
             $requestData = $request->all();
-            
+
             $methode = Methode::findOrFail($id);
              $methode->update($requestData);
 

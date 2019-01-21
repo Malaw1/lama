@@ -27,7 +27,7 @@
                                 <li role="separator" class="divider"></li>
                                 <li><a href="{{'account-settings'}}"><i class="fa fa-cog"></i> Account Settings</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href=""><i class="fa fa-power-off"></i> Logout</a></li>
+                                <li><a href="{{route('logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
                             </ul>
                         </div>
                         <p class="profile-text m-t-15 font-16"><a
@@ -273,7 +273,7 @@
             </nav>
         @else
                 <div class="list-group m-b-0">
-                   <h4 align="center">Welcome to Cubic</h4>
+                   <h4 align="center">Portail d'information</h4>
                     <span class="list-group-item bg-primary no-border text-center">Categories</span>
                     @if(count($categories) > 0)
                         @foreach($categories as $category)
@@ -281,7 +281,7 @@
                                href="{{url('blogs/category/'.$category->slug)}}">{{$category->title}}</a>
                         @endforeach
                     @else
-                        No Categories Yet
+                        Pas de Categories
                     @endif
                 </div>
                 <div class="list-group">
@@ -291,7 +291,7 @@
                             <a class="list-group-item" href="{{url('blogs/tag/'.$tag->slug)}}">{{$tag->name}}</a>
                         @endforeach
                     @else
-                        No Categories Yet
+                        Pas de Tags
                     @endif
                 </div>
         @endif

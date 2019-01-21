@@ -7,7 +7,12 @@
 </div><div class="form-group {{ $errors->has('parametre') ? 'has-error' : ''}}">
     <label for="parametre" class="col-md-4 control-label">{{ 'Parametre' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="parametre" type="number" id="parametre" value="{{ $methode->parametre or ''}}" required>
+      <select name="parametre" class="form-control select2">
+        @foreach($parametre as $param)
+            <option value="{{ $param->id}}">{{ $param->parametre}}</option>
+        @endforeach
+    </select>
+        <!-- <input class="form-control" name="parametre" type="number" id="parametre" value="{{ $methode->parametre or ''}}" required> -->
         {!! $errors->first('parametre', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
