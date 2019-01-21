@@ -13,10 +13,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Blogs List </h3>
+                    <h3 class="box-title pull-left">Liste des articles </h3>
                     @can('add-blog')
                         <a class="btn btn-success pull-right" href="{{url('blog/create')}}"><i class="icon-plus"></i>
-                            Add Blog</a>
+                            Ajouter Article</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -27,9 +27,9 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Title</th>
-                                        <th>No. of Comments</th>
-                                        <th>Created At</th>
+                                        <th>Sujet</th>
+                                        <th>No. de comments</th>
+                                        <th>Date pub.</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
