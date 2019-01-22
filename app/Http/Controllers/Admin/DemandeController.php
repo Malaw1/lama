@@ -144,7 +144,7 @@ class DemandeController extends Controller
     {
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $demande = Demande::join('clients', 'clients.id','=','demandes.client')->findOrFail($id);
+            $demande = Demande::findOrFail($id);
             $param = ParaDemande::where('demande', $id)->get();
             return view('demande.show', ['demande' => $demande, 'param' => $param]);
         }
