@@ -56,7 +56,7 @@ class FabricantController extends Controller
     {
         $model = str_slug('fabricant','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('fabricant.fabricant.create');
+            return view('fabricant.create');
         }
         return response(view('403'), 403);
 

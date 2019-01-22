@@ -36,7 +36,7 @@ class MethodeController extends Controller
                 ->orWhere('parametre', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $methode = Methode::paginate($perPage);
+                $methode = Methode::join('parametres', 'parametres.id', '=', 'methodes.parametre')->paginate($perPage);
             }
 
             return view('methode.index', compact('methode'));

@@ -114,7 +114,7 @@ class DemandeController extends Controller
             'code' => $code,
             'molecule' => $request->input('molecule'),
             'client' => $request->input('client'),
-            'client' => $request->input('description'),
+            'description' => $request->input('description'),
             'date_recue' => $request->input('date_recue'),
             'user_id' => $request->input('user_id')
             ]);
