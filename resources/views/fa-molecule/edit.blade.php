@@ -1,15 +1,14 @@
 @extends('layouts.master')
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Enregistrement d'Objet d'Essai</h3>
-                    @can('view-'.str_slug('ObjetEssai'))
-                    <a  class="btn btn-success pull-right" href="{{url('/objet-essais/objet-essais')}}"><i class="icon-arrow-left-circle"></i> Liste des Objets d'Essai</a>
+                    <h3 class="box-title pull-left">Edit FaMolecule #{{ $famolecule->id }}</h3>
+                    @can('view-'.str_slug('FaMolecule'))
+                        <a class="btn btn-success pull-right" href="{{ url('/fa-molecule/fa-molecule') }}">
+                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
                     @endcan
-
                     <div class="clearfix"></div>
                     <hr>
                     @if ($errors->any())
@@ -20,12 +19,11 @@
                         </ul>
                     @endif
 
-                    <form method="POST" action="{{ url('/objet-essais/objet-essais') }}" accept-charset="UTF-8"
-                          class="form-horizontal" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url('/fa-molecule/fa-molecule/' . $famolecule->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        {{ method_field('PATCH') }}
                         {{ csrf_field() }}
 
-                        @include ('objet-essais.form')
-                        @include ('/molecule.form')
+                        @include ('fa-molecule.form', ['submitButtonText' => 'Update'])
 
                     </form>
                 </div>

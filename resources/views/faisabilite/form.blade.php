@@ -1,5 +1,5 @@
 <div class="form-group {{ $errors->has('reference') ? 'has-error' : ''}}">
-    <label for="reference" class="col-md-4 control-label">{{ 'Reference' }}</label>
+    <label for="reference" class="col-md-4 control-label">{{ "Reference d'essai" }}</label>
     <div class="col-md-6">
       <select name="reference" class="form-control select2">
             @foreach($refs as $test)
@@ -22,6 +22,18 @@
         {!! $errors->first('objet_essais', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<!-- <div class="form-group {{ $errors->has('objet_essais') ? 'has-error' : ''}}">
+    <label for="objet_essais" class="col-md-4 control-label">{{ 'Molecule' }}</label>
+    <div class="col-md-6">
+        <select name="molecule" class="select2 m-b-10 select2-multiple" multiple="multiple" required>
+            @foreach($molecule as $test)
+                <option value="{{ $test->molecule}}">{{ $test->molecule}}</option>
+            @endforeach
+        </select>
+        <!-- <input class="form-control" name="objet_essais" type="number" id="objet_essais" value="{{ $faisabilite->objet_essais or ''}}" required> -->
+        {!! $errors->first('objet_essais', '<p class="help-block">:message</p>') !!}
+    <!-- </div> -->
+<!-- </div> --> -->
 <!-- <div class="form-group {{ $errors->has('molecule') ? 'has-error' : ''}}">
     <label for="molecule" class="col-md-4 control-label">{{ 'Molecule' }}</label>
     <div class="col-md-6">

@@ -33,7 +33,7 @@
                         {{ csrf_field() }}
 
                         @include ('faisabilite.form')
-                        @include ('/molecule.form')
+                        @include ('/fa-molecule.form')
                         @include ('/fa-param.form')
                         @include ('/fa-methode.form')
                         @include ('/fa-reactif.form')

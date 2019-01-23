@@ -20,13 +20,16 @@
                                 <th>ID</th>
                                 <td>{{ $demande->id }}</td>
                             </tr>
-                            <tr><th> Molecule </th><td> {{ $demande->molecule }} </td></tr>
+                            <tr><th> Code </th><td> {{ $demande->code }} </td></tr>
+                            <tr><th> Designation </th><td> {{ $demande->designation }} </td></tr>
                             <tr><th> Client </th><td> {{ $demande->company_name }} </td></tr>
-                            <tr><th> Description </th><td> {{ $demande->description }} </td></tr>
+                            <tr><th> Fabricant </th><td> {{ $demande->fabricant }} </td></tr>
+                            <tr><th> Nombre de Lots </th><td> {{ $demande->nombre_lot }} </td></tr>
+                            <tr><th> Commentaires </th><td> {{ $demande->description }} </td></tr>
                             <tr><th>Parametres</th>
                                 @foreach($param as $param)
                               <td>{{$param->parametre}}</td>
-                              @endforeach
+                                @endforeach
                             </tr>
                             </tbody>
                         </table>

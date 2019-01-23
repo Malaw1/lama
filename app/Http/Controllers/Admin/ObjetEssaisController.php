@@ -62,11 +62,17 @@ class ObjetEssaisController extends Controller
      */
     public function create()
     {
-        $fabricant = Fabricant::all();
-        $demande = Demande::all();
+
+    //  dd($_GET['id']);
+        $demande = Demande::where('code', $_GET['id'])->first();
+        $molecule = Molecule::join('demandes', 'demandes.id', '=', 'molecules.demande')
+        ->where('demandes.code', $_GET['id'])->get();
+        //dd($molecule);
+
+      // dd($demande);
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('objet-essais.create', ['fabricant' => $fabricant, 'demande' => $demande]);
+            return view('objet-essais.create', ['demande' => $demande, 'molecule' => $molecule]);
         }
         return response(view('403'), 403);
 
@@ -137,15 +143,7 @@ class ObjetEssaisController extends Controller
             'demandeur' => $request->input('demandeur')
       		]);
 
-        $objet_essai = $addObjet->id;
-
-        $molecule = $request->input('molecule');
-        foreach ($molecule as $mole) {
-        Molecule::create([
-            'molecule' => $mole,
-            'objet_essai' => $objet_essai
-            ]);
-        }
+  
             $requestData = $request->all();
 
             // ObjetEssai::create($requestData);
@@ -240,5 +238,10 @@ class ObjetEssaisController extends Controller
         }
         return response(view('403'), 403);
 
+    }
+
+    public function demande()
+    {
+        dd('hello world');
     }
 }

@@ -351,3 +351,7 @@ Route::resource('reactif/reactifs', 'Admin\\ReactifsController');
 Route::resource('substance/substance', 'Admin\\SubstanceController');
 Route::resource('para-demande/para-demande', 'Admin\\ParaDemandeController');
 Route::resource('molecule/molecule', 'Admin\\MoleculeController');
+
+Route::get('objet-essais/objet-essais/demande','Admin\\ObjetEssaisController@demande');
+
+Route::resource('fa-molecule/fa-molecule', 'Admin\\FaMoleculeController');

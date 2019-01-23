@@ -1,5 +1,5 @@
 <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">
-    <label for="company_name" class="col-md-4 control-label">{{ 'Company Name' }}</label>
+    <label for="company_name" class="col-md-4 control-label">{{ 'Nom du Client' }}</label>
     <div class="col-md-6">
         <input class="form-control" name="company_name" type="text" id="company_name" value="{{ $client->company_name or ''}}" required>
         {!! $errors->first('company_name', '<p class="help-block">:message</p>') !!}
@@ -22,11 +22,11 @@
         <input class="form-control" name="email" type="text" id="email" value="{{ $client->email or ''}}" required>
         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('description') ? 'has-error' : ''}}">
-    <label for="description" class="col-md-4 control-label">{{ 'Description' }}</label>
+</div><div class="form-group {{ $errors->has('categorie') ? 'has-error' : ''}}">
+    <label for="categorie" class="col-md-4 control-label">{{ 'Categorie' }}</label>
     <div class="col-md-6">
         <input class="form-control" name="description" type="text" id="description" value="{{ $client->description or ''}}" required>
-        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+        {!! $errors->first('categorie', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 

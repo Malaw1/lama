@@ -27,7 +27,7 @@ class Demande extends Model
      *
      * @var array
      */
-    protected $fillable = ['molecule', 'client', 'description', 'date_recue', 'user_id', 'code'];
+    protected $fillable = ['designation', 'client', 'description', 'date_recue', 'user_id', 'code', 'forme_galenique', 'fabricant', 'nombre_lot'];
 
 
 }

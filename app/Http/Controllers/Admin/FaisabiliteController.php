@@ -17,6 +17,7 @@ use App\FaMateriel;
 use App\FaReactif;
 use App\FaSubstance;
 use App\Methode;
+use App\Molecule;
 use App\Equipement;
 use App\Reactif;
 use App\Substance;
@@ -25,6 +26,7 @@ use App\FaParaMethode;
 use App\Pharmacopee;
 use App\FaConsommable;
 use App\ReactifError;
+use App\FaMolecule;
 
 
 class FaisabiliteController extends Controller
@@ -80,6 +82,7 @@ class FaisabiliteController extends Controller
         $reactif = Catalog::all();
         $substance = Substance::all();
         $refs = Pharmacopee::all();
+        $molecule = Molecule::all();
         $model = str_slug('faisabilite','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
           return view('faisabilite.create', [
@@ -90,7 +93,8 @@ class FaisabiliteController extends Controller
               'consommable' => $consommable,
               'reactif' => $reactif,
               'substance' => $substance,
-              'refs' => $refs
+              'refs' => $refs,
+              'molecule' => $molecule
               ]);
         }
         return response(view('403'), 403);
@@ -161,6 +165,21 @@ class FaisabiliteController extends Controller
             'faisabilite_id' => $faisabilite_id
             ]);
         }
+
+
+        $params = $request->input('molecule');
+        $quants = $request->input('dosage');
+
+        // dd($params, $quants);
+        for($i = 0; $i < count($params) ; $i++){
+      $mole =  FaMolecule::create([
+        'molecule' => $params[$i],
+        'dosage' => $quants[$i],
+        'faisabilite_id' => $faisabilite_id
+        ]);
+        }
+
+   //dd($mole);
 
 $errors = null;
         $pc = $request->input('reactif');

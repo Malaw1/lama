@@ -9,6 +9,7 @@ use App\Demande;
 use App\Client;
 use App\Parametre;
 use App\ParaDemande;
+use App\Molecule;
 use Illuminate\Http\Request;
 
 class DemandeController extends Controller
@@ -31,11 +32,11 @@ class DemandeController extends Controller
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $keyword = $request->get('search');
-            $perPage = 25;
+            $perPage = 100;
 
             if (!empty($keyword)) {
                 $demande = Demande::join('clients', 'clients.id','=','demandes.client')
-                ->where('molecule', 'LIKE', "%$keyword%")
+                ->where('designation', 'LIKE', "%$keyword%")
                 ->orWhere('client', 'LIKE', "%$keyword%")
                 ->orWhere('description', 'LIKE', "%$keyword%")
                 ->orWhere('date_recue', 'LIKE', "%$keyword%")
@@ -44,10 +45,10 @@ class DemandeController extends Controller
 
             } else {
                 $demande = Demande::join('clients', 'clients.id','=','demandes.client')->paginate($perPage);
-              //  dd($demande);
+                
             }
 
-            return view('demande.index', compact('demande'));
+            return view('demande.index', ['demande' => $demande]);
         }
         return response(view('403'), 403);
 
@@ -112,10 +113,13 @@ class DemandeController extends Controller
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
           $demande=   Demande::create([
             'code' => $code,
-            'molecule' => $request->input('molecule'),
+            'designation' => $request->input('designation'),
             'client' => $request->input('client'),
             'description' => $request->input('description'),
             'date_recue' => $request->input('date_recue'),
+            'fabricant' => $request->input('fabricant'),
+            'nombre_lot' => $request->input('lot'),
+            'forme_galenique' => $request->input('forme_galenique'),
             'user_id' => $request->input('user_id')
             ]);
 
@@ -128,6 +132,19 @@ class DemandeController extends Controller
                 'demande' => $dem_id
                 ]);
             }
+
+            $params = $request->input('molecule');
+            $quants = $request->input('dosage');
+
+            //dd($params, $quants);
+        for($i = 0; $i < count($params) ; $i++){
+        Molecule::create([
+            'molecule' => $params[$i],
+            'dosage' => $quants[$i],
+            'demande' => $dem_id
+        ]);
+        }
+
             return redirect('demande/demande')->with('flash_message', 'Demande added!');
         }
         return response(view('403'), 403);
@@ -144,7 +161,12 @@ class DemandeController extends Controller
     {
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $demande = Demande::findOrFail($id);
+            // $demande = Demande::findOrFail($id);
+
+            $demande = Demande::join('clients', 'clients.id','=','demandes.client')
+                            ->join('para_demandes', 'para_demandes.demande', '=', 'demandes.id')
+                            ->where('demandes.id', $id)
+                            ->first();
             $param = ParaDemande::where('demande', $id)->get();
             return view('demande.show', ['demande' => $demande, 'param' => $param]);
         }
@@ -160,10 +182,11 @@ class DemandeController extends Controller
      */
     public function edit($id)
     {
+      $client = Client::all();
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
             $demande = Demande::findOrFail($id);
-            return view('demande.edit', compact('demande'));
+            return view('demande.edit', ['demande' => $demande, 'client' => $client]);
         }
         return response(view('403'), 403);
     }

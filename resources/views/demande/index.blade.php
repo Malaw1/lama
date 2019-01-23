@@ -12,10 +12,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Demande</h3>
+                    <h3 class="box-title pull-left">Reception/Demande</h3>
                     @can('add-'.str_slug('Demande'))
                         <a class="btn btn-success pull-right" href="{{ url('/demande/demande/create') }}"><i
-                                    class="icon-plus"></i> Ajouter Demande</a>
+                                    class="icon-plus"></i> Enregistrer Demande</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -24,15 +24,16 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Molecule</th><th>Client</th><th>Description</th>
+                                <th>Designation</th><th>Client</th><th>Date de Reception</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($demande as $item)
+
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->molecule }}</td><td>{{ $item->company_name }}</td><td>{{ $item->description }}</td>
+                                    <td>{{ $item->designation   }}</td><td>{{ $item->company_name }}</td><td>{{ $item->date_recue }}</td>
                                     <td>
                                         @can('view-'.str_slug('Demande'))
                                             <a href="{{ url('/demande/demande/' . $item->id) }}"
@@ -63,6 +64,14 @@
                                                         onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                                                 </button>
                                             </form>
+                                        @endcan
+                                        @can('edit-'.str_slug('Demande'))
+                                            <a href="{{ url('/objet-essais/objet-essais/create'.'?id='.$item->code) }}"
+                                               title="Objet d'essai">
+                                                <button class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-save-o" aria-hidden="true"></i> Enregistrer Objet d'essai
+                                                </button>
+                                            </a>
                                         @endcan
 
 

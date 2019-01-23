@@ -63,6 +63,15 @@
                             <td>{{ $err->designation}}</td>
                             @endforeach
                         </tr>
+
+                        <tr>
+                          <th>Revue de Contrat</th>:
+                            @if($err == null)
+                            <td>
+                              <a class="btn btn-success pull-right" href="">
+                                  <i class="icon-arrow-left-circle" aria-hidden="true"></i> Revue de Contrat</a></td>
+                            @endif
+                        </tr>
                         </tbody>
 
                     </table>

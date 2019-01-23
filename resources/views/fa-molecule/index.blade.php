@@ -12,10 +12,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Client</h3>
-                    @can('add-'.str_slug('Client'))
-                        <a class="btn btn-success pull-right" href="{{ url('/client/client/create') }}"><i
-                                    class="icon-plus"></i> Ajouter Client</a>
+                    <h3 class="box-title pull-left">Famolecule</h3>
+                    @can('add-'.str_slug('FaMolecule'))
+                        <a class="btn btn-success pull-right" href="{{ url('/fa-molecule/fa-molecule/create') }}"><i
+                                    class="icon-plus"></i> Add Famolecule</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -24,42 +24,42 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nom du Client</th><th>Adresse</th><th>Telephone</th>
+                                <th>Molecule</th><th>Dosage</th><th>Faisabilite Id</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($client as $item)
+                            @foreach($famolecule as $item)
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->company_name }}</td><td>{{ $item->adresse }}</td><td>{{ $item->telephone }}</td>
+                                    <td>{{ $item->molecule }}</td><td>{{ $item->dosage }}</td><td>{{ $item->faisabilite_id }}</td>
                                     <td>
-                                        @can('view-'.str_slug('Client'))
-                                            <a href="{{ url('/client/client/' . $item->id) }}"
-                                               title="View Client">
+                                        @can('view-'.str_slug('FaMolecule'))
+                                            <a href="{{ url('/fa-molecule/fa-molecule/' . $item->id) }}"
+                                               title="View FaMolecule">
                                                 <button class="btn btn-info btn-sm">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                 </button>
                                             </a>
                                         @endcan
 
-                                        @can('edit-'.str_slug('Client'))
-                                            <a href="{{ url('/client/client/' . $item->id . '/edit') }}"
-                                               title="Edit Client">
+                                        @can('edit-'.str_slug('FaMolecule'))
+                                            <a href="{{ url('/fa-molecule/fa-molecule/' . $item->id . '/edit') }}"
+                                               title="Edit FaMolecule">
                                                 <button class="btn btn-primary btn-sm">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                                 </button>
                                             </a>
                                         @endcan
 
-                                        @can('delete-'.str_slug('Client'))
+                                        @can('delete-'.str_slug('FaMolecule'))
                                             <form method="POST"
-                                                  action="{{ url('/client/client' . '/' . $item->id) }}"
+                                                  action="{{ url('/fa-molecule/fa-molecule' . '/' . $item->id) }}"
                                                   accept-charset="UTF-8" style="display:inline">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm"
-                                                        title="Delete Client"
+                                                        title="Delete FaMolecule"
                                                         onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                                                 </button>
                                             </form>
@@ -71,7 +71,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="pagination-wrapper"> {!! $client->appends(['search' => Request::get('search')])->render() !!} </div>
+                        <div class="pagination-wrapper"> {!! $famolecule->appends(['search' => Request::get('search')])->render() !!} </div>
                     </div>
                 </div>
             </div>
