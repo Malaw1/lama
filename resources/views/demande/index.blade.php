@@ -36,7 +36,7 @@
                                     <td>{{ $item->designation   }}</td><td>{{ $item->company_name }}</td><td>{{ $item->date_recue }}</td>
                                     <td>
                                         @can('view-'.str_slug('Demande'))
-                                            <a href="{{ url('/demande/demande/' . $item->id) }}"
+                                            <a href="{{ url('/demande/demande/' . $item->code) }}"
                                                title="View Demande">
                                                 <button class="btn btn-info btn-sm">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View

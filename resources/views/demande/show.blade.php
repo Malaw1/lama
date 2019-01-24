@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Demande {{ $demande->id }}</h3>
+                    <h3 class="box-title pull-left">Demande:  {{ $demande->code }}</h3>
                     @can('view-'.str_slug('Demande'))
                         <a class="btn btn-success pull-right" href="{{ url('/demande/demande') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>

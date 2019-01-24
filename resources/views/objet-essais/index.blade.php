@@ -13,10 +13,10 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">Objet d'essais</h3>
-                    @can('add-'.str_slug('ObjetEssais'))
+                    <!-- @can('add-'.str_slug('ObjetEssais'))
                         <a class="btn btn-success pull-right" href="{{ url('/objet-essais/objet-essais/create') }}"><i
                                     class="icon-plus"></i> Ajouter Objet d'essais</a>
-                    @endcan
+                    @endcan -->
                     <div class="clearfix"></div>
                     <hr>
                     <div class="table-responsive">

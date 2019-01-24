@@ -45,7 +45,7 @@ class DemandeController extends Controller
 
             } else {
                 $demande = Demande::join('clients', 'clients.id','=','demandes.client')->paginate($perPage);
-                
+
             }
 
             return view('demande.index', ['demande' => $demande]);
@@ -157,7 +157,7 @@ class DemandeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show($code)
     {
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
@@ -165,9 +165,9 @@ class DemandeController extends Controller
 
             $demande = Demande::join('clients', 'clients.id','=','demandes.client')
                             ->join('para_demandes', 'para_demandes.demande', '=', 'demandes.id')
-                            ->where('demandes.id', $id)
+                            ->where('demandes.code', $code)
                             ->first();
-            $param = ParaDemande::where('demande', $id)->get();
+            $param = ParaDemande::where('demande', $demande->id)->get();
             return view('demande.show', ['demande' => $demande, 'param' => $param]);
         }
         return response(view('403'), 403);

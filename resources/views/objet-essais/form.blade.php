@@ -17,7 +17,7 @@
     <label for="forme_galenique" class="col-md-4 control-label">{{ 'Forme Galenique' }}</label>
     <div class="col-md-6">
           <select name="forme_galenique" class="form-control select2" disabled>
-                <option value="{{ $demande->designation}}">{{ $demande->forme_galenique}}</option>
+                <option value="{{ $demande->forme_galenique}}">{{ $demande->forme_galenique}}</option>
             </select>
         <!-- <input class="form-control" name="forme_galenique" type="text" id="forme_galenique" value="{{ $objetessai->forme_galenique or ''}}" required> -->
         {!! $errors->first('forme_galenique', '<p class="help-block">:message</p>') !!}
