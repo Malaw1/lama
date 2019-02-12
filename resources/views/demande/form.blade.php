@@ -115,6 +115,20 @@
         {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('motif') ? 'has-error' : ''}}">
+    <label for="motif" class="col-md-4 control-label">{{ 'Motif' }}</label>
+    <div class="col-md-6">
+          <select name="motif" class="form-control select2">
+                <option value="amm">AMM</option>
+                <option value="approvisonnement">Approvisonnement</option>
+                <option value="inspection_reglementee">Inspection reglementée</option>
+                <option value="spm">Surveillence Post Marketing</option>
+                <option value="spv">Suivi Pharmaco Vigilance</option>
+            </select>
+        <!-- <input class="form-control" name="forme_galenique" type="text" id="forme_galenique" value="{{ $objetessai->forme_galenique or ''}}" required> -->
+        {!! $errors->first('motif', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 
 <!-- <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

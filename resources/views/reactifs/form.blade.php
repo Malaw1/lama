@@ -1,7 +1,12 @@
 <div class="form-group {{ $errors->has('designation') ? 'has-error' : ''}}">
     <label for="designation" class="col-md-4 control-label">{{ 'Designation' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="designation" type="text" id="designation" value="{{ $reactif->designation or ''}}" required>
+      <select name="designation" class="form-control select2">
+        @foreach($catalog as $cat)
+            <option value="{{ $cat->designation}}">{{ $cat->designation}}</option>
+        @endforeach
+    </select>
+        <!-- <input class="form-control" name="designation" type="text" id="designation" value="{{ $reactif->designation or ''}}" required> -->
         {!! $errors->first('designation', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('date_recep') ? 'has-error' : ''}}">

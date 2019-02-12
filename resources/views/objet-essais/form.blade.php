@@ -16,7 +16,7 @@
 </div><div class="form-group {{ $errors->has('forme_galenique') ? 'has-error' : ''}}">
     <label for="forme_galenique" class="col-md-4 control-label">{{ 'Forme Galenique' }}</label>
     <div class="col-md-6">
-          <select name="forme_galenique" class="form-control select2" disabled>
+          <select name="forme_galenique" class="form-control select2">
                 <option value="{{ $demande->forme_galenique}}">{{ $demande->forme_galenique}}</option>
             </select>
         <!-- <input class="form-control" name="forme_galenique" type="text" id="forme_galenique" value="{{ $objetessai->forme_galenique or ''}}" required> -->
@@ -61,7 +61,7 @@
 </div><div class="form-group {{ $errors->has('fabricant') ? 'has-error' : ''}}">
     <label for="fabricant" class="col-md-4 control-label">{{ 'Fabricant' }}</label>
     <div class="col-md-6">
-      <select name="fabricant" class="form-control select2" disabled>
+      <select name="fabricant" class="form-control select2">
             <option value="{{ $demande->id}}">{{ $demande->fabricant}}</option>
     </select>
         <!-- <input class="form-control" name="fabricant" type="number" id="fabricant" value="{{ $objetessai->fabricant or ''}}" required> -->
@@ -70,7 +70,7 @@
 </div><div class="form-group {{ $errors->has('demandeur') ? 'has-error' : ''}}">
     <label for="demandeur" class="col-md-4 control-label">{{ 'Demande' }}</label>
     <div class="col-md-6">
-      <select name="demandeur" class="form-control select2" disabled>
+      <select name="demandeur" class="form-control select2" >
 
             <option value="{{ $demande->id}}">{{ $demande->code}}</option>
     </select>

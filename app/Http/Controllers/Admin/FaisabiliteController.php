@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Faisabilite;
 use Illuminate\Http\Request;
 use App\FaParam;
-use App\Catalog;
+use App\CatalogReactif;
+use App\CatalogRef;
 use App\Parametre;
 use App\FaMethode;
 use App\ObjetEssai;
@@ -27,7 +28,7 @@ use App\Pharmacopee;
 use App\FaConsommable;
 use App\ReactifError;
 use App\FaMolecule;
-
+use App\EqQualif;
 
 class FaisabiliteController extends Controller
 {
@@ -52,13 +53,13 @@ class FaisabiliteController extends Controller
             $perPage = 25;
 
             if (!empty($keyword)) {
-                $faisabilite = Faisabilite::where('reference', 'LIKE', "%$keyword%")
+                $faisabilite = Faisabilite::join('objet_essais', 'objet_essais.id', '=', 'faisabilites.objet_essais')->where('reference', 'LIKE', "%$keyword%")
                 ->orWhere('objet_essais', 'LIKE', "%$keyword%")
                 ->orWhere('molecule', 'LIKE', "%$keyword%")
                 ->orWhere('user_id', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $faisabilite = Faisabilite::paginate($perPage);
+                $faisabilite = Faisabilite::join('objet_essais', 'objet_essais.id', '=', 'faisabilites.objet_essais')->paginate($perPage);
             }
 
             return view('faisabilite.index', compact('faisabilite'));
@@ -76,11 +77,15 @@ class FaisabiliteController extends Controller
     {
         $parametre = Parametre::all();
         $methode = Methode::all();
+        $demande = ObjetEssai::where('code', $_GET['code'])->first();
         $objet = ObjetEssai::all();
-        $equipement = Equipement::all();
+        // $molecule = Molecule::join('demandes', 'demandes.id', '=', 'molecules.demande')
+        // ->where('demandes.code', $_GET['id'])->get();
+        $equipement = EqQualif::all();
         $consommable = Consommable::all();
-        $reactif = Catalog::all();
-        $substance = Substance::all();
+        $reactif = CatalogReactif::all();
+        // $reactif = CatalogRef::all();
+        $substance = CatalogRef::all();
         $refs = Pharmacopee::all();
         $molecule = Molecule::all();
         $model = str_slug('faisabilite','-');

@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Reactif;
+use App\CatalogReactif;
 use Illuminate\Http\Request;
 
 class ReactifsController extends Controller
@@ -64,7 +65,8 @@ class ReactifsController extends Controller
     {
         $model = str_slug('reactifs','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('reactifs.create');
+          $catalog = CatalogReactif::All();
+            return view('reactifs.create', ['catalog' => $catalog]);
         }
         return response(view('403'), 403);
 

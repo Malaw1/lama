@@ -120,6 +120,7 @@ class DemandeController extends Controller
             'fabricant' => $request->input('fabricant'),
             'nombre_lot' => $request->input('lot'),
             'forme_galenique' => $request->input('forme_galenique'),
+            'motif' => $request->input('motif'),
             'user_id' => $request->input('user_id')
             ]);
 

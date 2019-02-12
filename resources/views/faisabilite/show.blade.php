@@ -72,6 +72,15 @@
                                   <i class="icon-arrow-left-circle" aria-hidden="true"></i> Revue de Contrat</a></td>
                             @endif
                         </tr>
+
+                        <tr>
+                          <th>Actions</th>:
+
+                            <td>
+                              <a class="btn btn-success pull-right" href="{{ url('screening/screening/create'.'?code='.$faisabilite->code) }}">
+                                  <i class="icon-arrow-up-circle" aria-hidden="true"></i> Screening</a></td>
+
+                        </tr>
                         </tbody>
 
                     </table>

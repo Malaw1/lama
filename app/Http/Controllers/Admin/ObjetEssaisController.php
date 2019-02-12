@@ -125,7 +125,7 @@ class ObjetEssaisController extends Controller
           }
         }
 
-        $code = $form.''.$day.''.$month.''.$year.''.$f;
+        $code = $form.''.$year.''.$f;
         // dd($code);
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
@@ -134,7 +134,7 @@ class ObjetEssaisController extends Controller
             'designation' => $request->input('designation'),
             'forme_galenique' => $request->input('forme_galenique'),
             'date_recue' => $request->input('date_recue'),
-            'quantite_recue' => $request->input('quantite_recue'),
+            'quantite' => $request->input('quantite'),
             'lot' => $request->input('lot'),
             'date_fab' => $request->input('date_fab'),
             'date_exp' => $request->input('date_exp'),
@@ -143,11 +143,14 @@ class ObjetEssaisController extends Controller
             'demandeur' => $request->input('demandeur')
       		]);
 
-  
+          // dd($request->input('demandeur'));
             $requestData = $request->all();
-
+            $objet = ObjetEssai::All()->last();
+            // $objet = ObjetEssai::join('demandes', 'demandes.code', '=', );
+            // dd($objet);
+return redirect('objet-essais/objet-essais/'.$objet->id);
             // ObjetEssai::create($requestData);
-            return redirect('objet-essais/objet-essais')->with('flash_message', 'ObjetEssai added!');
+            // return redirect('objet-essais/objet-essais')->with('flash_message', 'ObjetEssai added!');
         }
         return response(view('403'), 403);
     }

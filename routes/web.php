@@ -355,3 +355,5 @@ Route::resource('molecule/molecule', 'Admin\\MoleculeController');
 Route::get('objet-essais/objet-essais/demande','Admin\\ObjetEssaisController@demande');
 
 Route::resource('fa-molecule/fa-molecule', 'Admin\\FaMoleculeController');
+Route::resource('analyse/analyse', 'Admin\\AnalyseController');
+Route::resource('screening/screening', 'Admin\\screeningController');

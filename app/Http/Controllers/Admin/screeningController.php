@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Substance;
-use App\CatalogRef;
+use App\screening;
+use App\ObjetEssai;
+use App\Molecule;
+use App\Demande;
+
 use Illuminate\Http\Request;
 
-class SubstanceController extends Controller
+class screeningController extends Controller
 {
 
     public function __construct()
@@ -26,31 +29,22 @@ class SubstanceController extends Controller
 
     public function index(Request $request)
     {
-        $model = str_slug('substance','-');
+        $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $keyword = $request->get('search');
             $perPage = 25;
 
             if (!empty($keyword)) {
-                $substance = Substance::where('designation', 'LIKE', "%$keyword%")
-                ->orWhere('date_recue', 'LIKE', "%$keyword%")
-                ->orWhere('depositaire', 'LIKE', "%$keyword%")
-                ->orWhere('unite_recue', 'LIKE', "%$keyword%")
-                ->orWhere('quantite', 'LIKE', "%$keyword%")
-                ->orWhere('fabricant', 'LIKE', "%$keyword%")
-                ->orWhere('lot', 'LIKE', "%$keyword%")
-                ->orWhere('date_fab', 'LIKE', "%$keyword%")
+                $screening = screening::where('designation', 'LIKE', "%$keyword%")
+                ->orWhere('code', 'LIKE', "%$keyword%")
+                ->orWhere('dci', 'LIKE', "%$keyword%")
                 ->orWhere('date_exp', 'LIKE', "%$keyword%")
-                ->orWhere('catalog', 'LIKE', "%$keyword%")
-                ->orWhere('cas', 'LIKE', "%$keyword%")
-                ->orWhere('prix', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $substance = Substance::paginate($perPage);
+                $screening = screening::paginate($perPage);
             }
 
-            return view('substance.index', compact('substance'));
+            return view('screening.index', compact('screening'));
         }
         return response(view('403'), 403);
 
@@ -63,10 +57,13 @@ class SubstanceController extends Controller
      */
     public function create()
     {
-        $model = str_slug('substance','-');
+        $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-          $catalog = CatalogRef::All();
-            return view('substance.create', ['catalog' => $catalog]);
+          $objet = ObjetEssai::where('code', $_GET['code'])->first();
+        //  dd($objet);
+          $molecule = Molecule::where('demande', $objet->demandeur)->get();
+        //  dd($molecule);
+            return view('screening.create', ['objet' => $objet, 'molecule' => $molecule]);
         }
         return response(view('403'), 403);
 
@@ -81,24 +78,18 @@ class SubstanceController extends Controller
      */
     public function store(Request $request)
     {
-        $model = str_slug('substance','-');
+        $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
 			'designation' => 'required',
-			'date_recue' => 'required',
-			'depositaire' => 'required',
-			'unite_recue' => 'required',
-			'quantite' => 'required',
-			'fabricant' => 'required',
-			'lot' => 'required',
-			'date_fab' => 'required',
-			'date_exp' => 'required',
-			'user_id' => 'required'
+			'code' => 'required',
+			'dci' => 'required',
+			'date_exp' => 'required'
 		]);
             $requestData = $request->all();
 
-            Substance::create($requestData);
-            return redirect('substance/substance')->with('flash_message', 'Substance added!');
+            screening::create($requestData);
+            return redirect('screening/screening')->with('flash_message', 'screening added!');
         }
         return response(view('403'), 403);
     }
@@ -112,10 +103,10 @@ class SubstanceController extends Controller
      */
     public function show($id)
     {
-        $model = str_slug('substance','-');
+        $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $substance = Substance::findOrFail($id);
-            return view('substance.show', compact('substance'));
+            $screening = screening::findOrFail($id);
+            return view('screening.show', compact('screening'));
         }
         return response(view('403'), 403);
     }
@@ -129,10 +120,10 @@ class SubstanceController extends Controller
      */
     public function edit($id)
     {
-        $model = str_slug('substance','-');
+        $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
-            $substance = Substance::findOrFail($id);
-            return view('substance.edit', compact('substance'));
+            $screening = screening::findOrFail($id);
+            return view('screening.edit', compact('screening'));
         }
         return response(view('403'), 403);
     }
@@ -147,26 +138,20 @@ class SubstanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = str_slug('substance','-');
+        $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
             $this->validate($request, [
 			'designation' => 'required',
-			'date_recue' => 'required',
-			'depositaire' => 'required',
-			'unite_recue' => 'required',
-			'quantite' => 'required',
-			'fabricant' => 'required',
-			'lot' => 'required',
-			'date_fab' => 'required',
-			'date_exp' => 'required',
-			'user_id' => 'required'
+			'code' => 'required',
+			'dci' => 'required',
+			'date_exp' => 'required'
 		]);
             $requestData = $request->all();
 
-            $substance = Substance::findOrFail($id);
-             $substance->update($requestData);
+            $screening = screening::findOrFail($id);
+             $screening->update($requestData);
 
-             return redirect('substance/substance')->with('flash_message', 'Substance updated!');
+             return redirect('screening/screening')->with('flash_message', 'screening updated!');
         }
         return response(view('403'), 403);
 
@@ -181,11 +166,11 @@ class SubstanceController extends Controller
      */
     public function destroy($id)
     {
-        $model = str_slug('substance','-');
+        $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','delete-'.$model)->first()!= null) {
-            Substance::destroy($id);
+            screening::destroy($id);
 
-            return redirect('substance/substance')->with('flash_message', 'Substance deleted!');
+            return redirect('screening/screening')->with('flash_message', 'screening deleted!');
         }
         return response(view('403'), 403);
 

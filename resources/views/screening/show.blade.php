@@ -6,9 +6,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">ObjetEssai {{ $objetessai->id }}</h3>
-                    @can('view-'.str_slug('ObjetEssai'))
-                        <a class="btn btn-success pull-right" href="{{ url('/objet-essais/objet-essais') }}">
+                    <h3 class="box-title pull-left">screening {{ $screening->id }}</h3>
+                    @can('view-'.str_slug('screening'))
+                        <a class="btn btn-success pull-right" href="{{ url('/screening/screening') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
                     @endcan
                     <div class="clearfix"></div>
@@ -18,12 +18,9 @@
                             <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{ $objetessai->id }}</td>
+                                <td>{{ $screening->id }}</td>
                             </tr>
-                            <tr><th> Code </th><td> {{ $objetessai->code }} </td></tr>
-                            <tr><th> Forme Galenique </th><td> {{ $objetessai->forme_galenique }} </td></tr>
-                            <tr><th> Date Recue </th><td> {{ $objetessai->date_recue }} </td></tr>
-                            <tr><th> Action </th><td> <a class="btn btn-success pull-center" href="{{ url('/faisabilite/faisabilite/create'.'?code='.$objetessai->code) }}">Faisabilite</a> </td></tr>
+                            <tr><th> Designation </th><td> {{ $screening->designation }} </td></tr><tr><th> Code </th><td> {{ $screening->code }} </td></tr><tr><th> Dci </th><td> {{ $screening->dci }} </td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -32,3 +29,4 @@
         </div>
     </div>
 @endsection
+
