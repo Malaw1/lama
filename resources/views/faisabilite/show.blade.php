@@ -80,6 +80,9 @@
                               <a class="btn btn-success pull-right" href="{{ url('screening/screening/create'.'?code='.$faisabilite->code) }}">
                                   <i class="icon-arrow-up-circle" aria-hidden="true"></i> Screening</a></td>
 
+                                  <td>
+                                    <a class="btn btn-success pull-right" href="{{ url('analyse/analyse/create'.'?code='.$faisabilite->code) }}">
+                                        <i class="icon-arrow-up-circle" aria-hidden="true"></i> Analyser</a></td>
                         </tr>
                         </tbody>
 

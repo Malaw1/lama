@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Analyse;
 use App\ObjetEssai;
 use App\User;
+use App\Molecule;
+use App\Faisabilite;
 use Illuminate\Http\Request;
 
 class AnalyseController extends Controller
@@ -61,8 +63,11 @@ class AnalyseController extends Controller
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
            $objet = ObjetEssai::All()->where('code', $_GET['code'])->first();
            $user = User::All();
+         //  dd($objet);
+           $molecule = Molecule::where('demande', $objet->demandeur)->get();
+           $fais = Faisabilite::where('objet_essais', $objet->id)->first();
           // dd($user);
-            return view('analyse.create', ['objet' => $objet, 'user' => $user]);
+            return view('analyse.create', ['objet' => $objet, 'user' => $user, 'molecule' => $molecule, 'fais' => $fais]);
         }
         return response(view('403'), 403);
 
@@ -77,18 +82,17 @@ class AnalyseController extends Controller
      */
     public function store(Request $request)
     {
+      dd($request->input('responsable'), $request->input('objet_essai') );
         $model = str_slug('analyse','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
-			'objet_essai' => 'required',
-			'reference' => 'required',
-			'dci' => 'required',
-			'dosage' => 'required',
-			'etat' => 'required',
-			'responable' => 'required'
-		]);
+      			'objet_essai' => 'required',
+      			'reference' => 'required',
+      			'dci' => 'required',
+      			'etat' => 'required',
+      			'responable' => 'required'
+      		]);
             $requestData = $request->all();
-
             Analyse::create($requestData);
             return redirect('analyse/analyse')->with('flash_message', 'Analyse added!');
         }

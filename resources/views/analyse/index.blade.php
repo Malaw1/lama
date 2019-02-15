@@ -25,6 +25,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Objet Essai</th><th>Reference</th><th>Dci</th>
+                                <th>Etat</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -33,12 +34,19 @@
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
                                     <td>{{ $item->objet_essai }}</td><td>{{ $item->reference }}</td><td>{{ $item->dci }}</td>
+                                    <td>{{ $item->etat }}</td>
                                     <td>
+                                      <a href="{{ url('/feuille/feuille/' . $item->id) }}"
+                                         title="View Analyse">
+                                          <button class="btn btn-success btn-sm">
+                                              <i class="fa fa-arrow-up" aria-hidden="true"></i> Analyser
+                                          </button>
+                                      </a>
                                         @can('view-'.str_slug('Analyse'))
                                             <a href="{{ url('/analyse/analyse/' . $item->id) }}"
                                                title="View Analyse">
                                                 <button class="btn btn-info btn-sm">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </button>
                                             </a>
                                         @endcan
@@ -47,7 +55,7 @@
                                             <a href="{{ url('/analyse/analyse/' . $item->id . '/edit') }}"
                                                title="Edit Analyse">
                                                 <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                 </button>
                                             </a>
                                         @endcan
@@ -60,7 +68,7 @@
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm"
                                                         title="Delete Analyse"
-                                                        onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+                                                        onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </button>
                                             </form>
                                         @endcan

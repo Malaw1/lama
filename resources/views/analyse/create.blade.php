@@ -24,7 +24,8 @@
                           class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
-                        @include ('analyse.form')
+                          @include ('analyse.form')
+                          @include ('/molecule.form')
                     </form>
                 </div>
             </div>

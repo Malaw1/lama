@@ -19,7 +19,6 @@ class CreateAnalysesTable extends Migration
             $table->string('objet_essai')->nullable();
             $table->string('reference')->nullable();
             $table->string('dci')->nullable();
-            $table->string('dosage')->nullable();
             $table->string('etat')->nullable();
             $table->integer('responable')->nullable();
             });

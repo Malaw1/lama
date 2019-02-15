@@ -20,7 +20,11 @@
                                 <th>ID</th>
                                 <td>{{ $analyse->id }}</td>
                             </tr>
-                            <tr><th> Objet Essai </th><td> {{ $analyse->objet_essai }} </td></tr><tr><th> Reference </th><td> {{ $analyse->reference }} </td></tr><tr><th> Dci </th><td> {{ $analyse->dci }} </td></tr>
+                            <tr><th> Objet Essai </th><td> {{ $analyse->objet_essai }} </td></tr>
+                            <tr><th> Reference </th><td> {{ $analyse->reference }} </td></tr>
+                            <tr><th> Dci </th><td> {{ $analyse->dci }} </td></tr>
+                            <tr><th> Etat </th><td> {{ $analyse->etat }} </td></tr>
+                            
                             </tbody>
                         </table>
                     </div>
@@ -29,4 +33,3 @@
         </div>
     </div>
 @endsection
-

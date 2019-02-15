@@ -53,16 +53,18 @@ class FaisabiliteController extends Controller
             $perPage = 25;
 
             if (!empty($keyword)) {
-                $faisabilite = Faisabilite::join('objet_essais', 'objet_essais.id', '=', 'faisabilites.objet_essais')->where('reference', 'LIKE', "%$keyword%")
+                $faisabilite = Faisabilite::join('objet_essais', 'objet_essais.id', '=', 'faisabilites.objet_essais')
+                ->where('reference', 'LIKE', "%$keyword%")
                 ->orWhere('objet_essais', 'LIKE', "%$keyword%")
                 ->orWhere('molecule', 'LIKE', "%$keyword%")
                 ->orWhere('user_id', 'LIKE', "%$keyword%")
+                ->orWhere('code', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
                 $faisabilite = Faisabilite::join('objet_essais', 'objet_essais.id', '=', 'faisabilites.objet_essais')->paginate($perPage);
             }
 
-            return view('faisabilite.index', compact('faisabilite'));
+            return view('faisabilite.index', ['faisabilite' => $faisabilite]);
         }
         return response(view('403'), 403);
 

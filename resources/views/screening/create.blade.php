@@ -7,7 +7,7 @@
                 <div class="white-box">
                     <h3 class="box-title pull-left">Create New screening</h3>
                     @can('view-'.str_slug('screening'))
-                    <a  class="btn btn-success pull-right" href="{{url('/screening/screening')}}"><i class="icon-arrow-left-circle"></i> Add screening</a>
+                    <a  class="btn btn-success pull-right" href="{{url('/screening/screening')}}"><i class="icon-arrow-left-circle"></i> Retour</a>
                     @endcan
 
                     <div class="clearfix"></div>

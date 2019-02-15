@@ -17,9 +17,9 @@
         {!! $errors->first('dci', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('date_exp') ? 'has-error' : ''}}">
-    <label for="date_exp" class="col-md-4 control-label">{{ 'Date Exp' }}</label>
+    <label for="date_exp" class="col-md-4 control-label">{{ 'Date de Peremtion' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="date_exp" type="date" id="date_exp" value="{{ $screening->date_exp or ''}}" required>
+        <input class="form-control" name="date_exp" type="date" id="date_exp" value="{{ $objet->date_exp or ''}}" required>
         {!! $errors->first('date_exp', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -133,6 +133,6 @@
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
-        <input class="btn btn-primary" type="submit" value="{{ $submitButtonText or 'Create' }}">
+        <input class="btn btn-primary" type="submit" value="{{ $submitButtonText or 'Enregistrer' }}">
     </div>
 </div>
