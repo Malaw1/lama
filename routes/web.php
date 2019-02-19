@@ -357,3 +357,5 @@ Route::get('objet-essais/objet-essais/demande','Admin\\ObjetEssaisController@dem
 Route::resource('fa-molecule/fa-molecule', 'Admin\\FaMoleculeController');
 Route::resource('analyse/analyse', 'Admin\\AnalyseController');
 Route::resource('screening/screening', 'Admin\\screeningController');
+Route::resource('rapportFrontal/rapport-frontal', 'Admin\\RapportFrontalController');
+Route::resource('principe-actif/principe-actif', 'Admin\\PrincipeActifController');

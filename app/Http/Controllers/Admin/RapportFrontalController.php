@@ -5,14 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\screening;
-use App\ObjetEssai;
-use App\Molecule;
-use App\Demande;
-
+use App\RapportFrontal;
 use Illuminate\Http\Request;
 
-class screeningController extends Controller
+class RapportFrontalController extends Controller
 {
 
     public function __construct()
@@ -29,22 +25,23 @@ class screeningController extends Controller
 
     public function index(Request $request)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('rapportfrontal','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $keyword = $request->get('search');
             $perPage = 25;
 
             if (!empty($keyword)) {
-                $screening = screening::where('designation', 'LIKE', "%$keyword%")
-                ->orWhere('code', 'LIKE', "%$keyword%")
-                ->orWhere('dci', 'LIKE', "%$keyword%")
-                ->orWhere('date_exp', 'LIKE', "%$keyword%")
+                $rapportfrontal = RapportFrontal::where('molecule', 'LIKE', "%$keyword%")
+                ->orWhere('rf_inf_5', 'LIKE', "%$keyword%")
+                ->orWhere('rf_inf_10', 'LIKE', "%$keyword%")
+                ->orWhere('rf_sup_10', 'LIKE', "%$keyword%")
+                ->orWhere('screening', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $screening = screening::paginate($perPage);
+                $rapportfrontal = RapportFrontal::paginate($perPage);
             }
 
-            return view('screening.index', compact('screening'));
+            return view('rapport-frontal.index', compact('rapportfrontal'));
         }
         return response(view('403'), 403);
 
@@ -57,14 +54,9 @@ class screeningController extends Controller
      */
     public function create()
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('rapportfrontal','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-          $objet = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')->where('objet_essais.code', $_GET['code'])->first();
-          // dd($objet);
-          $molecule = Molecule::where('demande', $objet->demandeur)->get();
-          // $demande = Demande::where()
-          // dd($molecule);
-            return view('screening.create', ['objet' => $objet, 'molecule' => $molecule]);
+            return view('rapport-frontal.create');
         }
         return response(view('403'), 403);
 
@@ -79,28 +71,19 @@ class screeningController extends Controller
      */
     public function store(Request $request)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('rapportfrontal','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
-			'designation' => 'required',
-			'code' => 'required',
-			'dci' => 'required',
-      'delitement' => 'required',
-			'date_exp' => 'required',
-      'conclusion' => 'required'
+			'molecule' => 'required',
+			'rf_inf_5' => 'required',
+			'rf_inf_10' => 'required',
+			'rf_sup_10' => 'required',
+			'screening' => 'required'
 		]);
-
-
             $requestData = $request->all();
- // dd($requestData);
-            screening::create($requestData);
-
-            PrincipeActif::create(
-              'molecule' => $request->input('molecule'),
-              'etat' => $request->input('etat'),
-              'screening' => 
-            );
-            return redirect('screening/screening')->with('flash_message', 'screening added!');
+            
+            RapportFrontal::create($requestData);
+            return redirect('rapportFrontal/rapport-frontal')->with('flash_message', 'RapportFrontal added!');
         }
         return response(view('403'), 403);
     }
@@ -114,10 +97,10 @@ class screeningController extends Controller
      */
     public function show($id)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('rapportfrontal','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $screening = screening::findOrFail($id);
-            return view('screening.show', compact('screening'));
+            $rapportfrontal = RapportFrontal::findOrFail($id);
+            return view('rapport-frontal.show', compact('rapportfrontal'));
         }
         return response(view('403'), 403);
     }
@@ -131,10 +114,10 @@ class screeningController extends Controller
      */
     public function edit($id)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('rapportfrontal','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
-            $screening = screening::findOrFail($id);
-            return view('screening.edit', compact('screening'));
+            $rapportfrontal = RapportFrontal::findOrFail($id);
+            return view('rapport-frontal.edit', compact('rapportfrontal'));
         }
         return response(view('403'), 403);
     }
@@ -149,20 +132,21 @@ class screeningController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('rapportfrontal','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
             $this->validate($request, [
-			'designation' => 'required',
-			'code' => 'required',
-			'dci' => 'required',
-			'date_exp' => 'required'
+			'molecule' => 'required',
+			'rf_inf_5' => 'required',
+			'rf_inf_10' => 'required',
+			'rf_sup_10' => 'required',
+			'screening' => 'required'
 		]);
             $requestData = $request->all();
+            
+            $rapportfrontal = RapportFrontal::findOrFail($id);
+             $rapportfrontal->update($requestData);
 
-            $screening = screening::findOrFail($id);
-             $screening->update($requestData);
-
-             return redirect('screening/screening')->with('flash_message', 'screening updated!');
+             return redirect('rapportFrontal/rapport-frontal')->with('flash_message', 'RapportFrontal updated!');
         }
         return response(view('403'), 403);
 
@@ -177,11 +161,11 @@ class screeningController extends Controller
      */
     public function destroy($id)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('rapportfrontal','-');
         if(auth()->user()->permissions()->where('name','=','delete-'.$model)->first()!= null) {
-            screening::destroy($id);
+            RapportFrontal::destroy($id);
 
-            return redirect('screening/screening')->with('flash_message', 'screening deleted!');
+            return redirect('rapportFrontal/rapport-frontal')->with('flash_message', 'RapportFrontal deleted!');
         }
         return response(view('403'), 403);
 

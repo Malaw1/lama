@@ -29,80 +29,21 @@
     <div class="radio-list">
         <label class="radio-inline p-0">
             <div class="radio radio-info">
-                <input type="radio" name="radio" id="radio1" value="option1">
-                <label for="radio1">Conforme</label>
+                <input type="radio" name="delitement" id="radio2" value="conforme" required>
+                <label for="radio2">Conforme</label>
             </div>
         </label>
         <label class="radio-inline">
             <div class="radio radio-info">
-                <input type="radio" name="radio" id="radio2" value="option2">
+                <input type="radio" name="delitement" id="radio2" value="Non conforme" required>
                 <label for="radio2">Non Conforme </label>
             </div>
         </label>
     </div>
 </div>
 
-@foreach($molecule as $mole)
-<div class="form-group {{ $errors->has('molecule') ? 'has-error' : ''}}">
-    <label for="molecule" class="col-md-4 control-label">{{ 'Principe Actif' }}</label>
-
-
-      <div class="col-md-3">
-        <input autocomplete="off" class="form-control" name="molecule[]" type="text" data-items="8" value="{{$mole->molecule}}"/>
-      </div>
-
-      <div class="col-md-3">
-        <div class="radio-list">
-            <label class="radio-inline p-0">
-                <div class="radio radio-info">
-                    <input type="radio" name="radio" id="radio3" value="option1">
-                    <label for="radio3">Present</label>
-                </div>
-            </label>
-            <label class="radio-inline">
-                <div class="radio radio-info">
-                    <input type="radio" name="radio" id="radio4" value="option2">
-                    <label for="radio4">Absent </label>
-                </div>
-            </label>
-        </div>
-      </div>
-      <div class="col-md-3">
-
-      </div>
-</div>
-  @endforeach
-
-  <div class="col-sm-12">
-    <div class="white-box">
-        <h3 class="box-title">Rapport Frontal</h3>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Molecule</th>
-                    <th>RF < 5%</th>
-                    <th>5% => RF < 10%</th>
-                    <th>RF => 10%</th>
-                </tr>
-                </thead>
-                <tbody>
-                  @foreach($molecule as $mole)
-                <tr>
-
-                    <td>1</td>
-                    <td>{{$mole->molecule}}</td>
-                    <td><input class="form-control" name="molecule[]" type="text" /></td>
-                    <td><input class="form-control" name="molecule[]" type="text" /></td>
-                    <td><input class="form-control" name="molecule[]" type="text" /></td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+@include ('principe-actif.form')
+@include ('rapport-frontal.form')
 
       <div class="col-sm-12">
         <div class="white-box">
@@ -120,9 +61,29 @@
                     <tbody>
                     <tr>
                         <td>{{$objet->code}}</td>
-                        <td><input class="form-control" name="molecule[]" type="checkbox" /></td>
-                        <td><input class="form-control" name="molecule[]" type="checkbox" /></td>
-                        <td><input class="form-control" name="molecule[]" type="checkbox" /></td>
+                            <div class="form-group">
+                                <div class="radio-list">
+                        <td><label class="radio-inline">
+                            <div class="radio radio-info">
+                                <input type="radio" name="conclusion" id="radio1" value="conforme" required>
+                                <label for="radio1">Conforme </label>
+                            </div>
+                        </label></td>
+                        <td><label class="radio-inline">
+                            <div class="radio radio-info">
+                                <input type="radio" name="conclusion" id="radio2" value="Non Conforme" required>
+                                <label for="radio2">Non Conforme </label>
+                            </div>
+                        </label></td>
+                        <td><label class="radio-inline">
+                            <div class="radio radio-info">
+                                <input type="radio" name="conclusion" id="radio3" value="Douteux" required>
+                                <label for="radio3">Douteux </label>
+                            </div>
+                        </label></td>
+                      </div>
+                  </div>
+
                     </tr>
                   </tbody>
                 </table>

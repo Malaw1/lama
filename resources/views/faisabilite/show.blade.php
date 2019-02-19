@@ -82,7 +82,7 @@
 
                                   <td>
                                     <a class="btn btn-success pull-right" href="{{ url('analyse/analyse/create'.'?code='.$faisabilite->code) }}">
-                                        <i class="icon-arrow-up-circle" aria-hidden="true"></i> Analyser</a></td>
+                                        <i class="icon-arrow-up-circle" aria-hidden="true"></i> Monographie</a></td>
                         </tr>
                         </tbody>
 

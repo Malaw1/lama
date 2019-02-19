@@ -1,15 +1,14 @@
 @extends('layouts.master')
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New screening</h3>
-                    @can('view-'.str_slug('screening'))
-                    <a  class="btn btn-success pull-right" href="{{url('/screening/screening')}}"><i class="icon-arrow-left-circle"></i> Retour</a>
+                    <h3 class="box-title pull-left">Edit PrincipeActif #{{ $principeactif->id }}</h3>
+                    @can('view-'.str_slug('PrincipeActif'))
+                        <a class="btn btn-success pull-right" href="{{ url('/principe-actif/principe-actif') }}">
+                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
                     @endcan
-
                     <div class="clearfix"></div>
                     <hr>
                     @if ($errors->any())
@@ -20,12 +19,12 @@
                         </ul>
                     @endif
 
-                    <form method="POST" action="{{ url('/screening/screening') }}" accept-charset="UTF-8"
-                          class="form-horizontal" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url('/principe-actif/principe-actif/' . $principeactif->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        {{ method_field('PATCH') }}
                         {{ csrf_field() }}
 
-                        @include ('screening.form')
-                        
+                        @include ('principe-actif.form', ['submitButtonText' => 'Update'])
+
                     </form>
                 </div>
             </div>

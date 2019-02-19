@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New screening</h3>
-                    @can('view-'.str_slug('screening'))
-                    <a  class="btn btn-success pull-right" href="{{url('/screening/screening')}}"><i class="icon-arrow-left-circle"></i> Retour</a>
+                    <h3 class="box-title pull-left">Create New PrincipeActif</h3>
+                    @can('view-'.str_slug('PrincipeActif'))
+                    <a  class="btn btn-success pull-right" href="{{url('/principe-actif/principe-actif')}}"><i class="icon-arrow-left-circle"></i> Add PrincipeActif</a>
                     @endcan
 
                     <div class="clearfix"></div>
@@ -20,12 +20,11 @@
                         </ul>
                     @endif
 
-                    <form method="POST" action="{{ url('/screening/screening') }}" accept-charset="UTF-8"
+                    <form method="POST" action="{{ url('/principe-actif/principe-actif') }}" accept-charset="UTF-8"
                           class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
-                        @include ('screening.form')
-                        
+                        @include ('principe-actif.form')
                     </form>
                 </div>
             </div>

@@ -5,14 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\screening;
-use App\ObjetEssai;
-use App\Molecule;
-use App\Demande;
-
+use App\PrincipeActif;
 use Illuminate\Http\Request;
 
-class screeningController extends Controller
+class PrincipeActifController extends Controller
 {
 
     public function __construct()
@@ -29,22 +25,21 @@ class screeningController extends Controller
 
     public function index(Request $request)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('principeactif','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $keyword = $request->get('search');
             $perPage = 25;
 
             if (!empty($keyword)) {
-                $screening = screening::where('designation', 'LIKE', "%$keyword%")
-                ->orWhere('code', 'LIKE', "%$keyword%")
-                ->orWhere('dci', 'LIKE', "%$keyword%")
-                ->orWhere('date_exp', 'LIKE', "%$keyword%")
+                $principeactif = PrincipeActif::where('molecule', 'LIKE', "%$keyword%")
+                ->orWhere('etat', 'LIKE', "%$keyword%")
+                ->orWhere('screening', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $screening = screening::paginate($perPage);
+                $principeactif = PrincipeActif::paginate($perPage);
             }
 
-            return view('screening.index', compact('screening'));
+            return view('principe-actif.index', compact('principeactif'));
         }
         return response(view('403'), 403);
 
@@ -57,14 +52,9 @@ class screeningController extends Controller
      */
     public function create()
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('principeactif','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-          $objet = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')->where('objet_essais.code', $_GET['code'])->first();
-          // dd($objet);
-          $molecule = Molecule::where('demande', $objet->demandeur)->get();
-          // $demande = Demande::where()
-          // dd($molecule);
-            return view('screening.create', ['objet' => $objet, 'molecule' => $molecule]);
+            return view('principe-actif.create');
         }
         return response(view('403'), 403);
 
@@ -79,28 +69,17 @@ class screeningController extends Controller
      */
     public function store(Request $request)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('principeactif','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
-			'designation' => 'required',
-			'code' => 'required',
-			'dci' => 'required',
-      'delitement' => 'required',
-			'date_exp' => 'required',
-      'conclusion' => 'required'
+			'molecule' => 'required',
+			'etat' => 'required',
+			'screening' => 'required'
 		]);
-
-
             $requestData = $request->all();
- // dd($requestData);
-            screening::create($requestData);
-
-            PrincipeActif::create(
-              'molecule' => $request->input('molecule'),
-              'etat' => $request->input('etat'),
-              'screening' => 
-            );
-            return redirect('screening/screening')->with('flash_message', 'screening added!');
+            
+            PrincipeActif::create($requestData);
+            return redirect('principe-actif/principe-actif')->with('flash_message', 'PrincipeActif added!');
         }
         return response(view('403'), 403);
     }
@@ -114,10 +93,10 @@ class screeningController extends Controller
      */
     public function show($id)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('principeactif','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $screening = screening::findOrFail($id);
-            return view('screening.show', compact('screening'));
+            $principeactif = PrincipeActif::findOrFail($id);
+            return view('principe-actif.show', compact('principeactif'));
         }
         return response(view('403'), 403);
     }
@@ -131,10 +110,10 @@ class screeningController extends Controller
      */
     public function edit($id)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('principeactif','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
-            $screening = screening::findOrFail($id);
-            return view('screening.edit', compact('screening'));
+            $principeactif = PrincipeActif::findOrFail($id);
+            return view('principe-actif.edit', compact('principeactif'));
         }
         return response(view('403'), 403);
     }
@@ -149,20 +128,19 @@ class screeningController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('principeactif','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
             $this->validate($request, [
-			'designation' => 'required',
-			'code' => 'required',
-			'dci' => 'required',
-			'date_exp' => 'required'
+			'molecule' => 'required',
+			'etat' => 'required',
+			'screening' => 'required'
 		]);
             $requestData = $request->all();
+            
+            $principeactif = PrincipeActif::findOrFail($id);
+             $principeactif->update($requestData);
 
-            $screening = screening::findOrFail($id);
-             $screening->update($requestData);
-
-             return redirect('screening/screening')->with('flash_message', 'screening updated!');
+             return redirect('principe-actif/principe-actif')->with('flash_message', 'PrincipeActif updated!');
         }
         return response(view('403'), 403);
 
@@ -177,11 +155,11 @@ class screeningController extends Controller
      */
     public function destroy($id)
     {
-        $model = str_slug('screening','-');
+        $model = str_slug('principeactif','-');
         if(auth()->user()->permissions()->where('name','=','delete-'.$model)->first()!= null) {
-            screening::destroy($id);
+            PrincipeActif::destroy($id);
 
-            return redirect('screening/screening')->with('flash_message', 'screening deleted!');
+            return redirect('principe-actif/principe-actif')->with('flash_message', 'PrincipeActif deleted!');
         }
         return response(view('403'), 403);
 

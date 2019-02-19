@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class screening extends Model
+class PrincipeActif extends Model
 {
     use SoftDeletes;
     /**
@@ -13,7 +13,7 @@ class screening extends Model
      *
      * @var string
      */
-    protected $table = 'screenings';
+    protected $table = 'principe_actifs';
 
     /**
     * The database primary key value.
@@ -27,7 +27,7 @@ class screening extends Model
      *
      * @var array
      */
-    protected $fillable = ['designation', 'code', 'dci', 'date_exp', 'delitement', 'conclusion'];
+    protected $fillable = ['molecule', 'etat', 'screening'];
 
-
+    
 }
