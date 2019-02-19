@@ -9,7 +9,8 @@ use App\screening;
 use App\ObjetEssai;
 use App\Molecule;
 use App\Demande;
-
+use App\PrincipeActif;
+use App\RapportFrontal;
 use Illuminate\Http\Request;
 
 class screeningController extends Controller
@@ -93,13 +94,27 @@ class screeningController extends Controller
 
             $requestData = $request->all();
  // dd($requestData);
-            screening::create($requestData);
-
-            PrincipeActif::create(
+          $screen = screening::create($requestData);
+          // dd($screen->id);
+            $pa = PrincipeActif::create([
               'molecule' => $request->input('molecule'),
               'etat' => $request->input('etat'),
-              'screening' => 
-            );
+               'screening' => $screen->id
+            ]);
+
+            $molecule = $request->input('molecule');
+            $rf_inf_5 = $request->input('rf_inf_5');
+            $rf_inf_10 = $request->input('rf_inf_10');
+            $rf_sup_10 = $request->input('rf_sup_10');
+
+            dd($molecule);
+            foreach($molecule as $param){
+                RapportFrontal::create([
+
+                ]);
+            }
+
+            dd($pa);
             return redirect('screening/screening')->with('flash_message', 'screening added!');
         }
         return response(view('403'), 403);
