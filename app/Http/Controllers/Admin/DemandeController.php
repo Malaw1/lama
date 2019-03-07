@@ -32,7 +32,7 @@ class DemandeController extends Controller
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $keyword = $request->get('search');
-            $perPage = 100;
+            $perPage = 10000;
 
             if (!empty($keyword)) {
                 $demande = Demande::join('clients', 'clients.id','=','demandes.client')
@@ -120,6 +120,7 @@ class DemandeController extends Controller
             'fabricant' => $request->input('fabricant'),
             'nombre_lot' => $request->input('lot'),
             'forme_galenique' => $request->input('forme_galenique'),
+            'lieu_prelevement' => $request->input('lieu_prelevement'),
             'motif' => $request->input('motif'),
             'user_id' => $request->input('user_id')
             ]);
@@ -169,6 +170,7 @@ class DemandeController extends Controller
                             ->where('demandes.code', $code)
                             ->first();
             $param = ParaDemande::where('demande', $demande->id)->get();
+             // dd($demande);
             return view('demande.show', ['demande' => $demande, 'param' => $param]);
         }
         return response(view('403'), 403);

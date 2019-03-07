@@ -67,8 +67,8 @@
 <body>
 <div class="flex-center position-ref full-height">
     <div class="content">
-           <h1>403 <br>Sorry! You are not authorised to view this page</h1>
-        <h4><a href="{{url('/')}}">Go back to Home</a></h4>
+           <h1>403 <br>Desolé! Vous n'etes pas autoriser à consulter cette page</h1>
+        <h4><a href="{{url('/')}}">Retour</a></h4>
     </div>
 </div>
 </body>

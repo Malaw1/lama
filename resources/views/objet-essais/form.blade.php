@@ -58,7 +58,8 @@
         <input class="form-control" name="provenance" type="text" id="provenance" value="{{ $objetessai->provenance or ''}}" required>
         {!! $errors->first('provenance', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('fabricant') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('fabricant') ? 'has-error' : ''}}">
     <label for="fabricant" class="col-md-4 control-label">{{ 'Fabricant' }}</label>
     <div class="col-md-6">
       <select name="fabricant" class="form-control select2">
@@ -78,6 +79,8 @@
         {!! $errors->first('demandeur', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+
+<input class="form-control" name="user_id" type="hidden" id="user_id" value="{{ auth()->user()->id}}" required>
 
 <!-- <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

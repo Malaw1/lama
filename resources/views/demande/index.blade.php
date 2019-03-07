@@ -10,25 +10,38 @@
     <div class="container-fluid">
         <!-- .row -->
         <div class="row">
-            <div class="col-sm-12">
-                <div class="white-box">
-                    <h3 class="box-title pull-left">Reception/Demande</h3>
-                    @can('add-'.str_slug('Demande'))
-                        <a class="btn btn-success pull-right" href="{{ url('/demande/demande/create') }}"><i
-                                    class="icon-plus"></i> Enregistrer Demande</a>
-                    @endcan
-                    <div class="clearfix"></div>
-                    <hr>
-                    <div class="table-responsive">
-                        <table class="table" id="myTable">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Designation</th><th>Client</th><th>Date de Reception</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+          <div class="col-sm-12">
+              <div class="white-box">
+                <h3 class="box-title pull-left">Reception/Demande</h3>
+                @can('add-'.str_slug('Demande'))
+                    <a class="btn btn-success pull-right" href="{{ url('/demande/demande/create') }}"><i
+                                class="icon-plus"></i> Enregistrer Demande</a>
+                @endcan
+                <div class="clearfix"></div>
+                <hr>
+                  <h3 class="box-title m-b-0">Data Export</h3>
+                  <p class="text-muted m-b-30">Export data to Copy, CSV, Excel, PDF & Print</p>
+                  <div class="table-responsive">
+                      <table id="example23" class="display nowrap" cellspacing="0" width="100%">
+                          <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Designation</th>
+                            <th>Client</th>
+                            <th>Date de Reception</th>
+                            <th>Actions</th>
+                          </tr>
+                          </thead>
+                          <tfoot>
+                          <tr>
+                            <th>#</th>
+                            <th>Designation</th>
+                            <th>Client</th>
+                            <th>Date de Reception</th>
+                            <th>Actions</th>
+                          </tr>
+                          </tfoot>
+                          <tbody>
                             @foreach($demande as $item)
 
                                 <tr>
@@ -65,7 +78,7 @@
                                                 </button>
                                             </form>
                                         @endcan
-                                        @can('edit-'.str_slug('Demande'))
+                                        @can('view-'.str_slug('Demande'))
                                             <a href="{{ url('/objet-essais/objet-essais/create'.'?id='.$item->code) }}"
                                                title="Objet d'essai">
                                                 <button class="btn btn-primary btn-sm">
@@ -78,48 +91,72 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            </tbody>
-                        </table>
-                        <div class="pagination-wrapper"> {!! $demande->appends(['search' => Request::get('search')])->render() !!} </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
 
 @endsection
 
 @push('js')
-    <script src="{{asset('plugins/components/toast-master/js/jquery.toast.js')}}"></script>
+<script src="{{asset('plugins/components/datatables/jquery.dataTables.min.js')}}"></script>
+<!-- start - This is for export functionality only -->
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+<!-- end - This is for export functionality only -->
+<script>
+    $(function() {
+        $('#myTable').DataTable();
 
-    <script src="{{asset('plugins/components/datatables/jquery.dataTables.min.js')}}"></script>
-    <!-- start - This is for export functionality only -->
-    <!-- end - This is for export functionality only -->
-    <script>
-        $(document).ready(function () {
-
-            @if(\Session::has('message'))
-            $.toast({
-                heading: 'Success!',
-                position: 'top-center',
-                text: '{{session()->get('message')}}',
-                loaderBg: '#ff6849',
-                icon: 'success',
-                hideAfter: 3000,
-                stack: 6
-            });
-            @endif
-        })
-
-        $(function () {
-            $('#myTable').DataTable({
-                'aoColumnDefs': [{
-                    'bSortable': false,
-                    'aTargets': [-1] /* 1st one, start by the right */
-                }]
-            });
-
+        var table = $('#example').DataTable({
+            "columnDefs": [{
+                "visible": false,
+                "targets": 2
+            }],
+            "order": [
+                [2, 'asc']
+            ],
+            "displayLength": 10000,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+                api.column(2, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+                        last = group;
+                    }
+                });
+            }
         });
-    </script>
+        // Order by the grouping
+        $('#example tbody').on('click', 'tr.group', function() {
+            var currentOrder = table.order()[0];
+            if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                table.order([2, 'desc']).draw();
+            } else {
+                table.order([2, 'asc']).draw();
+            }
+        });
+    });
+    $('#example23').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+</script>
 
 @endpush

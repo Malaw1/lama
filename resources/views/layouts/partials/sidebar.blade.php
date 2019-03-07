@@ -25,7 +25,7 @@
                                 <li><a href="{{url('profile')}}"><i class="fa fa-user"></i> Profile</a></li>
                                 {{--<li><a href="javascript:void(0);"><i class="fa fa-inbox"></i> Inbox</a></li>--}}
                                 <li role="separator" class="divider"></li>
-                                <li><a href="{{'account-settings'}}"><i class="fa fa-cog"></i> Account Settings</a></li>
+                                <li><a href="{{url('account-settings')}}"><i class="fa fa-cog"></i> Account Settings</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="{{route('logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
                             </ul>
@@ -114,18 +114,18 @@
                     @can('view-blog')
                         <li class="two-column">
                             <a class="waves-effect" href="javascript:void(0);" aria-expanded="false"><i
-                                        class="fa fa-comment fa-fw"></i> <span class="hide-menu"> Blog</span></a>
+                                        class="fa fa-comment fa-fw"></i> <span class="hide-menu"> Informations</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 @can('add-blog-category')
-                                    <li><a href="{{asset('blog-category')}}">Blog Categories</a></li>
+                                    <li><a href="{{asset('blog-category')}}">Categories</a></li>
                                 @endcan
 
                                 @can('view-blog')
-                                    <li><a href="{{asset('blog')}}">Blog List</a></li>
+                                    <li><a href="{{asset('blog')}}">Infos</a></li>
                                 @endcan
 
                                 @can('add-blog')
-                                    <li><a href="{{asset('blog/create')}}">Add New Blog</a></li>
+                                    <li><a href="{{asset('blog/create')}}">Ajouter Info</a></li>
                                 @endcan
                             </ul>
                         </li>

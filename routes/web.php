@@ -56,6 +56,10 @@ Route::group(['middleware' => ['auth', 'roles'],'roles' => 'admin'], function ()
     Route::get('index2', function (){
         return view('dashboard.index2');
     });
+
+    // Route::get('account-settings', function (){
+    //     return view('users.account-settings');
+    // });
     Route::get('index3', function (){
         return view('dashboard.index3');
     });

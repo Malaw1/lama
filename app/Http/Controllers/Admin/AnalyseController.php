@@ -82,15 +82,19 @@ class AnalyseController extends Controller
      */
     public function store(Request $request)
     {
-      dd($request->input('responsable'), $request->input('objet_essai') );
+      // dd($request->input('responsable')
+      // , $request->input('reference')
+      // , $request->input('dci')
+      // , $request->input('objet') );
         $model = str_slug('analyse','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
-      			'objet_essai' => 'required',
+      			'objet' => 'required',
       			'reference' => 'required',
       			'dci' => 'required',
       			'etat' => 'required',
-      			'responable' => 'required'
+      			'responsable' => 'required',
+            'user_id' => 'required'
       		]);
             $requestData = $request->all();
             Analyse::create($requestData);

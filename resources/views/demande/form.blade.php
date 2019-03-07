@@ -100,6 +100,13 @@
         <input class="form-control" name="date_recue" type="date" id="date_recue" value="{{ $demande->date_recue or ''}}" required>
         {!! $errors->first('date_recue', '<p class="help-block">:message</p>') !!}
     </div>
+</div>
+<div class="form-group {{ $errors->has('lieu de prelevement') ? 'has-error' : ''}}">
+    <label for="provenance" class="col-md-4 control-label">{{ 'Lieu de Prelevement' }}</label>
+    <div class="col-md-6">
+        <input class="form-control" name="lieu_prelevement" type="text" id="lieu_prelevement" value="{{ $objetessai->lieu_prelevement or ''}}" required>
+        {!! $errors->first('lieu_prelevement', '<p class="help-block">:message</p>') !!}
+    </div>
 </div><div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
     <!-- <label for="user_id" class="col-md-4 control-label">{{ 'User Id' }}</label> -->
     <div class="col-md-6">
@@ -119,11 +126,11 @@
     <label for="motif" class="col-md-4 control-label">{{ 'Motif' }}</label>
     <div class="col-md-6">
           <select name="motif" class="form-control select2">
-                <option value="amm">AMM</option>
-                <option value="approvisonnement">Approvisonnement</option>
-                <option value="inspection_reglementee">Inspection reglementée</option>
-                <option value="spm">Surveillence Post Marketing</option>
-                <option value="spv">Suivi Pharmaco Vigilance</option>
+                <option value="Amm">AMM</option>
+                <option value="Approvisonnement">Approvisonnement</option>
+                <option value="Inspection Reglementee">Inspection reglementée</option>
+                <option value="Surveillance Post Marketing">Surveillance Post Marketing</option>
+                <option value="Suivi Pharmaco Vigilance">Suivi Pharmaco Vigilance</option>
             </select>
         <!-- <input class="form-control" name="forme_galenique" type="text" id="forme_galenique" value="{{ $objetessai->forme_galenique or ''}}" required> -->
         {!! $errors->first('motif', '<p class="help-block">:message</p>') !!}

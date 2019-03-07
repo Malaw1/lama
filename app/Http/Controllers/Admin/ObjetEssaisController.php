@@ -31,10 +31,11 @@ class ObjetEssaisController extends Controller
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
             $keyword = $request->get('search');
-            $perPage = 25;
+            $perPage = 1000000;
 
             if (!empty($keyword)) {
-                $objetessais = ObjetEssai::where('code', 'LIKE', "%$keyword%")
+                $objetessais = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')
+                ->where('code', 'LIKE', "%$keyword%")
                 ->orWhere('forme_galenique', 'LIKE', "%$keyword%")
                 ->orWhere('date_recue', 'LIKE', "%$keyword%")
                 ->orWhere('quantite', 'LIKE', "%$keyword%")
@@ -46,7 +47,9 @@ class ObjetEssaisController extends Controller
                 ->orWhere('demandeur', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $objetessais = ObjetEssai::paginate($perPage);
+                $objetessais = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')
+                ->select('*', 'objet_essais.code')
+                ->paginate($perPage);
             }
 
             return view('objet-essais.index', compact('objetessais'));
@@ -140,7 +143,8 @@ class ObjetEssaisController extends Controller
             'date_exp' => $request->input('date_exp'),
             'provenance' => $request->input('provenance'),
             'fabricant' => $request->input('fabricant'),
-            'demandeur' => $request->input('demandeur')
+            'demandeur' => $request->input('demandeur'),
+            'user_id' => $request->input('user_id')
       		]);
 
           // dd($request->input('demandeur'));
@@ -148,7 +152,7 @@ class ObjetEssaisController extends Controller
             $objet = ObjetEssai::All()->last();
             // $objet = ObjetEssai::join('demandes', 'demandes.code', '=', );
             // dd($objet);
-return redirect('objet-essais/objet-essais/'.$objet->id);
+return redirect('objet-essais/objet-essais/'.$objet->code);
             // ObjetEssai::create($requestData);
             // return redirect('objet-essais/objet-essais')->with('flash_message', 'ObjetEssai added!');
         }
@@ -166,8 +170,24 @@ return redirect('objet-essais/objet-essais/'.$objet->id);
     {
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
-            $objetessai = ObjetEssai::findOrFail($id);
-            return view('objet-essais.show', compact('objetessai'));
+              // $objetessai = ObjetEssai::findOrFail($id);
+              $objetessai = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')
+              ->join('clients', 'clients.id', '=', 'demandes.client')
+              // ->join('molecules', 'molecules.demande', '=', 'demandes.id')
+              ->select('*', 'objet_essais.code', 'demandes.id')
+              ->where('objet_essais.code', $id)
+              ->first();
+
+              $code = $objetessai->id;
+              // dd($code);
+              $molecule = Molecule::join('demandes', 'molecules.demande', '=', 'demandes.id')
+              ->where('molecules.demande', $code)
+              ->get();
+               // dd($objetessai);
+               // dd($molecule);
+
+            // $objetessai = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')->findOrFail($id);
+            return view('objet-essais.show', ['objetessai' => $objetessai, 'molecule' => $molecule]);
         }
         return response(view('403'), 403);
     }

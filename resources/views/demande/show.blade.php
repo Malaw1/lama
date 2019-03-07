@@ -25,6 +25,8 @@
                             <tr><th> Client </th><td> {{ $demande->company_name }} </td></tr>
                             <tr><th> Fabricant </th><td> {{ $demande->fabricant }} </td></tr>
                             <tr><th> Nombre de Lots </th><td> {{ $demande->nombre_lot }} </td></tr>
+                            <tr><th> Forme Galenique </th><td> {{ $demande->forme_galenique }} </td></tr>
+                            <tr><th> Motif </th><td> {{ $demande->motif }} </td></tr>
                             <tr><th> Commentaires </th><td> {{ $demande->description }} </td></tr>
                             <tr><th>Parametres</th>
                                 @foreach($param as $param)

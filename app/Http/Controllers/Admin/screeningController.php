@@ -35,14 +35,34 @@ class screeningController extends Controller
             $keyword = $request->get('search');
             $perPage = 25;
 
+            // $screening = screening::join('rapport_frontals', 'screenings.id','=','rapport_frontals.screening')
+            // ->join('principe_actifs', 'principe_actifs.screening','=', 'screenings.id')
+            // ->join('objet_essais', 'objet_essais.code', '=', 'screenings.code')
+            // ->join('demandes', 'objet_essais.demandeur', '=', 'demandes.id')
+            // ->get();
+            // dd($screening);
+
             if (!empty($keyword)) {
-                $screening = screening::where('designation', 'LIKE', "%$keyword%")
+                $screening = screening::join('rapport_frontals', 'screenings.id','=','rapport_frontals.screening')
+                ->join('principe_actifs', 'principe_actifs.screening','=', 'screenings.id')
+                ->join('objet_essais', 'objet_essais.code', '=', 'screenings.code')
+                ->join('demandes', 'objet_essais.demandeur', '=', 'demandes.id')
+                ->where('designation', 'LIKE', "%$keyword%")
                 ->orWhere('code', 'LIKE', "%$keyword%")
                 ->orWhere('dci', 'LIKE', "%$keyword%")
                 ->orWhere('date_exp', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
             } else {
-                $screening = screening::paginate($perPage);
+              $screening = screening::join('objet_essais', 'objet_essais.code', '=' ,'screenings.code')
+              // ->join('rapport_frontals', 'screenings.id','=','rapport_frontals.screening')
+              // ->join('objet_essais', 'objet_essais.code', '=' ,'screenings.code')
+              ->join('demandes', 'objet_essais.demandeur', '=', 'demandes.id')
+              // ->join('principe_actifs', 'principe_actifs.screening','=', 'screenings.id')
+              ->select('*', 'objet_essais.code')
+              // ->distinct('objet_essais.code')
+              ->paginate($perPage);
+              // dd($screening);
+                // $screening = screening::paginate($perPage);
             }
 
             return view('screening.index', compact('screening'));
@@ -61,10 +81,10 @@ class screeningController extends Controller
         $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
           $objet = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')->where('objet_essais.code', $_GET['code'])->first();
-          // dd($objet);
+          // dd($objet)
           $molecule = Molecule::where('demande', $objet->demandeur)->get();
           // $demande = Demande::where()
-          // dd($molecule);
+          // dd($objet);
             return view('screening.create', ['objet' => $objet, 'molecule' => $molecule]);
         }
         return response(view('403'), 403);
@@ -88,7 +108,11 @@ class screeningController extends Controller
 			'dci' => 'required',
       'delitement' => 'required',
 			'date_exp' => 'required',
-      'conclusion' => 'required'
+      'conclusion' => 'required',
+      'impurete' => 'required',
+      'desc_physique' => 'desc_physique',
+      'prospectus' => 'prospectus',
+      'user_id' => 'required'
 		]);
 
 
@@ -96,25 +120,33 @@ class screeningController extends Controller
  // dd($requestData);
           $screen = screening::create($requestData);
           // dd($screen->id);
+          $molecule = $request->input('molecule');
+          // dd($molecule);
+          $etat = $request->input('etat');
+          // dd($etat);
+          for($i = 0; $i < count($etat) ; $i++){
             $pa = PrincipeActif::create([
-              'molecule' => $request->input('molecule'),
-              'etat' => $request->input('etat'),
+              'molecule' => $molecule[$i],
+              'etat' => $etat[$i],
                'screening' => $screen->id
             ]);
+          }
 
-            $molecule = $request->input('molecule');
+            $molecul = $request->input('molecule');
             $rf_inf_5 = $request->input('rf_inf_5');
             $rf_inf_10 = $request->input('rf_inf_10');
             $rf_sup_10 = $request->input('rf_sup_10');
 
-            dd($molecule);
-            foreach($molecule as $param){
-                RapportFrontal::create([
-
-                ]);
-            }
-
-            dd($pa);
+         for($i = 0; $i < count($rf_sup_10) ; $i++){
+      $rap = RapportFrontal::create([
+            'molecule' => $molecule[$i],
+            'rf_inf_5' => $rf_inf_5[$i],
+            'rf_inf_10' => $rf_inf_10[$i],
+            'rf_sup_10' => $rf_sup_10[$i],
+            'screening' => $screen->id
+          ]);
+ }
+            // dd($pa, $rap);
             return redirect('screening/screening')->with('flash_message', 'screening added!');
         }
         return response(view('403'), 403);
@@ -131,8 +163,11 @@ class screeningController extends Controller
     {
         $model = str_slug('screening','-');
         if(auth()->user()->permissions()->where('name','=','view-'.$model)->first()!= null) {
+          $rapportfrontal = RapportFrontal::All()->where('screening', $id);
+          $pa = PrincipeActif::All()->where('screening', $id);
+          // dd($rap, $pa);
             $screening = screening::findOrFail($id);
-            return view('screening.show', compact('screening'));
+            return view('screening.show', ['screening' => $screening, 'rapportfrontal' => $rapportfrontal, 'pa' => $pa]);
         }
         return response(view('403'), 403);
     }

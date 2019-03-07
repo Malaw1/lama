@@ -33,7 +33,7 @@
                             @foreach($analyse as $item)
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->objet_essai }}</td><td>{{ $item->reference }}</td><td>{{ $item->dci }}</td>
+                                    <td>{{ $item->objet }}</td><td>{{ $item->reference }}</td><td>{{ $item->dci }}</td>
                                     <td>{{ $item->etat }}</td>
                                     <td>
                                       <a href="{{ url('/feuille/feuille/' . $item->id) }}"
@@ -42,6 +42,7 @@
                                               <i class="fa fa-arrow-up" aria-hidden="true"></i> Analyser
                                           </button>
                                       </a>
+                                      
                                         @can('view-'.str_slug('Analyse'))
                                             <a href="{{ url('/analyse/analyse/' . $item->id) }}"
                                                title="View Analyse">

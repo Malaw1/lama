@@ -6,7 +6,7 @@
       </div>
 
       <div class="form-group col-md-3">
-          <select class="form-control" data-placeholder="Choose a Category" tabindex="1" name="etat">
+          <select class="form-control" data-placeholder="Choose a Category" tabindex="1" name="etat[]">
               <option value="Present">Present</option>
               <option value="Absent">Absent</option>
           </select>
@@ -15,7 +15,9 @@
 
 </div>
 
+
   @endforeach
+
 
 <!--
 <div class="form-group">

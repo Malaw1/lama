@@ -4,6 +4,7 @@
 <section id="wrapper" class="login-register">
     <div class="login-box">
         <div class="white-box">
+          <center><h2 class="title">LabMan <strong> Systems</strong> v1.0</h2></center>
             <form class="form-horizontal form-material pull-center" id="loginform" method="post" action="{{ route('login') }}">
                 {{csrf_field()}}
                 <h3 class="box-title m-b-20">Authentification</h3>

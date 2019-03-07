@@ -1,10 +1,12 @@
 <div class="form-group {{ $errors->has('objet_essai') ? 'has-error' : ''}}">
     <label for="objet_essai" class="col-md-4 control-label">{{ 'Objet Essai' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="objet_essai" type="text" id="objet_essai" value="{{ $objet->code }}" required>
+
+        <input class="form-control" name="objet" type="text" id="objet_essai" value="{{ $objet->code }}" required>
         {!! $errors->first('objet_essai', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('reference') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('reference') ? 'has-error' : ''}}">
     <label for="reference" class="col-md-4 control-label">{{ 'Reference' }}</label>
     <div class="col-md-6">
         <input class="form-control" name="reference" type="text" id="reference" value="{{ $analyse->reference or $fais->reference}}" required>
@@ -36,6 +38,8 @@
         {!! $errors->first('responable', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+
+<input class="form-control" name="user_id" type="hidden" id="user_id" value="{{ auth()->user()->id}}" required>
 
 <!-- <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

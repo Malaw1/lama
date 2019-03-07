@@ -7,7 +7,7 @@
 </div><div class="form-group {{ $errors->has('code') ? 'has-error' : ''}}">
     <label for="code" class="col-md-4 control-label">{{ 'Code' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="code" type="text" id="code" value="{{ $objet->code or ''}}" required>
+        <input class="form-control" name="code" type="text" id="code" value="{{ $_GET['code'] or ''}}" required>
         {!! $errors->first('code', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('dci') ? 'has-error' : ''}}">
@@ -24,6 +24,32 @@
     </div>
 </div>
 
+<div class="form-group {{ $errors->has('Fabricant') ? 'has-error' : ''}}">
+    <label for="fabricant" class="col-md-4 control-label">{{ 'Nom et Adresse du Fabricant et si possible du responsable de la mise sur le marché' }}</label>
+    <div class="col-md-6">
+      <input class="form-control" name="description" type="text" id="fabricant" value="{{ $objet->fabricant or ''}}" required />
+        <!-- <input class="form-control" name="description" type="text" id="description" value="{{ $demande->description or ''}}" required> -->
+        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('Fabricant') ? 'has-error' : ''}}">
+    <label for="fabricant" class="col-md-4 control-label">{{ "Description du prospectus: langue, lisibilite, conditions de stockage(T°C, humidite, lumiere...), mode d'emploi...)" }}</label>
+    <div class="col-md-6">
+      <textarea class="form-control" name="description" type="text" id="fabricant" value="{{ $objet->prospectus or ''}}" required></textarea>
+        <!-- <input class="form-control" name="description" type="text" id="description" value="{{ $demande->description or ''}}" required> -->
+        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('Fabricant') ? 'has-error' : ''}}">
+    <label for="fabricant" class="col-md-4 control-label">{{ "Decrire l'emballage, l'aspect, la forme, la couleur de l'objet d'essai, et autres observations(fissures, particules etrangeres, etancheite, odeur, gout..)"}}</label>
+    <div class="col-md-6">
+      <textarea class="form-control" name="description" type="text" id="fabricant" value="{{ $objet->desc_physique or ''}}" required></textarea>
+        <!-- <input class="form-control" name="description" type="text" id="description" value="{{ $demande->description or ''}}" required> -->
+        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 <div class="form-group">
     <label class="col-md-4 control-label">Delitement</label>
     <div class="radio-list">
@@ -43,6 +69,15 @@
 </div>
 
 @include ('principe-actif.form')
+<div class="form-group {{ $errors->has('molecule') ? 'has-error' : ''}}">
+    <label for="molecule" class="col-md-4 control-label">{{ 'impurete' }}</label>
+      <div class="form-group col-md-6">
+          <select class="form-control" data-placeholder="Choose a Category" tabindex="1" name="impurete">
+              <option value="Present">Present</option>
+              <option value="Absent">Absent</option>
+          </select>
+      </div>
+</div>
 @include ('rapport-frontal.form')
 
       <div class="col-sm-12">
@@ -60,7 +95,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>{{$objet->code}}</td>
+                        <td>{{$_GET['code']}}</td>
                             <div class="form-group">
                                 <div class="radio-list">
                         <td><label class="radio-inline">
@@ -91,6 +126,7 @@
             </div>
           </div>
 
+          <input class="form-control" name="user_id" type="hidden" id="user_id" value="{{ auth()->user()->id}}" required>
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

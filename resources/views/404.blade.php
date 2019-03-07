@@ -67,8 +67,8 @@
 <body>
 <div class="flex-center position-ref full-height">
     <div class="content">
-           <h1>404 <br> Sorry! Page not found</h1>
-        <h4><a href="{{url('/')}}">Go back to Home</a></h4>
+           <h1>404 <br> Desole! Page non trouvee</h1>
+        <h4><a href="{{url('/')}}">Retour</a></h4>
     </div>
 </div>
 </body>

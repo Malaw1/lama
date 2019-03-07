@@ -21,7 +21,9 @@ class CreateScreeningsTable extends Migration
             $table->string('dci')->nullable();
             $table->string('delitement')->nullable();
             $table->string('conclusion')->nullable();
+            $table->string('impurete')->nullable();
             $table->date('date_exp')->nullable();
+
             });
     }
 
