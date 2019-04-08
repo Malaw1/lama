@@ -27,7 +27,7 @@ class PrincipeActif extends Model
      *
      * @var array
      */
-    protected $fillable = ['molecule', 'etat', 'screening'];
+    protected $fillable = ['molecule', 'etat', 'screening', 'teneur'];
 
-    
+
 }

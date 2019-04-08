@@ -81,19 +81,20 @@ class ReactifsController extends Controller
      */
     public function store(Request $request)
     {
+      // dd($request);
         $model = str_slug('reactifs','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
-			'designation' => 'required',
-			'date_recep' => 'required',
-			'depositaire' => 'required',
-			'unite_recue' => 'required',
-			'quantite' => 'required',
-			'fabricant' => 'required',
-			'lot' => 'required',
-			'date_fab' => 'required',
-			'date_exp' => 'required',
-			'user_id' => 'required'
+        			'designation' => 'required',
+        			'date_recep' => 'required',
+        			'depositaire' => 'required',
+        			'unite_recue' => 'required',
+        			'quantite' => 'required',
+        			'fabricant' => 'required',
+        			'lot' => 'required',
+              'forme_galenique' => 'required',
+              'unite' => 'required',
+        			'user_id' => 'required'
 		]);
             $requestData = $request->all();
 

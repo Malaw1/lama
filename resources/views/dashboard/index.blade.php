@@ -19,10 +19,10 @@
                                     class="mdi mdi-checkbox-marked-circle-outline"></i></span>
                     </div>
                     <div class="media-body">
-                        <h3 class="info-count text-blue">154</h3>
-                        <p class="info-text font-12">Bookings</p>
+                        <h3 class="info-count text-blue">{{$process}}</h3>
+                        <p class="info-text font-12">A analyser</p>
                         <span class="hr-line"></span>
-                        <p class="info-ot font-15">Target<span class="label label-rounded label-success">300</span></p>
+                        <p class="info-ot font-15">Afficher<span class="label label-rounded label-success">300</span></p>
                     </div>
                 </div>
             </div>
@@ -33,9 +33,9 @@
                     </div>
                     <div class="media-body">
                         <h3 class="info-count text-blue">68</h3>
-                        <p class="info-text font-12">Complaints</p>
+                        <p class="info-text font-12">En cours</p>
                         <span class="hr-line"></span>
-                        <p class="info-ot font-15">Total Pending<span
+                        <p class="info-ot font-15">Afficher<span
                                     class="label label-rounded label-danger">154</span></p>
                     </div>
                 </div>
@@ -46,8 +46,8 @@
                         <span class="icoleaf bg-primary text-white"><i class="mdi mdi-coin"></i></span>
                     </div>
                     <div class="media-body">
-                        <h3 class="info-count text-blue">&#36;9475</h3>
-                        <p class="info-text font-12">Earning</p>
+                        <h3 class="info-count text-blue">9475</h3>
+                        <p class="info-text font-12">Archives</p>
                         <span class="hr-line"></span>
                         <p class="info-ot font-15">March : <span class="text-blue font-semibold">&#36;514578</span></p>
                     </div>
@@ -467,11 +467,191 @@
         </div>
     @else
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 col-sm-12">
-                    <h1 align="center">Welcome to Dashboard</h1>
-                </div>
-            </div>
+
+          <div class="row m-0">
+
+              <div class="col-md-3 col-sm-6 info-box">
+                  <div class="media">
+                      <div class="media-left">
+                          <span class="icoleaf bg-primary text-white"><i
+                                      class="mdi mdi-checkbox-marked-circle-outline"></i></span>
+                      </div>
+                      <div class="media-body">
+                          <h3 class="info-count text-blue">{{ $objet }}</h3>
+                          <p class="info-text font-12">Objet Essai</p>
+                          <span class="hr-line"></span>
+                          <p class="info-ot font-15">Afficher</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3 col-sm-6 info-box">
+                  <div class="media">
+                      <div class="media-left">
+                          <span class="icoleaf bg-primary text-white"><i class="mdi mdi-comment-text-outline"></i></span>
+                      </div>
+                      <div class="media-body">
+                          <h3 class="info-count text-blue">{{ $process }}</h3>
+                          <p class="info-text font-12">En cours</p>
+                          <span class="hr-line"></span>
+                          <p class="info-ot font-15">Afficher</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3 col-sm-6 info-box">
+                  <div class="media">
+                      <div class="media-left">
+                          <span class="icoleaf bg-primary text-white"><i class="mdi mdi-coin"></i></span>
+                      </div>
+                      <div class="media-body">
+                          <h3 class="info-count text-blue">{{ $archive }}</h3>
+                          <p class="info-text font-12">Archives</p>
+                          <span class="hr-line"></span>
+                          <p class="info-ot font-15">Afficher</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3 col-sm-6 info-box b-r-0">
+                  <div class="media">
+                      <div class="media-left p-r-5">
+                          <div id="earning" class="e" data-percent="60">
+                              <div id="pending" class="p" data-percent="55"></div>
+                              <div id="booking" class="b" data-percent="50"></div>
+                          </div>
+                      </div>
+                      <div class="media-body">
+                          <h2 class="text-blue font-22 m-t-0">Report</h2>
+                          <ul class="p-0 m-b-20">
+                              <li><i class="fa fa-circle m-r-5 text-primary"></i>60% Earnings</li>
+                              <li><i class="fa fa-circle m-r-5 text-primary"></i>55% Pending</li>
+                              <li><i class="fa fa-circle m-r-5 text-info"></i>50% Bookings</li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="white-box">
+                      <div class="task-widget2">
+                          <div class="task-image">
+                              <img src="{{asset('plugins/images/task.jpg')}}" alt="task" class="img-responsive">
+                              <div class="task-image-overlay"></div>
+                              <div class="task-detail">
+                                  <h2 class="font-light text-white m-b-0">07 April</h2>
+                                  <h4 class="font-normal text-white m-t-5">Your tasks for today</h4>
+                              </div>
+                              <div class="task-add-btn">
+                                  <a href="javascript:void(0);" class="btn btn-success">+</a>
+                              </div>
+                          </div>
+                          <div class="task-total">
+                              <p class="font-16 m-b-0"><strong>5</strong> Tasks for <a href="javascript:void(0);"
+                                                                                       class="text-link">Jon Doe</a>
+                              </p>
+                          </div>
+                          <div class="task-list">
+                              <ul class="list-group">
+                                  <li class="list-group-item bl-info">
+                                      <div class="checkbox checkbox-success">
+                                          <input id="c7" type="checkbox">
+                                          <label for="c7">
+                                              <span class="font-16">Create invoice for customers and email each customers.</span>
+                                          </label>
+                                          <h6 class="p-l-30 font-bold">05:00 PM</h6>
+                                      </div>
+                                  </li>
+                                  <li class="list-group-item bl-warning">
+                                      <div class="checkbox checkbox-success">
+                                          <input id="c8" type="checkbox" checked>
+                                          <label for="c8">
+                                              <span class="font-16">Send payment of <strong>&#36;500 invoised</strong> on 23 May to <a
+                                                          href="javascript:void(0);"
+                                                          class="text-link">Daniel Kristeen</a> via paypal.</span>
+                                          </label>
+                                          <h6 class="p-l-30 font-bold">03:00 PM</h6>
+                                      </div>
+                                  </li>
+                                  <li class="list-group-item bl-danger">
+                                      <div class="checkbox checkbox-success">
+                                          <input id="c9" type="checkbox">
+                                          <label for="c9">
+                                              <span class="font-16">It is a long established fact that a reader will be distracted by the readable.</span>
+                                          </label>
+                                          <h6 class="p-l-30 font-bold">04:45 PM</h6>
+                                      </div>
+                                  </li>
+                                  <li class="list-group-item bl-success">
+                                      <div class="checkbox checkbox-success">
+                                          <input id="c10" type="checkbox">
+                                          <label for="c10">
+                                              <span class="font-16">It is a long established fact that a reader will be distracted by the readable.</span>
+                                          </label>
+                                          <h6 class="p-l-30 font-bold">05:30 PM</h6>
+                                      </div>
+                                  </li>
+                              </ul>
+                          </div>
+                          <div class="task-loadmore">
+                              <a href="javascript:void(0);" class="btn btn-default btn-outline btn-rounded">Load
+                                  More</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="white-box chat-widget">
+                      <a href="javascript:void(0);" class="pull-right"><i class="icon-settings"></i></a>
+                      <h4 class="box-title">Chat</h4>
+                      <ul class="chat-list slimscroll" style="overflow: hidden;" tabindex="5005">
+                          <li>
+                              <div class="chat-image"><img alt="male"
+                                                           src="{{asset('plugins/images/users/hanna.jpg')}}"></div>
+                              <div class="chat-body">
+                                  <div class="chat-text">
+                                      <p><span class="font-semibold">Hanna Gover</span> Hey Daniel, This is just a
+                                          sample chat. </p>
+                                  </div>
+                                  <span>2 Min ago</span>
+                              </div>
+                          </li>
+                          <li class="odd">
+                              <div class="chat-body">
+                                  <div class="chat-text">
+                                      <p> buddy </p>
+                                  </div>
+                                  <span>2 Min ago</span>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="chat-image"><img alt="male"
+                                                           src="{{asset('plugins/images/users/hanna.jpg')}}"></div>
+                              <div class="chat-body">
+                                  <div class="chat-text">
+                                      <p><span class="font-semibold">Hanna Gover</span> Bye now. </p>
+                                  </div>
+                                  <span>1 Min ago</span>
+                              </div>
+                          </li>
+                          <li class="odd">
+                              <div class="chat-body">
+                                  <div class="chat-text">
+                                      <p> We have been busy all the day to make your website proposal and finally came
+                                          with the super excited offer. </p>
+                                  </div>
+                                  <span>5 Sec ago</span>
+                              </div>
+                          </li>
+                      </ul>
+                      <div class="chat-send">
+                          <input type="text" class="form-control" placeholder="Write your message">
+                          <i class="fa fa-camera"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
         </div>
     @endif
 

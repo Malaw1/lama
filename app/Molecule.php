@@ -27,7 +27,7 @@ class Molecule extends Model
      *
      * @var array
      */
-    protected $fillable = ['molecule', 'demande', 'dosage'];
+    protected $fillable = ['molecule', 'objet_essai', 'dosage'];
 
 
 }

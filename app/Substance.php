@@ -27,7 +27,14 @@ class Substance extends Model
      *
      * @var array
      */
-    protected $fillable = ['designation', 'date_recue', 'depositaire', 'unite_recue', 'quantite', 'fabricant', 'lot', 'date_fab', 'date_exp', 'catalog', 'cas', 'prix', 'user_id'];
+    protected $fillable = ['designation', 'date_recue',
+                            'depositaire', 'unite_recue',
+                            'quantite', 'fabricant',
+                            'lot', 'date_fab', 'date_exp',
+                            'catalog', 'cas', 'certificat',
+                            'stockage', 'unite',
+                            'forme_galenique', 'container',
+                            'prix', 'user_id'];
 
-    
+
 }

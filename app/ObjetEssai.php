@@ -27,7 +27,7 @@ class ObjetEssai extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'forme_galenique', 'date_recue', 'quantite', 'lot', 'date_fab', 'date_exp', 'provenance', 'fabricant', 'demandeur', 'user_id'];
+    protected $fillable = ['code', 'designation', 'conditionnement' , 'forme_galenique', 'date_recue', 'quantite', 'lot', 'date_fab', 'date_exp', 'provenance', 'fabricant', 'demandeur', 'user_id'];
 
 
 }

@@ -27,7 +27,13 @@ class Reactif extends Model
      *
      * @var array
      */
-    protected $fillable = ['designation', 'date_recep', 'depositaire', 'unite_recue', 'quantite', 'fabricant', 'lot', 'date_fab', 'date_exp', 'catalog', 'cas', 'prix', 'user_id'];
+    protected $fillable = ['designation', 'date_recep', 'depositaire', 'unite_recue', 'quantite', 'fabricant',
+    'lot', 'date_fab',
+     'date_exp', 'catalog',
+      'cas', 'prix',
+      'stockage', 'unite',
+      'forme_galenique', 'container',
+       'user_id'];
 
-    
+
 }

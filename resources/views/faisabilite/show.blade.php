@@ -49,7 +49,7 @@
                         <tr>
                           <th>Reactifs</th>:
                           @foreach ($reactif as $key)
-                            <td>{{ $key->reactif}}</td>
+                            <td>{{ $key->designation}}</td>
                           @endforeach
                         </tr>
                         <tr>
@@ -60,13 +60,16 @@
                           <th>Conclusion</th>:
                           <td><p>Les Produits Chimiques suivants ne sont pas dans votre stock: </p></td>
                           @foreach($err as $err)
-                            <td>{{ $err->designation}}</td>
+                            <td>{{ $err->designation}}</td> $err_subs
                             @endforeach
+                            @foreach($err_subs as $err_subs)
+                              <td>{{ $err_subs->designation}}</td> $err_subs
+                              @endforeach
                         </tr>
 
                         <tr>
                           <th>Revue de Contrat</th>:
-                            @if($err == null)
+                            @if(($err == null) || ($subserr == null))
                             <td>
                               <a class="btn btn-success pull-right" href="">
                                   <i class="icon-arrow-left-circle" aria-hidden="true"></i> Revue de Contrat</a></td>

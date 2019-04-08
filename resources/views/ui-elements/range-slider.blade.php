@@ -5,6 +5,7 @@
     <link href="{{asset('plugins/components/ion-rangeslider/css/ion.rangeSlider.skinModern.css')}}" rel="stylesheet">
 @endpush
 
+
 @section('content')
     <div class="container-fluid">
         <!-- .row -->

@@ -21,11 +21,7 @@
                                 <td>{{ $demande->id }}</td>
                             </tr>
                             <tr><th> Code </th><td> {{ $demande->code }} </td></tr>
-                            <tr><th> Designation </th><td> {{ $demande->designation }} </td></tr>
                             <tr><th> Client </th><td> {{ $demande->company_name }} </td></tr>
-                            <tr><th> Fabricant </th><td> {{ $demande->fabricant }} </td></tr>
-                            <tr><th> Nombre de Lots </th><td> {{ $demande->nombre_lot }} </td></tr>
-                            <tr><th> Forme Galenique </th><td> {{ $demande->forme_galenique }} </td></tr>
                             <tr><th> Motif </th><td> {{ $demande->motif }} </td></tr>
                             <tr><th> Commentaires </th><td> {{ $demande->description }} </td></tr>
                             <tr><th>Parametres</th>
@@ -36,8 +32,53 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="clearfix"></div>
+                      <hr>
+                    <div class="table-responsive">
+                        <table id="example23" class="table table" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Code</th>
+                              <th>DCI</th>
+                              <th>Forme Galenique</th>
+                              <th>Conditionnement</th>
+                              <th>lot</th>
+                              <th>Quantite</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                              <th>#</th>
+                              <th>Code</th>
+                              <th>DCI</th>
+                              <th>Forme Galenique</th>
+                              <th>Conditionnement</th>
+                              <th>lot</th>
+                              <th>Quantite</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                              @foreach($objetessais as $objet)
+                                  <tr>
+                                      <td>{{ $loop->iteration  }}</td>
+                                      <td>{{ $objet->code }}</td>
+                                      <td>{{ $objet->designation }}</td>
+                                      <td>{{ $objet->forme_galenique }}</td>
+                                      <td>{{ $objet->conditionnement }}</td>
+                                      <td>{{ $objet->lot }}</td>
+                                      <td>{{ $objet->quantite }}</td>
+
+                                  </tr>
+                              @endforeach
+                            </tbody>
+                        </table>
+                  </div>
+
                 </div>
             </div>
         </div>
+
+
     </div>
 @endsection

@@ -9,6 +9,8 @@ use App\ObjetEssai;
 use App\Fabricant;
 use App\Demande;
 use App\Molecule;
+use App\Parametre;
+use App\ParaDemande;
 use Illuminate\Http\Request;
 
 class ObjetEssaisController extends Controller
@@ -68,14 +70,21 @@ class ObjetEssaisController extends Controller
 
     //  dd($_GET['id']);
         $demande = Demande::where('code', $_GET['id'])->first();
-        $molecule = Molecule::join('demandes', 'demandes.id', '=', 'molecules.demande')
-        ->where('demandes.code', $_GET['id'])->get();
-        //dd($molecule);
 
-      // dd($demande);
+        $molecule = null;
+        $parametre = Parametre::all();
+        $objet = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')
+                            ->where('demandeur', $demande->id)
+                            ->select('*', 'objet_essais.code')
+                            ->get();
+                            $object = count($objet);
+                            // dd($object);
+
+        $para = 0;
+        // dd($objet);
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
-            return view('objet-essais.create', ['demande' => $demande, 'molecule' => $molecule]);
+            return view('objet-essais.create', ['demande' => $demande, 'parametre' => $parametre, 'objet' => $object, 'molecule' => $molecule, 'para' => $para]);
         }
         return response(view('403'), 403);
 
@@ -90,11 +99,9 @@ class ObjetEssaisController extends Controller
      */
     public function store(Request $request)
     {
-      // $mol = $request->input('molecule');
-      //
-      // dd($mol);
       $date = $request->input('date_recue');
         $dat = explode('-', $date, 3);
+        // dd($dat);
         $year = substr($dat[0], -2);
         $month = $dat[1];
         $day = $dat[2];
@@ -139,6 +146,7 @@ class ObjetEssaisController extends Controller
             'date_recue' => $request->input('date_recue'),
             'quantite' => $request->input('quantite'),
             'lot' => $request->input('lot'),
+            'conditionnement' => $request->input('conditionnement'),
             'date_fab' => $request->input('date_fab'),
             'date_exp' => $request->input('date_exp'),
             'provenance' => $request->input('provenance'),
@@ -147,12 +155,66 @@ class ObjetEssaisController extends Controller
             'user_id' => $request->input('user_id')
       		]);
 
+          $param = $request->input('parametre');
+          foreach ($param as $param) {
+          ParaDemande::create([
+              'parametre' => $param,
+              'objet_essai' => $addObjet->id
+              ]);
+          }
+
+          $params = $request->input('molecule');
+          $quants = $request->input('dosage');
+
+
+          for($i = 0; $i < count($params) ; $i++){
+          Molecule::create([
+              'molecule' => $params[$i],
+              'dosage' => $quants[$i],
+              'objet_essai' => $addObjet->id
+          ]);
+          }
+
+// dd($params, $quants, $addObjet->id);
           // dd($request->input('demandeur'));
             $requestData = $request->all();
             $objet = ObjetEssai::All()->last();
             // $objet = ObjetEssai::join('demandes', 'demandes.code', '=', );
             // dd($objet);
-return redirect('objet-essais/objet-essais/'.$objet->code);
+
+
+          $mol = $request->input('demand');
+           // $demande = Demande::where('code', $mol)->first();
+           $demande = Demande::join('clients', 'clients.id','=','demandes.client')
+                           // ->join('para_demandes', 'para_demandes.demande', '=', 'demandes.id')
+                           ->where('demandes.code', $mol)
+                           ->select('*', 'demandes.id')
+                           ->first();
+
+           $parametre = Parametre::all();
+           $objet = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')
+                               ->where('demandeur', $demande->id)
+                               ->select('*', 'objet_essais.code')
+                               ->get();
+                              $object = count($objet);
+          $objetessais = $objet;
+
+          $param = ParaDemande::join('objet_essais', 'objet_essais.id', '=', 'para_demandes.objet_essai')
+                              ->join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')
+                              ->where('demandes.code', $demande->code)
+                              ->get();
+
+          $num = $demande->nombre_lot;
+          $para = null;
+                              // dd($object, $demande->nombre_lot, $para);
+        if ($object < $demande->nombre_lot ) {
+          $molecule = null;
+          return view('objet-essais.create', ['demande' => $demande, 'parametre' => $parametre, 'objet' => $object, 'molecule' => $molecule, 'para' => $para]);
+        }else{
+          // return redirect('objet-essais/objet-essais/'.$objet->code);
+          return view('demande.show', ['demande' => $demande, 'param' => $param, 'objetessais' => $objetessais, 'para' => $para]);
+
+        }
             // ObjetEssai::create($requestData);
             // return redirect('objet-essais/objet-essais')->with('flash_message', 'ObjetEssai added!');
         }
@@ -180,8 +242,8 @@ return redirect('objet-essais/objet-essais/'.$objet->code);
 
               $code = $objetessai->id;
               // dd($code);
-              $molecule = Molecule::join('demandes', 'molecules.demande', '=', 'demandes.id')
-              ->where('molecules.demande', $code)
+              $molecule = Molecule::join('objet_essais', 'molecules.objet_essai', '=', 'objet_essais.id')
+              ->where('molecules.objet_essai', $code)
               ->get();
                // dd($objetessai);
                // dd($molecule);
@@ -203,8 +265,22 @@ return redirect('objet-essais/objet-essais/'.$objet->code);
     {
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
-            $objetessai = ObjetEssai::findOrFail($id);
-            return view('objet-essais.edit', compact('objetessai'));
+          $demande = Demande::join('objet_essais', 'objet_essais.demandeur', '=', 'demandes.id')
+          ->where('objet_essais.code', $id)
+          ->select('*', 'demandes.code', 'objet_essais.id')
+          ->first();
+
+          $molecule = Molecule::join('objet_essais', 'molecules.objet_essai', '=', 'objet_essais.id')
+          ->where('molecules.objet_essai', $demande->id)
+          ->get();
+
+          $parametre = ParaDemande::join('objet_essais', 'objet_essais.id', '=', 'para_demandes.objet_essai')
+                              ->where('para_demandes.objet_essai', $demande->id)
+                              ->get();
+           // dd($parametre);
+           $para = 1;
+            $objetessai = ObjetEssai::findOrFail($demande->id);
+            return view('objet-essais.edit', ['objetessai' => $objetessai, 'demande' => $demande, 'molecule' => $molecule, 'parametre' => $parametre, 'para' => $para]);
         }
         return response(view('403'), 403);
     }
@@ -222,16 +298,16 @@ return redirect('objet-essais/objet-essais/'.$objet->code);
         $model = str_slug('objetessais','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
             $this->validate($request, [
-			'code' => 'required',
-			'forme_galenique' => 'required',
-			'date_recue' => 'required',
-			'quantite' => 'required',
-			'lot' => 'required',
-			'date_fab' => 'required',
-			'date_exp' => 'required',
-			'provenance' => 'required',
-			'fabricant' => 'required',
-			'demandeur' => 'required'
+        		'code' => 'required',
+        		'forme_galenique' => 'required',
+        		'date_recue' => 'required',
+        		'quantite' => 'required',
+        		'lot' => 'required',
+        		'date_fab' => 'required',
+        		'date_exp' => 'required',
+        		'provenance' => 'required',
+        		'fabricant' => 'required',
+        		'demandeur' => 'required'
 		]);
             $requestData = $request->all();
 

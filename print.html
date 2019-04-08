@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Imprimer un formulaire</title>
+
+<style>
+#printBox{
+  text-align:center;
+width: 500px;
+  margin:auto;
+}
+
+.Printbutton{
+  display:inline-block;
+  color:#fff;
+  cursor:pointer;
+  background-color:#3e87ec;
+  padding:20px;
+  margin:5px;
+}
+
+
+@media print {
+
+  .Printbutton{
+display:none;
+}
+
+}
+</style>
+<body>
+  <div id="printBox">
+
+  <div class="Printbutton" onclick="myFunction()" >
+   Imprimer la page</div>
+    <p>
+    Le bouton ne sera pas imprimé</p>
+  <script>
+  function myFunction() {
+      window.print();
+  }
+
+  </script>
+    </div>
+</body>
+</html>

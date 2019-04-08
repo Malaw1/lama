@@ -62,7 +62,7 @@
                                         @endcan
 
                                         @can('edit-'.str_slug('ObjetEssais'))
-                                            <a href="{{ url('/objet-essais/objet-essais/' . $item->id . '/edit') }}"
+                                            <a href="{{ url('/objet-essais/objet-essais/' . $item->code . '/edit') }}"
                                                title="Edit ObjetEssai">
                                                 <button class="btn btn-primary btn-sm">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit

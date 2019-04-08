@@ -26,9 +26,10 @@
                           <thead>
                           <tr>
                             <th>#</th>
-                            <th>Designation</th>
+                            <th>code</th>
                             <th>Client</th>
                             <th>Date de Reception</th>
+                            <th>Motifs</th>
                             <th>Actions</th>
                           </tr>
                           </thead>
@@ -38,6 +39,7 @@
                             <th>Designation</th>
                             <th>Client</th>
                             <th>Date de Reception</th>
+                            <th>Motifs</th>
                             <th>Actions</th>
                           </tr>
                           </tfoot>
@@ -46,7 +48,10 @@
 
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->designation   }}</td><td>{{ $item->company_name }}</td><td>{{ $item->date_recue }}</td>
+                                    <td>{{ $item->code   }}</td>
+                                    <td>{{ $item->company_name }}</td>
+                                    <td>{{ $item->date_recue }}</td>
+                                    <td>{{ $item->motif }}</td>
                                     <td>
                                         @can('view-'.str_slug('Demande'))
                                             <a href="{{ url('/demande/demande/' . $item->code) }}"
@@ -58,7 +63,7 @@
                                         @endcan
 
                                         @can('edit-'.str_slug('Demande'))
-                                            <a href="{{ url('/demande/demande/' . $item->id . '/edit') }}"
+                                            <a href="{{ url('/demande/demande/' . $item->code . '/edit') }}"
                                                title="Edit Demande">
                                                 <button class="btn btn-primary btn-sm">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit

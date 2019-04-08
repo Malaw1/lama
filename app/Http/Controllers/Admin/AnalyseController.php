@@ -10,6 +10,9 @@ use App\ObjetEssai;
 use App\User;
 use App\Molecule;
 use App\Faisabilite;
+use App\Parametre;
+use App\Methode;
+use App\Essai;
 use Illuminate\Http\Request;
 
 class AnalyseController extends Controller
@@ -63,11 +66,14 @@ class AnalyseController extends Controller
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
            $objet = ObjetEssai::All()->where('code', $_GET['code'])->first();
            $user = User::All();
-         //  dd($objet);
-           $molecule = Molecule::where('demande', $objet->demandeur)->get();
+          // dd($objet);
+           $molecule = Molecule::where('objet_essai', $objet->id)->get();
            $fais = Faisabilite::where('objet_essais', $objet->id)->first();
-          // dd($user);
-            return view('analyse.create', ['objet' => $objet, 'user' => $user, 'molecule' => $molecule, 'fais' => $fais]);
+           $param = Parametre::All();
+           $methode = Methode::All();
+         //  // dd($user);
+         // return view('analyse.create');
+            return view('analyse.create', ['objet' => $objet, 'user' => $user, 'molecule' => $molecule, 'fais' => $fais, 'param' => $param, 'methode' => $methode]);
         }
         return response(view('403'), 403);
 
@@ -82,10 +88,12 @@ class AnalyseController extends Controller
      */
     public function store(Request $request)
     {
-      // dd($request->input('responsable')
+      // dd($request->input('methode'), $request->input('parametre'));
       // , $request->input('reference')
       // , $request->input('dci')
       // , $request->input('objet') );
+
+
         $model = str_slug('analyse','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
@@ -94,10 +102,28 @@ class AnalyseController extends Controller
       			'dci' => 'required',
       			'etat' => 'required',
       			'responsable' => 'required',
+            'norme' => 'required',
+            'aspect' => 'required',
+            'observation' => 'required',
+            'date_exp' => 'required',
             'user_id' => 'required'
       		]);
             $requestData = $request->all();
             Analyse::create($requestData);
+
+            $ana = Analyse::All()->last();
+            $params = $request->input('parametre');
+            $methode = $request->input('methode');
+
+            for($i = 0; $i < count($params) ; $i++){
+            Essai::create([
+                'parametre' => $params[$i],
+                'methode' => $methode[$i],
+                'analyse_id' => $ana->id
+            ]);
+            }
+
+
             return redirect('analyse/analyse')->with('flash_message', 'Analyse added!');
         }
         return response(view('403'), 403);

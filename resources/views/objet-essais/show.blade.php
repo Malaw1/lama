@@ -38,6 +38,7 @@
                             <tr><th> Date de Recept. </th><td> {{ $objetessai->date_recue }} </td></tr>
                             <tr><th> Motif </th><td> {{ $objetessai->motif }} </td></tr>
                             <tr><th> Num. Lot </th><td> {{ $objetessai->lot }} </td></tr>
+                            <tr><th> Quantite </th><td> {{ $objetessai->quantite }} </td></tr>
                             <tr><th> Lieu de Prelevement </th><td> {{ $objetessai->provenance }} </td></tr>
                             <tr><th> Action </th>
                               <td>
@@ -45,7 +46,7 @@
                               @if($objetessai->motif == 'spm' || $objetessai->motif == 'Surveillance Post Marketing')
 
                                 <a class="btn btn-success pull-center" href="{{ url('screening/screening/create'.'?code='.$objetessai->code) }}">
-                                    <i class="icon-arrow-up-circle" aria-hidden="true"></i> Screening</a>
+                                    <i class="icon-arrow-up-circle" aria-hidden="true"></i> Screening</a> 
 
                               @endif
                               </td>

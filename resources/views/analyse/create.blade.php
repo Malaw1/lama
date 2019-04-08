@@ -25,6 +25,7 @@
                         {{ csrf_field() }}
 
                           @include ('analyse.form')
+                          @include ('/essai.form')
                           @include ('/molecule.form')
                     </form>
                 </div>

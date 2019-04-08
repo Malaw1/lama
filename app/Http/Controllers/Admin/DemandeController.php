@@ -10,6 +10,7 @@ use App\Client;
 use App\Parametre;
 use App\ParaDemande;
 use App\Molecule;
+use App\ObjetEssai;
 use Illuminate\Http\Request;
 
 class DemandeController extends Controller
@@ -106,46 +107,24 @@ class DemandeController extends Controller
         //  dd($f);
         }
 
-        $code ='DEM'.$day.''.$month.''.$year.''.$f;
+        $code = $year.''.$f;
 
         // dd($code);
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
           $demande=   Demande::create([
             'code' => $code,
-            'designation' => $request->input('designation'),
             'client' => $request->input('client'),
             'description' => $request->input('description'),
             'date_recue' => $request->input('date_recue'),
-            'fabricant' => $request->input('fabricant'),
-            'nombre_lot' => $request->input('lot'),
-            'forme_galenique' => $request->input('forme_galenique'),
-            'lieu_prelevement' => $request->input('lieu_prelevement'),
             'motif' => $request->input('motif'),
+            'nombre_lot' =>$request->input ('nombre_lot'),
             'user_id' => $request->input('user_id')
             ]);
 
             $dem_id = $demande->id;
 
-            $param = $request->input('parametre');
-            foreach ($param as $param) {
-            ParaDemande::create([
-                'parametre' => $param,
-                'demande' => $dem_id
-                ]);
-            }
 
-            $params = $request->input('molecule');
-            $quants = $request->input('dosage');
-
-            //dd($params, $quants);
-        for($i = 0; $i < count($params) ; $i++){
-        Molecule::create([
-            'molecule' => $params[$i],
-            'dosage' => $quants[$i],
-            'demande' => $dem_id
-        ]);
-        }
 
             return redirect('demande/demande')->with('flash_message', 'Demande added!');
         }
@@ -166,12 +145,23 @@ class DemandeController extends Controller
             // $demande = Demande::findOrFail($id);
 
             $demande = Demande::join('clients', 'clients.id','=','demandes.client')
-                            ->join('para_demandes', 'para_demandes.demande', '=', 'demandes.id')
+                            // ->join('para_demandes', 'para_demandes.demande', '=', 'demandes.id')
                             ->where('demandes.code', $code)
+                            ->select('*', 'demandes.id')
                             ->first();
-            $param = ParaDemande::where('demande', $demande->id)->get();
-             // dd($demande);
-            return view('demande.show', ['demande' => $demande, 'param' => $param]);
+                            // dd($demande->id);
+
+            $objetessais = ObjetEssai::join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')
+                                ->where('demandeur', $demande->id)
+                                ->select('*', 'objet_essais.code')
+                                ->get();
+                                // dd($objet);
+            $param = ParaDemande::join('objet_essais', 'objet_essais.id', '=', 'para_demandes.objet_essai')
+                                ->join('demandes', 'demandes.id', '=', 'objet_essais.demandeur')
+                                ->where('demandes.code', $demande->code)
+                                ->get();
+              // dd($param);
+            return view('demande.show', ['demande' => $demande, 'param' => $param, 'objetessais' => $objetessais]);
         }
         return response(view('403'), 403);
     }
@@ -183,12 +173,16 @@ class DemandeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($code)
     {
       $client = Client::all();
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
-            $demande = Demande::findOrFail($id);
+          $demande = Demande::join('clients', 'clients.id','=','demandes.client')
+                          // ->join('para_demandes', 'para_demandes.demande', '=', 'demandes.id')
+                          ->where('demandes.code', $code)
+                          ->select('*', 'demandes.id')
+                          ->first();
             return view('demande.edit', ['demande' => $demande, 'client' => $client]);
         }
         return response(view('403'), 403);
@@ -207,12 +201,11 @@ class DemandeController extends Controller
         $model = str_slug('demande','-');
         if(auth()->user()->permissions()->where('name','=','edit-'.$model)->first()!= null) {
             $this->validate($request, [
-			'molecule' => 'required',
-			'client' => 'required',
-			'description' => 'required',
-			'date_recue' => 'required',
-			'user_id' => 'required'
-		]);
+          		'client' => 'required',
+          		'description' => 'required',
+          		'date_recue' => 'required',
+          		'user_id' => 'required'
+          	]);
             $requestData = $request->all();
 
             $demande = Demande::findOrFail($id);

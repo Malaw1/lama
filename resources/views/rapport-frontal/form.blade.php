@@ -1,41 +1,52 @@
 <div class="col-sm-12">
   <div class="white-box">
-      <h3 class="box-title">Rapport Frontal</h3>
+      <h3 class="box-title">Identification</h3>
       <div class="table-responsive">
           <table class="table">
-              <thead>
-              <tr>
-                  <th>#</th>
-                  <th>Molecule</th>
-                  <th>RF < 5%</th>
-                  <th>5% => RF < 10%</th>
-                  <th>RF => 10%</th>
-              </tr>
-              </thead>
-              <tbody>
-                @foreach($molecule as $mole)
-              <tr>
+            <tr>
+                <th>Molecule</th>
+                <th>RF(temoin)</th>
+                <th>Rf(echantillon)</th>
+                <th>RF(erreur)</th>
+            </tr>
 
-                  <td>1</td>
-                  <td><input class="form-control" name="molecule[]" type="text" id="molecule" value="{{ $rapportfrontal->molecule or $mole->molecule}}" required></td>
-                  <td><input class="form-control" name="rf_inf_5[]" type="text" id="rf_inf_5" value="{{ $rapportfrontal->rf_inf_5 or ''}}" required></td>
-                  <td><input class="form-control" name="rf_inf_10[]" type="text" id="rf_inf_10" value="{{ $rapportfrontal->rf_inf_10 or ''}}" required></td>
-                  <td><input class="form-control" name="rf_sup_10[]" type="text" id="rf_sup_10" value="{{ $rapportfrontal->rf_sup_10 or ''}}" required></td>
-                  <input class="form-control" name="screening" type="hidden" id="screening" value="{{ $rapportfrontal->screening or ''}}" required>
+            @foreach($molecule as $mole)
+          <tr>
+              <td>{{ $rapportfrontal->molecule or $mole->molecule}}</td>
+              <input class="form-control" name="molecule[]" type="hidden" id="molecule" value="{{ $rapportfrontal->molecule or $mole->molecule}}" >
+              <td><input class="form-control" name="rf_temoin[]" type="text" id="rf_temoin" value="{{ $rapportfrontal->rf_temoin or ''}}" ></td>
+              <td><input class="form-control" name="rf_echan[]" type="text" id="rf_echan" value="{{ $rapportfrontal->rf_echan or ''}}" ></td>
+              <td><input class="form-control" name="rf_erreur[]" type="text" id="rf_erreur" value="{{ $rapportfrontal->rf_erreur or ''}}"  disabled></td>
+              <input class="form-control" name="screening" type="hidden" id="screening" value="{{ $rapportfrontal->screening or ''}}" >
 
-              </tr>
-              @endforeach
-            </tbody>
+          </tr>
+          @endforeach
+
+          <tr>
+            <th>Impurete</th>
+            <td colspan="2">
+              <select class="form-control" data-placeholder="Choose a Category" tabindex="1" name="impurete">
+                  <option value="Present">Present</option>
+                  <option value="Absent">Absent</option>
+              </select>
+            </td>
+            <td colspan="2">
+              <textarea class="form-control" name="prospectus" type="text" id="fabricant" value="{{ $objet->desc_impurete or ''}}" required></textarea>
+            </td>
+          </tr>
+
+            <tr>
+              <th>Conclusion</th>
+              <td colspan="2">
+                  <select class="form-control" data-placeholder="Choose a Category" tabindex="1" name="identification">
+                      <option value="Conforme">Conforme</option>
+                      <option value="Non Conforme">Non Conforme</option>
+                      <option value="Douteux">Douteux</option>
+                  </select>
+              </td>
+            </tr>
           </table>
-        </div>
+
       </div>
     </div>
-
-
-
-
-<!-- <div class="form-group">
-    <div class="col-md-offset-4 col-md-4">
-        <input class="btn btn-primary" type="submit" value="{{ $submitButtonText or 'Create' }}">
-    </div>
-</div> -->
+</div>

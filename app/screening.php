@@ -27,7 +27,7 @@ class screening extends Model
      *
      * @var array
      */
-    protected $fillable = ['designation', 'code', 'dci', 'date_exp', 'delitement', 'conclusion', 'impurete', 'user_id', 'desc_physique', 'prospectus'];
+    protected $fillable = ['designation', 'code', 'dci', 'date_exp', 'delitement', 'conclusion', 'impurete', 'user_id', 'desc_physique', 'prospectus', 'identification', 'ipv', 'duree_delitement', 'dosage'];
 
 
 }

@@ -17,9 +17,8 @@ Route::get('/',function (){
 });
 
 Route::group(['middleware' => ['auth', 'roles'],'roles' => ['admin','user']], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard.index');
-    });
+
+    Route::get('/dashboard', 'HomeController@index');
     Route::get('account-settings','UsersController@getSettings');
     Route::post('account-settings','UsersController@saveSettings');
 });
@@ -60,6 +59,13 @@ Route::group(['middleware' => ['auth', 'roles'],'roles' => 'admin'], function ()
     // Route::get('account-settings', function (){
     //     return view('users.account-settings');
     // });
+
+    // Route::post('temp', function (){
+    //     return view('essai.temp');
+    // });
+
+    // Route::get('temp','EssaiController@temp');
+
     Route::get('index3', function (){
         return view('dashboard.index3');
     });
@@ -363,3 +369,7 @@ Route::resource('analyse/analyse', 'Admin\\AnalyseController');
 Route::resource('screening/screening', 'Admin\\screeningController');
 Route::resource('rapportFrontal/rapport-frontal', 'Admin\\RapportFrontalController');
 Route::resource('principe-actif/principe-actif', 'Admin\\PrincipeActifController');
+
+Route::resource('essai/essai', 'Admin\\EssaiController');
+Route::resource('pesage/pesage', 'Admin\\PesageController');
+Route::resource('poids/poids', 'Admin\\PoidsController');

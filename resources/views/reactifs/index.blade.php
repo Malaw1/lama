@@ -23,7 +23,13 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Designation</th><th>Date Recep</th><th>Depositaire</th>
+                                <th>Designation</th>
+                                <th>Date Recep</th>
+                                <th>Unite Recue</th>
+                                <th>Unite Restante</th>
+                                <th>Quantite</th>
+                                <th>Lot</th>
+                                <th>Fabricant</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -31,9 +37,15 @@
                             @foreach($reactifs as $item)
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->designation }}</td><td>{{ $item->date_recep }}</td><td>{{ $item->depositaire }}</td>
+                                    <td>{{ $item->designation }}</td>
+                                    <td>{{ $item->date_recep }}</td>
+                                    <td>{{ $item->unite_recue }}</td>
+                                    <td>{{ $item->quantite }}</td>
+                                    <td>{{ $item->quantite }}</td>
+                                    <td>{{ $item->lot }}</td>
+                                    <td>{{ $item->fabricant }}</td>
                                     <td>
-                                        @can('view-'.str_slug('Reactif'))
+                                        @can('view-'.str_slug('reactifs'))
                                             <a href="{{ url('/reactif/reactifs/' . $item->id) }}"
                                                title="View Reactif">
                                                 <button class="btn btn-info btn-sm">
@@ -42,7 +54,7 @@
                                             </a>
                                         @endcan
 
-                                        @can('edit-'.str_slug('Reactif'))
+                                        @can('edit-'.str_slug('Reactifs'))
                                             <a href="{{ url('/reactif/reactifs/' . $item->id . '/edit') }}"
                                                title="Edit Reactif">
                                                 <button class="btn btn-primary btn-sm">
@@ -51,7 +63,7 @@
                                             </a>
                                         @endcan
 
-                                        @can('delete-'.str_slug('Reactif'))
+                                        @can('delete-'.str_slug('Reactifs'))
                                             <form method="POST"
                                                   action="{{ url('/reactif/reactifs' . '/' . $item->id) }}"
                                                   accept-charset="UTF-8" style="display:inline">

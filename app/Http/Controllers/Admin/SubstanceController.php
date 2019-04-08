@@ -84,16 +84,14 @@ class SubstanceController extends Controller
         $model = str_slug('substance','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
             $this->validate($request, [
-			'designation' => 'required',
-			'date_recue' => 'required',
-			'depositaire' => 'required',
-			'unite_recue' => 'required',
-			'quantite' => 'required',
-			'fabricant' => 'required',
-			'lot' => 'required',
-			'date_fab' => 'required',
-			'date_exp' => 'required',
-			'user_id' => 'required'
+      		'designation' => 'required',
+      		'date_recue' => 'required',
+      		'depositaire' => 'required',
+      		'unite_recue' => 'required',
+      		'quantite' => 'required',
+      		'fabricant' => 'required',
+      		'lot' => 'required',
+      		'user_id' => 'required'
 		]);
             $requestData = $request->all();
 

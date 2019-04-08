@@ -27,7 +27,7 @@ class ParaDemande extends Model
      *
      * @var array
      */
-    protected $fillable = ['parametre', 'demande'];
+    protected $fillable = ['parametre', 'objet_essai'];
 
-    
+
 }

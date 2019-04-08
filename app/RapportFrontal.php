@@ -27,7 +27,7 @@ class RapportFrontal extends Model
      *
      * @var array
      */
-    protected $fillable = ['molecule', 'rf_inf_5', 'rf_inf_10', 'rf_sup_10', 'screening'];
+    protected $fillable = ['molecule', 'rf_erreur', 'rf_temoin', 'rf_echan', 'screening'];
 
-    
+
 }

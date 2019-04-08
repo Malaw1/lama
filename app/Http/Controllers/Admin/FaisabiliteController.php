@@ -29,6 +29,10 @@ use App\FaConsommable;
 use App\ReactifError;
 use App\FaMolecule;
 use App\EqQualif;
+use App\ParaDemande;
+use App\SubstanceError;
+
+
 
 class FaisabiliteController extends Controller
 {
@@ -77,19 +81,23 @@ class FaisabiliteController extends Controller
      */
     public function create()
     {
-        $parametre = Parametre::all();
+
         $methode = Methode::all();
-        $demande = ObjetEssai::where('code', $_GET['code'])->first();
-        $objet = ObjetEssai::all();
-        // $molecule = Molecule::join('demandes', 'demandes.id', '=', 'molecules.demande')
-        // ->where('demandes.code', $_GET['id'])->get();
-        $equipement = EqQualif::all();
+        $objet = ObjetEssai::where('code', $_GET['code'])->first();
+        $parametre = ParaDemande::where('objet_essai', $objet->id)->get();
+         // dd($parametre);
+         // = ObjetEssai::all();
+         // $molecule = Molecule::join('demandes', 'demandes.id', '=', 'molecules.demande')
+         // ->where('demandes.code', $_GET['id'])->get();
+        $equipement = EqQualif::join('equipements', 'equipements.id', '=', 'eq_qualifs.equipement')->get();
+        // dd($equipement);
         $consommable = Consommable::all();
         $reactif = CatalogReactif::all();
         // $reactif = CatalogRef::all();
         $substance = CatalogRef::all();
         $refs = Pharmacopee::all();
-        $molecule = Molecule::all();
+        $molecule = Molecule::where('objet_essai', $objet->id)->get();
+        // dd($molecule);
         $model = str_slug('faisabilite','-');
         if(auth()->user()->permissions()->where('name','=','add-'.$model)->first()!= null) {
           return view('faisabilite.create', [
@@ -149,13 +157,7 @@ class FaisabiliteController extends Controller
 
 
 
-        $substance = $request->input('substance');
-        foreach ($substance as $methode) {
-        FaSubstance::create([
-            'substance' => $methode,
-            'faisabilite_id' => $faisabilite_id
-            ]);
-        }
+
 
         $materiel = $request->input('consommable');
         foreach ($materiel as $methode) {
@@ -215,7 +217,39 @@ $errors = null;
 
                 }
 
-                if (($errors != null)) {
+                // Substance de Reference
+
+                $subserr = null;
+                $subs = $request->input('substance');
+                foreach ($subs as $key ) {
+                     $req = Substance::where('designation', '=', $key)->first();
+                     // $pp = $req->designation;
+                     if ($req == null) {
+                       SubstanceError::create([
+                       'designation' => $key,
+                       'faisabilite_id' => $faisabilite_id
+                       ]);
+                       $subserr[] = $key;
+                     }else {
+                           if(strcasecmp($key, $req->designation ) == 0){
+                             FaSubstance::create([
+                              'substance' => $key,
+                              'faisabilite_id' => $faisabilite_id
+                              ]);
+                           }else {
+                           SubstanceError::create([
+                           'designation' => $key,
+                           'faisabilite_id' => $faisabilite_id
+                           ]);
+                            }
+                          }
+
+                        }
+
+// dd($subs, $pc, $errors, $subserr);
+                // Substance de Reference
+
+                if (($errors != null) || ($subserr != null)) {
                   echo "Errors is not null";
                   $fais = Faisabilite::where('id', $faisabilite_id)
                   ->update(['etat' => 'Non Faisable']);
@@ -227,6 +261,7 @@ $errors = null;
                 $substance = FaSubstance::where('fa_substances.faisabilite_id', $faisabilite_id)->get();
                 $cons = FaConsommable::where('fa_consommables.faisabilite_id', $faisabilite_id)->get();
                 $err = ReactifError::where('reactif_errors.faisabilite_id', $faisabilite_id)->get();
+                $err_subs = SubstanceError::where('substance_errors.faisabilite_id', $faisabilite_id)->get();
                   $faisabilite = Faisabilite::where('id', $faisabilite_id)->first();
 
                   return view('faisabilite.show', [
@@ -238,7 +273,10 @@ $errors = null;
                     'cons' => $cons,
                     'substance' =>$substance,
                     'errors' => $errors,
-                    'err' => $err
+                    'err' => $err,
+                    'subserr' =>$subserr,
+                    'err_subs' => $err_subs
+
                   ]);
                 }else {
                   return redirect('faisabilite/faisabilite')->with('flash_message', 'Faisabilite added!');

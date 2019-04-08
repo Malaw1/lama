@@ -13,6 +13,12 @@ class AdminController extends Controller
      */
     public function index()
     {
+      $client = Client::join('demandes', 'client.id', '=', 'demandes.client')
+                        ->count()
+                        ->all();
+      // all();
+      dd($client);
+      // $parametre = Parametre::all();
         return view('admin.dashboard');
     }
 }

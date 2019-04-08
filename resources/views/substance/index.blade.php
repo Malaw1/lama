@@ -23,16 +23,28 @@
                         <table class="table" id="myTable">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Designation</th><th>Date Recue</th><th>Depositaire</th>
-                                <th>Actions</th>
+                              <th>#</th>
+                              <th>Designation</th>
+                              <th>Date Recep</th>
+                              <th>Unite Recue</th>
+                              <th>Unite Restante</th>
+                              <th>Quantite</th>
+                              <th>Lot</th>
+                              <th>Fabricant</th>
+                              <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($substance as $item)
                                 <tr>
-                                    <td>{{ $loop->iteration or $item->id }}</td>
-                                    <td>{{ $item->designation }}</td><td>{{ $item->date_recue }}</td><td>{{ $item->depositaire }}</td>
+                                  <td>{{ $loop->iteration or $item->id }}</td>
+                                  <td>{{ $item->designation }}</td>
+                                  <td>{{ $item->date_recep }}</td>
+                                  <td>{{ $item->unite_recue }}</td>
+                                  <td>{{ $item->quantite }}</td>
+                                  <td>{{ $item->quantite }}</td>
+                                  <td>{{ $item->lot }}</td>
+                                  <td>{{ $item->fabricant }}</td>
                                     <td>
                                         @can('view-'.str_slug('Substance'))
                                             <a href="{{ url('/substance/substance/' . $item->id) }}"

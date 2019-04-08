@@ -20,7 +20,7 @@
                 <div class="clearfix"></div>
                 <hr >
                   <h3 class="box-title m-b-0">Data Export</h3>
-                  <p class="text-muted m-b-30">Export data to Copy, CSV, Excel, PDF & Print</p>
+                  <p class="text-muted m-b-30">Export data to Copy, CSV, Excel, PDF, & Print</p>
                   <div class="table-responsive">
                       <table id="example23" class="display nowrap" cellspacing="0" width="100%">
                           <thead>
@@ -28,12 +28,12 @@
                             <th>#</th>
                             <th>Code</th>
                             <th>Designation</th>
-                            <th>Forme Galenique</th>
                             <th>Date de Fab.</th>
                             <th>Date d'Exp.</th>
                             <th>Num Lot</th>
-                            <th>Provenance</th>
+                            <th>lieu de Prelevement</th>
                             <th>Fabricant</th>
+                            <th>Identification</th>
                             <th>Dosage</th>
                             <th>IPV</th>
                             <th>Impurete</th>
@@ -46,12 +46,12 @@
                             <th>#</th>
                             <th>Code</th>
                             <th>Designation</th>
-                            <th>Forme Galenique</th>
                             <th>Date de Fab.</th>
                             <th>Date de Perem.</th>
                             <th>Num Lot</th>
                             <th>Provenance</th>
                             <th>Fabricant</th>
+                            <th>Identification</th>
                             <th>Dosage</th>
                             <th>IPV</th>
                             <th>Impurete</th>
@@ -64,21 +64,18 @@
                                 <tr>
                                     <td>{{ $loop->iteration or $item->id }}</td>
                                     <td>
-                                      <a href="{{ url('/screening/screening/' . $item->id) }}"
+                                      <a href="{{ url('/screening/screening/' . $item->code) }}"
                                          title="View screening"> {{ $item->code }}</a>
                                     </td>
                                     <td>{{ $item->designation }}</td>
-                                    <td>{{ $item->forme_galenique }}</td>
                                     <td>{{ $item->date_fab }}</td>
                                     <td>{{ $item->date_exp }}</td>
                                     <td>{{ $item->lot }}</td>
                                     <td>{{ $item->provenance }}</td>
                                     <td>{{ $item->fabricant }}</td>
+                                    <td>{{ $item->identification }}</td>
                                     <td>{{ $item->dosage }}</td>
-                                    <td>
-                                            {{ $item->prospectus }} </br>
-                                            {{ $item->desc_physique }} </br>
-                                    </td>
+                                    <td>{{ $item->ipv }}</td>
                                     <td>{{ $item->impurete }}</td>
                                     <td>{{ $item->delitement }}</td>
                                     <td>{{ $item->conclusion }}</td>
@@ -184,6 +181,34 @@
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
+
+    $('#myTable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfFlash',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }
+        ]
+    } );
+
+    $(document).ready(function() {
+        $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelFlash',
+                    filename: 'Data export'
+                },
+                {
+                    extend: 'pdfFlash',
+                    filename: 'Rapport'
+                }
+            ]
+        } );
+    } );
+
 </script>
 
 @endpush

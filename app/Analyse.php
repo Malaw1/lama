@@ -27,7 +27,7 @@ class Analyse extends Model
      *
      * @var array
      */
-    protected $fillable = ['objet', 'reference', 'dci', 'etat', 'responsable', 'user_id'];
+    protected $fillable = ['objet', 'reference', 'dci', 'etat', 'responsable', 'user_id', 'norme', 'aspect', 'observation', 'date_exp'];
 
 
 }

@@ -36,13 +36,13 @@
                                     <td>{{ $item->objet }}</td><td>{{ $item->reference }}</td><td>{{ $item->dci }}</td>
                                     <td>{{ $item->etat }}</td>
                                     <td>
-                                      <a href="{{ url('/feuille/feuille/' . $item->id) }}"
+                                      <a href="{{ url('/essai/essai/'. $item->objet) }}"
                                          title="View Analyse">
                                           <button class="btn btn-success btn-sm">
                                               <i class="fa fa-arrow-up" aria-hidden="true"></i> Analyser
                                           </button>
                                       </a>
-                                      
+
                                         @can('view-'.str_slug('Analyse'))
                                             <a href="{{ url('/analyse/analyse/' . $item->id) }}"
                                                title="View Analyse">

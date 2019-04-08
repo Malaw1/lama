@@ -65,6 +65,11 @@
                                             </form>
                                         @endcan
 
+                                        @can('delete-'.str_slug('Faisabilite'))
+                                        <a class="btn btn-success pull-right" href="{{ url('/analyse/analyse/create?code='.$item->code) }}"><i
+                                                    class="icon-plus"></i>Analyser</a>
+                                        @endcan
+
 
                                     </td>
                                 </tr>
